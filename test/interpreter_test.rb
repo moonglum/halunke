@@ -13,4 +13,8 @@ class InterpreterTest < Minitest::Test
   def test_reverse_string
     assert_equal "eknulah", @interpreter.eval('("halunke" reverse)')
   end
+
+  def test_inner_message_send
+    assert_equal 8, @interpreter.eval("(4 + (2 + 2))")
+  end
 end

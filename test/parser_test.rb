@@ -71,4 +71,23 @@ class ParserTest < Minitest::Test
 
     assert_equal expected_nodes, @parser.parse("(2 a x b 4)")
   end
+
+  def test_inner_message_send
+    expected_nodes = Halunke::Nodes.new([
+      Halunke::MessageSendNode.new(
+        Halunke::NumberNode.new(2),
+        Halunke::MessageNode.new([
+          Halunke::BarewordNode.new("a"),
+          Halunke::MessageSendNode.new(
+            Halunke::NumberNode.new(1),
+            Halunke::MessageNode.new([
+              Halunke::BarewordNode.new("x")
+            ])
+          )
+        ])
+      )
+    ])
+
+    assert_equal expected_nodes, @parser.parse("(2 a (1 x))")
+  end
 end

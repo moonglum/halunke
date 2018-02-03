@@ -9,22 +9,17 @@ token OPERATOR
 
 rule
   Program:
-    /* empty */  { result = Nodes.new }
-  | Expressions  { result = val[0] }
+    Expressions  { result = val[0] }
   ;
 
   Expressions:
-    Expression { result = Nodes.new(val) }
+    /* empty */            { result = Nodes.new }
+  | Expression Expressions { result = Nodes.new([val[0]]).concat(val[1]) }
   ;
 
   Expression:
     Literal
-  | OPEN_PAREN Literal Literals CLOSE_PAREN { result = Halunke::MessageSendNode.new(val[1], MessageNode.new(val[2].nodes)) }
-  ;
-
-  Literals:
-    /* empty */      { result = Nodes.new }
-  | Literal Literals { result = Nodes.new([val[0]]).concat(val[1]) }
+  | OPEN_PAREN Literal Expressions CLOSE_PAREN { result = Halunke::MessageSendNode.new(val[1], MessageNode.new(val[2].nodes)) }
   ;
 
   Literal:
