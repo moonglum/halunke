@@ -13,7 +13,9 @@ module Halunke
     end
 
     def lookup(message)
-      @runtime_methods[message]
+      @runtime_methods.fetch(message)
+    rescue KeyError
+      raise "Class #{@name} has no method to respond to message '#{message}'"
     end
   end
 
