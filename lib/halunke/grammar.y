@@ -19,7 +19,7 @@ rule
 
   Expression:
     Literal
-  | OPEN_PAREN Literal Expressions CLOSE_PAREN { result = Halunke::MessageSendNode.new(val[1], MessageNode.new(val[2].nodes)) }
+  | OPEN_PAREN Expression Expressions CLOSE_PAREN { result = Halunke::MessageSendNode.new(val[1], MessageNode.new(val[2].nodes)) }
   ;
 
   Literal:
