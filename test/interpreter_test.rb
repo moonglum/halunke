@@ -17,4 +17,8 @@ class InterpreterTest < Minitest::Test
   def test_inner_message_send
     assert_equal 8, @interpreter.eval("(4 + (2 + 2))")
   end
+
+  def test_replace_with_on_string
+    assert_equal "bhb", @interpreter.eval('("aha" replace "a" with "b")')
+  end
 end

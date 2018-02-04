@@ -46,10 +46,18 @@ module Halunke
 
   MessageNode = Struct.new(:nodes) do
     def eval(context)
-      case nodes.length
-      when 1 then [nodes[0].value, []]
-      when 2 then [nodes[0].value, [nodes[1].eval(context)]]
-      else raise "Not implemented"
+      if nodes.length == 1
+        [nodes[0].value, []]
+      elsif nodes.length.even?
+        name = []
+        message = []
+        nodes.each_slice(2) do |name_part, value|
+          name.push(name_part.value)
+          message.push(value.eval(context))
+        end
+        [name.join(" "), message]
+      else
+        raise "Parse Error"
       end
     end
   end

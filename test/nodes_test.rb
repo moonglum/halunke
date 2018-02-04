@@ -53,4 +53,16 @@ class NodesTest < Minitest::Test
 
     assert_equal ["a", [:b_evaluated]], node.eval(@context)
   end
+
+  def test_message_with_two_args
+    a = Halunke::BarewordNode.new("a")
+    b = Minitest::Mock.new
+    b.expect :eval, :b_evaluated, [@context]
+    c = Halunke::BarewordNode.new("c")
+    d = Minitest::Mock.new
+    d.expect :eval, :d_evaluated, [@context]
+    node = Halunke::MessageNode.new([a, b, c, d])
+
+    assert_equal ["a c", [:b_evaluated, :d_evaluated]], node.eval(@context)
+  end
 end

@@ -68,6 +68,13 @@ module Halunke
         "String",
         "reverse" => Halunke::HFunction.new(lambda { |receiver, _args|
           context[:String].create_instance(receiver.ruby_value.reverse)
+        }),
+        "replace with" => Halunke::HFunction.new(lambda { |receiver, args|
+          result = receiver.ruby_value.gsub(
+            args[0].ruby_value,
+            args[1].ruby_value
+          )
+          context[:String].create_instance(result)
         })
       )
 
