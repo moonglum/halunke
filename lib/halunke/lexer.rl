@@ -7,6 +7,8 @@
   bareword = [a-zA-Z_]+;
   open_paren = '(';
   close_paren = ')';
+  open_curly = '{';
+  close_curly = '}';
   operator = '+' | '-' | '<' | '>';
 
   main := |*
@@ -16,6 +18,8 @@
     bareword => { emit(:BAREWORD, data[ts...te]) };
     open_paren => { emit(:OPEN_PAREN, data[ts...te]) };
     close_paren => { emit(:CLOSE_PAREN, data[ts...te]) };
+    open_curly => { emit(:OPEN_CURLY, data[ts...te]) };
+    close_curly => { emit(:CLOSE_CURLY, data[ts...te]) };
     operator => { emit(:OPERATOR, data[ts ... te]) };
     space;
     any => { raise "Could not lex '#{ data[ts...te] }'" };

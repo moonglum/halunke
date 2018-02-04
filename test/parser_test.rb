@@ -90,4 +90,16 @@ class ParserTest < Minitest::Test
 
     assert_equal expected_nodes, @parser.parse("(2 a (1 x))")
   end
+
+  def test_function_with_no_params
+    expected_nodes = Halunke::Nodes.new([
+      Halunke::FunctionNode.new(
+        Halunke::Nodes.new([
+          Halunke::NumberNode.new(1)
+        ])
+      )
+    ])
+
+    assert_equal expected_nodes, @parser.parse("{ 1 }")
+  end
 end

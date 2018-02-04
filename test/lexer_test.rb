@@ -29,6 +29,14 @@ class LexerTest < Minitest::Test
     assert_equal [[:CLOSE_PAREN, ")"]], @lexer.tokenize(")")
   end
 
+  def test_open_curly
+    assert_equal [[:OPEN_CURLY, "{"]], @lexer.tokenize("{")
+  end
+
+  def test_closing_curly
+    assert_equal [[:CLOSE_CURLY, "}"]], @lexer.tokenize("}")
+  end
+
   def test_plus
     assert_equal [[:OPERATOR, "+"]], @lexer.tokenize("+")
   end

@@ -101,6 +101,9 @@ module Halunke
         }),
         "or" => Halunke::HFunction.new(lambda { |args|
           context["true"]
+        }),
+        "then else" => Halunke::HFunction.new(lambda { |args|
+          args[1].call([])
         })
       )
 
@@ -114,6 +117,9 @@ module Halunke
         }),
         "or" => Halunke::HFunction.new(lambda { |args|
           args[1]
+        }),
+        "then else" => Halunke::HFunction.new(lambda { |args|
+          args[2].call([])
         })
       )
 

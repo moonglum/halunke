@@ -55,4 +55,9 @@ class InterpreterTest < Minitest::Test
     assert_equal true, @interpreter.eval('(false or (4 > 1))')
     assert_equal false, @interpreter.eval('(false or (4 < 1))')
   end
+
+  def test_then_else
+    assert_equal "foo", @interpreter.eval('(true then { "foo" } else { "bar" })')
+    assert_equal "bar", @interpreter.eval('(false then { "foo" } else { "bar" })')
+  end
 end

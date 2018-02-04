@@ -5,6 +5,8 @@ token STRING
 token BAREWORD
 token OPEN_PAREN
 token CLOSE_PAREN
+token OPEN_CURLY
+token CLOSE_CURLY
 token OPERATOR
 
 rule
@@ -19,6 +21,7 @@ rule
 
   Expression:
     Literal
+  | OPEN_CURLY Expressions CLOSE_CURLY { result = Halunke::FunctionNode.new(val[1]) }
   | OPEN_PAREN Expression Expressions CLOSE_PAREN { result = Halunke::MessageSendNode.new(val[1], MessageNode.new(val[2].nodes)) }
   ;
 

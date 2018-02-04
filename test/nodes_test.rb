@@ -72,4 +72,14 @@ class NodesTest < Minitest::Test
 
     assert_equal ["a c", [:b_evaluated, :d_evaluated]], node.eval(@context)
   end
+
+  def test_function_node
+    node = Halunke::FunctionNode.new(
+      Halunke::Nodes.new([
+        Halunke::NumberNode.new(1)
+      ])
+    )
+
+    assert_equal 1, node.eval(@context).call([]).ruby_value
+  end
 end
