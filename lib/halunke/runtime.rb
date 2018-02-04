@@ -96,7 +96,12 @@ module Halunke
 
       context["True"] = Halunke::HClass.new(
         "True",
-        {}
+        "and" => Halunke::HFunction.new(lambda { |args|
+          args[1]
+        }),
+        "or" => Halunke::HFunction.new(lambda { |args|
+          context["true"]
+        })
       )
 
       # TODO: This is not good. This should need no value to be evaluated.
@@ -104,7 +109,12 @@ module Halunke
 
       context["False"] = Halunke::HClass.new(
         "False",
-        {}
+        "and" => Halunke::HFunction.new(lambda { |args|
+          context["false"]
+        }),
+        "or" => Halunke::HFunction.new(lambda { |args|
+          args[1]
+        })
       )
 
       # TODO: This is not good. This should need no value to be evaluated.

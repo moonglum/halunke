@@ -34,7 +34,21 @@ class InterpreterTest < Minitest::Test
     assert_equal true, @interpreter.eval('(2 < 3)')
   end
 
-  def test_falsecomparison
+  def test_false_comparison
     assert_equal false, @interpreter.eval('(2 > 3)')
+  end
+
+  def test_and
+    assert_equal true, @interpreter.eval('(true and (4 > 1))')
+    assert_equal false, @interpreter.eval('(true and (4 < 1))')
+    assert_equal false, @interpreter.eval('(false and (4 > 1))')
+    assert_equal false, @interpreter.eval('(false and (4 < 1))')
+  end
+
+  def test_or
+    assert_equal true, @interpreter.eval('(true or (4 > 1))')
+    assert_equal true, @interpreter.eval('(true or (4 < 1))')
+    assert_equal true, @interpreter.eval('(false or (4 > 1))')
+    assert_equal false, @interpreter.eval('(false or (4 < 1))')
   end
 end
