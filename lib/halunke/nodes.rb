@@ -25,13 +25,13 @@ module Halunke
 
   class NumberNode < LiteralNode
     def eval(context)
-      context[:Number].create_instance(value)
+      context["Number"].create_instance(value)
     end
   end
 
   class StringNode < LiteralNode
     def eval(context)
-      context[:String].create_instance(value)
+      context["String"].create_instance(value)
     end
   end
 

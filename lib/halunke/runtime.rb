@@ -59,56 +59,56 @@ module Halunke
     def self.root_context
       context = new
 
-      context[:Number] = Halunke::HClass.new(
+      context["Number"] = Halunke::HClass.new(
         "Number",
         "+" => Halunke::HFunction.new(lambda { |receiver, args|
-          context[:Number].create_instance(receiver.ruby_value + args.first.ruby_value)
+          context["Number"].create_instance(receiver.ruby_value + args.first.ruby_value)
         }),
         "<" => Halunke::HFunction.new(lambda { |receiver, args|
           if receiver.ruby_value < args.first.ruby_value
-            context[:true]
+            context["true"]
           else
-            context[:false]
+            context["false"]
           end
         }),
         ">" => Halunke::HFunction.new(lambda { |receiver, args|
           if receiver.ruby_value > args.first.ruby_value
-            context[:true]
+            context["true"]
           else
-            context[:false]
+            context["false"]
           end
         })
       )
 
-      context[:String] = Halunke::HClass.new(
+      context["String"] = Halunke::HClass.new(
         "String",
         "reverse" => Halunke::HFunction.new(lambda { |receiver, _args|
-          context[:String].create_instance(receiver.ruby_value.reverse)
+          context["String"].create_instance(receiver.ruby_value.reverse)
         }),
         "replace with" => Halunke::HFunction.new(lambda { |receiver, args|
           result = receiver.ruby_value.gsub(
             args[0].ruby_value,
             args[1].ruby_value
           )
-          context[:String].create_instance(result)
+          context["String"].create_instance(result)
         })
       )
 
-      context[:True] = Halunke::HClass.new(
+      context["True"] = Halunke::HClass.new(
         "True",
         {}
       )
 
       # TODO: This is not good. This should need no value to be evaluated.
-      context[:true] = Halunke::HObject.new(context[:True], true)
+      context["true"] = Halunke::HObject.new(context["True"], true)
 
-      context[:False] = Halunke::HClass.new(
+      context["False"] = Halunke::HClass.new(
         "False",
         {}
       )
 
       # TODO: This is not good. This should need no value to be evaluated.
-      context[:false] = Halunke::HObject.new(context[:False], false)
+      context["false"] = Halunke::HObject.new(context["False"], false)
 
       context
     end
