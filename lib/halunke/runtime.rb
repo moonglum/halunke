@@ -29,7 +29,7 @@ module Halunke
 
     def receive_message(message_name, message_value)
       m = @runtime_class.lookup(message_name)
-      m.call(self, message_value)
+      m.call([self].concat(message_value))
     end
   end
 
@@ -38,8 +38,8 @@ module Halunke
       @fn = fn
     end
 
-    def call(receiver, args)
-      @fn.call(receiver, args)
+    def call(args)
+      @fn.call(args)
     end
   end
 
@@ -61,18 +61,18 @@ module Halunke
 
       context["Number"] = Halunke::HClass.new(
         "Number",
-        "+" => Halunke::HFunction.new(lambda { |receiver, args|
-          context["Number"].create_instance(receiver.ruby_value + args.first.ruby_value)
+        "+" => Halunke::HFunction.new(lambda { |args|
+          context["Number"].create_instance(args[0].ruby_value + args[1].ruby_value)
         }),
-        "<" => Halunke::HFunction.new(lambda { |receiver, args|
-          if receiver.ruby_value < args.first.ruby_value
+        "<" => Halunke::HFunction.new(lambda { |args|
+          if args[0].ruby_value < args[1].ruby_value
             context["true"]
           else
             context["false"]
           end
         }),
-        ">" => Halunke::HFunction.new(lambda { |receiver, args|
-          if receiver.ruby_value > args.first.ruby_value
+        ">" => Halunke::HFunction.new(lambda { |args|
+          if args[0].ruby_value > args[1].ruby_value
             context["true"]
           else
             context["false"]
@@ -82,13 +82,13 @@ module Halunke
 
       context["String"] = Halunke::HClass.new(
         "String",
-        "reverse" => Halunke::HFunction.new(lambda { |receiver, _args|
-          context["String"].create_instance(receiver.ruby_value.reverse)
+        "reverse" => Halunke::HFunction.new(lambda { |args|
+          context["String"].create_instance(args[0].ruby_value.reverse)
         }),
-        "replace with" => Halunke::HFunction.new(lambda { |receiver, args|
-          result = receiver.ruby_value.gsub(
-            args[0].ruby_value,
-            args[1].ruby_value
+        "replace with" => Halunke::HFunction.new(lambda { |args|
+          result = args[0].ruby_value.gsub(
+            args[1].ruby_value,
+            args[2].ruby_value
           )
           context["String"].create_instance(result)
         })
