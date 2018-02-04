@@ -36,6 +36,9 @@ module Halunke
   end
 
   class BarewordNode < LiteralNode
+    def eval(context)
+      context[value]
+    end
   end
 
   MessageSendNode = Struct.new(:receiver, :message) do

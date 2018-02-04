@@ -17,6 +17,13 @@ class NodesTest < Minitest::Test
     assert_equal "test", string_node.eval(@context).ruby_value
   end
 
+  def test_bareword_node_eval
+    @context["test"] = @context["Number"].create_instance(1)
+    bareword_node = Halunke::BarewordNode.new("test")
+
+    assert_equal 1, bareword_node.eval(@context).ruby_value
+  end
+
   def test_nodes
     node1 = Halunke::NumberNode.new(1)
     node2 = Halunke::NumberNode.new(2)
