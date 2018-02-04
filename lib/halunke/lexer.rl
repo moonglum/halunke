@@ -7,7 +7,7 @@
   bareword = [a-zA-Z_]+;
   open_paren = '(';
   close_paren = ')';
-  operator = '+' | '-';
+  operator = '+' | '-' | '<' | '>';
 
   main := |*
 

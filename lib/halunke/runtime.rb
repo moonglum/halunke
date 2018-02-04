@@ -63,6 +63,20 @@ module Halunke
         "Number",
         "+" => Halunke::HFunction.new(lambda { |receiver, args|
           context[:Number].create_instance(receiver.ruby_value + args.first.ruby_value)
+        }),
+        "<" => Halunke::HFunction.new(lambda { |receiver, args|
+          if receiver.ruby_value < args.first.ruby_value
+            context[:true]
+          else
+            context[:false]
+          end
+        }),
+        ">" => Halunke::HFunction.new(lambda { |receiver, args|
+          if receiver.ruby_value > args.first.ruby_value
+            context[:true]
+          else
+            context[:false]
+          end
         })
       )
 
@@ -79,6 +93,22 @@ module Halunke
           context[:String].create_instance(result)
         })
       )
+
+      context[:True] = Halunke::HClass.new(
+        "True",
+        {}
+      )
+
+      # TODO: This is not good. This should need no value to be evaluated.
+      context[:true] = Halunke::HObject.new(context[:True], true)
+
+      context[:False] = Halunke::HClass.new(
+        "False",
+        {}
+      )
+
+      # TODO: This is not good. This should need no value to be evaluated.
+      context[:false] = Halunke::HObject.new(context[:False], false)
 
       context
     end

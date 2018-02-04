@@ -21,4 +21,12 @@ class InterpreterTest < Minitest::Test
   def test_replace_with_on_string
     assert_equal "bhb", @interpreter.eval('("aha" replace "a" with "b")')
   end
+
+  def test_true_comparison
+    assert_equal true, @interpreter.eval('(2 < 3)')
+  end
+
+  def test_falsecomparison
+    assert_equal false, @interpreter.eval('(2 > 3)')
+  end
 end

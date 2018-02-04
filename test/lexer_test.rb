@@ -36,4 +36,12 @@ class LexerTest < Minitest::Test
   def test_minus
     assert_equal [[:OPERATOR, "-"]], @lexer.tokenize("-")
   end
+
+  def test_less_than
+    assert_equal [[:OPERATOR, "<"]], @lexer.tokenize("<")
+  end
+
+  def test_greater_than
+    assert_equal [[:OPERATOR, ">"]], @lexer.tokenize(">")
+  end
 end
