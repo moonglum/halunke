@@ -17,6 +17,15 @@ class NodesTest < Minitest::Test
     assert_equal '"test"', string_node.eval(@context).inspect
   end
 
+  def test_array
+    node = Halunke::ArrayNode.new([
+      Halunke::NumberNode.new(2),
+      Halunke::NumberNode.new(8)
+    ])
+
+    assert_equal '[2 8]', node.eval(@context).inspect
+  end
+
   def test_bareword_node_eval
     @context["test"] = @context["Number"].create_instance(1)
     bareword_node = Halunke::BarewordNode.new("test")

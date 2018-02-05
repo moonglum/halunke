@@ -56,6 +56,16 @@ module Halunke
     end
   end
 
+  ArrayNode = Struct.new(:nodes) do
+    def initialize(nodes = [])
+      super(nodes)
+    end
+
+    def eval(context)
+      context["Array"].create_instance(nodes.map { |node| node.eval(context) })
+    end
+  end
+
   MessageSendNode = Struct.new(:receiver, :message) do
     def eval(context)
       receiver.eval(context).receive_message(*message.eval(context))

@@ -83,4 +83,8 @@ class InterpreterTest < Minitest::Test
       @interpreter.eval("'a")
     end
   end
+
+  def test_array
+    assert_equal "[2 3 4]", @interpreter.eval("[2 3 4]")
+  end
 end

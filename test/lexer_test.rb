@@ -37,6 +37,14 @@ class LexerTest < Minitest::Test
     assert_equal [[:CLOSE_CURLY, "}"]], @lexer.tokenize("}")
   end
 
+  def test_open_bracket
+    assert_equal [[:OPEN_BRACKET, "["]], @lexer.tokenize("[")
+  end
+
+  def test_closing_bracket
+    assert_equal [[:CLOSE_BRACKET, "]"]], @lexer.tokenize("]")
+  end
+
   def test_plus
     assert_equal [[:OPERATOR, "+"]], @lexer.tokenize("+")
   end

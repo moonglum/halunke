@@ -112,4 +112,15 @@ class ParserTest < Minitest::Test
 
     assert_equal expected_nodes, @parser.parse("{ 1 }")
   end
+
+  def test_array
+    expected_nodes = Halunke::Nodes.new([
+      Halunke::ArrayNode.new([
+        Halunke::NumberNode.new(2),
+        Halunke::NumberNode.new(3)
+      ])
+    ])
+
+    assert_equal expected_nodes, @parser.parse("[2 3]")
+  end
 end

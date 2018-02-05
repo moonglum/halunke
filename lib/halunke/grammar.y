@@ -9,6 +9,8 @@ token OPEN_CURLY
 token CLOSE_CURLY
 token OPERATOR
 token UNASSIGNED_BAREWORD
+token OPEN_BRACKET
+token CLOSE_BRACKET
 
 rule
   Program:
@@ -24,6 +26,7 @@ rule
     Literal
   | OPEN_CURLY Expressions CLOSE_CURLY { result = Halunke::FunctionNode.new(val[1]) }
   | OPEN_PAREN Expression Expressions CLOSE_PAREN { result = Halunke::MessageSendNode.new(val[1], MessageNode.new(val[2].nodes)) }
+  | OPEN_BRACKET Expressions CLOSE_BRACKET { result = ArrayNode.new(val[1].nodes) }
   ;
 
   Literal:

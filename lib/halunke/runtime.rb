@@ -69,6 +69,7 @@ module Halunke
 
       context["Number"] = HNumber
       context["String"] = HString
+      context["Array"] = HArray
       context["True"] = HTrue
       context["False"] = HFalse
       context["true"] = HTrue.create_instance
@@ -141,6 +142,14 @@ module Halunke
       }),
       "inspect" => HFunction.new(lambda { |args|
         HString.create_instance(args[0].ruby_value.inspect)
+      })
+    )
+
+    HArray = HClass.new(
+      "Array",
+      "inspect" => HFunction.new(lambda { |args|
+        inspected_members = args[0].ruby_value.map(&:inspect)
+        HString.create_instance("[#{inspected_members.join(' ')}]")
       })
     )
 
