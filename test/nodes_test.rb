@@ -8,20 +8,20 @@ class NodesTest < Minitest::Test
   def test_number_node_eval
     number_node = Halunke::NumberNode.new(7)
 
-    assert_equal 7, number_node.eval(@context).ruby_value
+    assert_equal '7', number_node.eval(@context).inspect
   end
 
   def test_string_node_eval
     string_node = Halunke::StringNode.new("test")
 
-    assert_equal "test", string_node.eval(@context).ruby_value
+    assert_equal '"test"', string_node.eval(@context).inspect
   end
 
   def test_bareword_node_eval
     @context["test"] = @context["Number"].create_instance(1)
     bareword_node = Halunke::BarewordNode.new("test")
 
-    assert_equal 1, bareword_node.eval(@context).ruby_value
+    assert_equal '1', bareword_node.eval(@context).inspect
   end
 
   def test_nodes
@@ -29,7 +29,7 @@ class NodesTest < Minitest::Test
     node2 = Halunke::NumberNode.new(2)
     nodes = Halunke::Nodes.new([node1, node2])
 
-    assert_equal 2, nodes.eval(@context).ruby_value
+    assert_equal '2', nodes.eval(@context).inspect
   end
 
   def test_message_send
@@ -80,6 +80,6 @@ class NodesTest < Minitest::Test
       ])
     )
 
-    assert_equal 1, node.eval(@context).call([]).ruby_value
+    assert_equal '1', node.eval(@context).call([]).inspect
   end
 end

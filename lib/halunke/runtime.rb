@@ -31,6 +31,10 @@ module Halunke
       m = @runtime_class.lookup(message_name)
       m.call([self].concat(message_value))
     end
+
+    def inspect
+      ruby_value.inspect
+    end
   end
 
   class HFunction
