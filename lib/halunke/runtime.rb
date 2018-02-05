@@ -8,7 +8,7 @@ module Halunke
       @runtime_methods = methods
     end
 
-    def create_instance(ruby_value)
+    def create_instance(ruby_value = nil)
       HObject.new(self, ruby_value)
     end
 
@@ -22,7 +22,7 @@ module Halunke
   class HObject
     attr_reader :ruby_value
 
-    def initialize(runtime_class, ruby_value)
+    def initialize(runtime_class, ruby_value = nil)
       @runtime_class = runtime_class
       @ruby_value = ruby_value
     end
@@ -33,7 +33,7 @@ module Halunke
     end
 
     def inspect
-      ruby_value.inspect
+      receive_message("inspect", []).ruby_value
     end
   end
 
@@ -67,12 +67,8 @@ module Halunke
       context["String"] = HString
       context["True"] = HTrue
       context["False"] = HFalse
-
-      # TODO: This is not good. This should need no value to be evaluated.
-      context["true"] = HTrue.create_instance(true)
-
-      # TODO: This is not good. This should need no value to be evaluated.
-      context["false"] = HFalse.create_instance(false)
+      context["true"] = HTrue.create_instance
+      context["false"] = HFalse.create_instance
 
       context
     end
@@ -84,17 +80,20 @@ module Halunke
       }),
       "<" => HFunction.new(lambda { |args|
         if args[0].ruby_value < args[1].ruby_value
-          HTrue.create_instance(true)
+          HTrue.create_instance
         else
-          HFalse.create_instance(false)
+          HFalse.create_instance
         end
       }),
       ">" => HFunction.new(lambda { |args|
         if args[0].ruby_value > args[1].ruby_value
-          HTrue.create_instance(true)
+          HTrue.create_instance
         else
-          HFalse.create_instance(false)
+          HFalse.create_instance
         end
+      }),
+      "inspect" => HFunction.new(lambda { |args|
+        HString.create_instance(args[0].ruby_value.inspect)
       })
     )
 
@@ -109,6 +108,9 @@ module Halunke
           args[2].ruby_value
         )
         HString.create_instance(result)
+      }),
+      "inspect" => HFunction.new(lambda { |args|
+        HString.create_instance(args[0].ruby_value.inspect)
       })
     )
 
@@ -118,23 +120,29 @@ module Halunke
         args[1]
       }),
       "or" => HFunction.new(lambda { |args|
-        HTrue.create_instance(true)
+        HTrue.create_instance
       }),
       "then else" => HFunction.new(lambda { |args|
         args[1].call([])
+      }),
+      "inspect" => HFunction.new(lambda {|args|
+        HString.create_instance("true")
       })
     )
 
     HFalse = HClass.new(
       "False",
       "and" => HFunction.new(lambda { |args|
-        HFalse.create_instance(false)
+        HFalse.create_instance
       }),
       "or" => HFunction.new(lambda { |args|
         args[1]
       }),
       "then else" => HFunction.new(lambda { |args|
         args[2].call([])
+      }),
+      "inspect" => HFunction.new(lambda {|args|
+        HString.create_instance("false")
       })
     )
   end
