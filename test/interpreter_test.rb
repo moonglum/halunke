@@ -22,6 +22,10 @@ class InterpreterTest < Minitest::Test
     assert_equal '8', @interpreter.eval("(4 + (2 + 2))")
   end
 
+  def test_unassigned_bareword
+    assert_equal "'xyz", @interpreter.eval("'xyz")
+  end
+
   def test_replace_with_on_string
     assert_equal '"bhb"', @interpreter.eval('("aha" replace "a" with "b")')
   end
@@ -59,5 +63,10 @@ class InterpreterTest < Minitest::Test
   def test_then_else
     assert_equal '"foo"', @interpreter.eval('(true then { "foo" } else { "bar" })')
     assert_equal '"bar"', @interpreter.eval('(false then { "foo" } else { "bar" })')
+  end
+
+  def test_assign
+    assert_equal "true", @interpreter.eval("('a = 2)")
+    assert_equal "2", @interpreter.eval("a")
   end
 end

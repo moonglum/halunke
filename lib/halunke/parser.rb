@@ -13,7 +13,7 @@ require "halunke/nodes"
 module Halunke
   class Parser < Racc::Parser
 
-module_eval(<<'...end grammar.y/module_eval...', 'grammar.y', 44)
+module_eval(<<'...end grammar.y/module_eval...', 'grammar.y', 46)
 
 def parse(code)
   @tokens = Lexer.new.tokenize(code)
@@ -27,32 +27,34 @@ end
 ##### State transition tables begin ###
 
 racc_action_table = [
-     7,     8,     9,     6,    11,     5,    15,    10,     7,     8,
-     9,     6,    16,     5,    18,    10,     7,     8,     9,     6,
-   nil,     5,   nil,    10,     7,     8,     9,     6,   nil,     5,
-   nil,    10,     7,     8,     9,     6,   nil,     5,   nil,    10 ]
+     7,     8,     9,     6,    12,     5,    16,    10,    11,     7,
+     8,     9,     6,    17,     5,    19,    10,    11,     7,     8,
+     9,     6,   nil,     5,   nil,    10,    11,     7,     8,     9,
+     6,   nil,     5,   nil,    10,    11,     7,     8,     9,     6,
+   nil,     5,   nil,    10,    11 ]
 
 racc_action_check = [
-     0,     0,     0,     0,     1,     0,    11,     0,     3,     3,
-     3,     3,    13,     3,    17,     3,     5,     5,     5,     5,
-   nil,     5,   nil,     5,     6,     6,     6,     6,   nil,     6,
-   nil,     6,    14,    14,    14,    14,   nil,    14,   nil,    14 ]
+     0,     0,     0,     0,     1,     0,    12,     0,     0,     3,
+     3,     3,     3,    14,     3,    18,     3,     3,     5,     5,
+     5,     5,   nil,     5,   nil,     5,     5,     6,     6,     6,
+     6,   nil,     6,   nil,     6,     6,    15,    15,    15,    15,
+   nil,    15,   nil,    15,    15 ]
 
 racc_action_pointer = [
-    -2,     4,   nil,     6,   nil,    14,    22,   nil,   nil,   nil,
-   nil,     6,   nil,     4,    30,   nil,   nil,     8,   nil ]
+    -2,     4,   nil,     7,   nil,    16,    25,   nil,   nil,   nil,
+   nil,   nil,     6,   nil,     5,    34,   nil,   nil,     9,   nil ]
 
 racc_action_default = [
-    -2,   -11,    -1,    -2,    -4,    -2,   -11,    -7,    -8,    -9,
-   -10,   -11,    -3,   -11,    -2,    19,    -5,   -11,    -6 ]
+    -2,   -12,    -1,    -2,    -4,    -2,   -12,    -7,    -8,    -9,
+   -10,   -11,   -12,    -3,   -12,    -2,    20,    -5,   -12,    -6 ]
 
 racc_goto_table = [
-     2,     1,    14,    12,   nil,    13,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,    17 ]
+     2,     1,    15,    13,   nil,    14,   nil,   nil,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,    18 ]
 
 racc_goto_check = [
      2,     1,     3,     2,   nil,     2,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,     2 ]
+   nil,   nil,   nil,   nil,   nil,     2 ]
 
 racc_goto_pointer = [
    nil,     1,     0,    -4,   nil ]
@@ -62,20 +64,21 @@ racc_goto_default = [
 
 racc_reduce_table = [
   0, 0, :racc_error,
-  1, 11, :_reduce_1,
-  0, 12, :_reduce_2,
-  2, 12, :_reduce_3,
-  1, 13, :_reduce_none,
-  3, 13, :_reduce_5,
-  4, 13, :_reduce_6,
-  1, 14, :_reduce_7,
-  1, 14, :_reduce_8,
-  1, 14, :_reduce_9,
-  1, 14, :_reduce_10 ]
+  1, 12, :_reduce_1,
+  0, 13, :_reduce_2,
+  2, 13, :_reduce_3,
+  1, 14, :_reduce_none,
+  3, 14, :_reduce_5,
+  4, 14, :_reduce_6,
+  1, 15, :_reduce_7,
+  1, 15, :_reduce_8,
+  1, 15, :_reduce_9,
+  1, 15, :_reduce_10,
+  1, 15, :_reduce_11 ]
 
-racc_reduce_n = 11
+racc_reduce_n = 12
 
-racc_shift_n = 19
+racc_shift_n = 20
 
 racc_token_table = {
   false => 0,
@@ -87,9 +90,10 @@ racc_token_table = {
   :CLOSE_PAREN => 6,
   :OPEN_CURLY => 7,
   :CLOSE_CURLY => 8,
-  :OPERATOR => 9 }
+  :OPERATOR => 9,
+  :UNASSIGNED_BAREWORD => 10 }
 
-racc_nt_base = 10
+racc_nt_base = 11
 
 racc_use_result_var = true
 
@@ -120,6 +124,7 @@ Racc_token_to_s_table = [
   "OPEN_CURLY",
   "CLOSE_CURLY",
   "OPERATOR",
+  "UNASSIGNED_BAREWORD",
   "$start",
   "Program",
   "Expressions",
@@ -132,21 +137,21 @@ Racc_debug_parser = false
 
 # reduce 0 omitted
 
-module_eval(<<'.,.,', 'grammar.y', 13)
+module_eval(<<'.,.,', 'grammar.y', 14)
   def _reduce_1(val, _values, result)
      result = val[0] 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'grammar.y', 17)
+module_eval(<<'.,.,', 'grammar.y', 18)
   def _reduce_2(val, _values, result)
      result = Nodes.new 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'grammar.y', 18)
+module_eval(<<'.,.,', 'grammar.y', 19)
   def _reduce_3(val, _values, result)
      result = Nodes.new([val[0]]).concat(val[1]) 
     result
@@ -155,44 +160,51 @@ module_eval(<<'.,.,', 'grammar.y', 18)
 
 # reduce 4 omitted
 
-module_eval(<<'.,.,', 'grammar.y', 23)
+module_eval(<<'.,.,', 'grammar.y', 24)
   def _reduce_5(val, _values, result)
      result = Halunke::FunctionNode.new(val[1]) 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'grammar.y', 24)
+module_eval(<<'.,.,', 'grammar.y', 25)
   def _reduce_6(val, _values, result)
      result = Halunke::MessageSendNode.new(val[1], MessageNode.new(val[2].nodes)) 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'grammar.y', 28)
+module_eval(<<'.,.,', 'grammar.y', 29)
   def _reduce_7(val, _values, result)
      result = NumberNode.new(val[0]) 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'grammar.y', 29)
+module_eval(<<'.,.,', 'grammar.y', 30)
   def _reduce_8(val, _values, result)
      result = StringNode.new(val[0]) 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'grammar.y', 31)
+module_eval(<<'.,.,', 'grammar.y', 32)
   def _reduce_9(val, _values, result)
      result = BarewordNode.new(val[0]) 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'grammar.y', 32)
+module_eval(<<'.,.,', 'grammar.y', 33)
   def _reduce_10(val, _values, result)
      result = BarewordNode.new(val[0]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'grammar.y', 34)
+  def _reduce_11(val, _values, result)
+     result = UnassignedNode.new(BarewordNode.new(val[0])) 
     result
   end
 .,.,

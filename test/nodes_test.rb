@@ -82,4 +82,17 @@ class NodesTest < Minitest::Test
 
     assert_equal '1', node.eval(@context).call([]).inspect
   end
+
+  def test_unassigend_bareword
+    unassigned_bareword = Minitest::Mock.new
+    unassigned_bareword.expect :create_instance, nil, ["abc"]
+    context = { "UnassignedBareword" => unassigned_bareword }
+
+    node = Halunke::UnassignedNode.new(
+      Halunke::BarewordNode.new("abc")
+    )
+
+    node.eval(context)
+    unassigned_bareword.verify
+  end
 end

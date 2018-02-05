@@ -8,6 +8,7 @@ token CLOSE_PAREN
 token OPEN_CURLY
 token CLOSE_CURLY
 token OPERATOR
+token UNASSIGNED_BAREWORD
 
 rule
   Program:
@@ -31,6 +32,7 @@ rule
   /* TODO: Are Operators just Barewords? */
   | BAREWORD { result = BarewordNode.new(val[0]) }
   | OPERATOR { result = BarewordNode.new(val[0]) }
+  | UNASSIGNED_BAREWORD { result = UnassignedNode.new(BarewordNode.new(val[0])) }
   ;
 
 end

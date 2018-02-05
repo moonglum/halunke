@@ -70,6 +70,18 @@ module Halunke
       context["true"] = HTrue.create_instance
       context["false"] = HFalse.create_instance
 
+      # This has to be here, because it needs access to the context
+      context["UnassignedBareword"] = HClass.new(
+        "UnassignedBareword",
+        "=" => HFunction.new(lambda { |args|
+          context[args[0].ruby_value] = args[1]
+          HTrue.create_instance
+        }),
+        "inspect" => HFunction.new(lambda { |args|
+          HString.create_instance("'#{args[0].ruby_value}")
+        })
+      )
+
       context
     end
 

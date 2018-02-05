@@ -29,6 +29,16 @@ class ParserTest < Minitest::Test
     assert_equal expected_nodes, @parser.parse("fizz")
   end
 
+  def test_unassigned
+    expected_nodes = Halunke::Nodes.new([
+      Halunke::UnassignedNode.new(
+        Halunke::BarewordNode.new("abc")
+      )
+    ])
+
+    assert_equal expected_nodes, @parser.parse("'abc")
+  end
+
   def test_message_with_no_args
     expected_nodes = Halunke::Nodes.new([
       Halunke::MessageSendNode.new(

@@ -4,17 +4,19 @@
 
   number = ('+'|'-')?[0-9]+;
   string = '"' [^"]* '"';
+  unassigned_bareword = "'" [a-zA-Z_]+;
   bareword = [a-zA-Z_]+;
   open_paren = '(';
   close_paren = ')';
   open_curly = '{';
   close_curly = '}';
-  operator = '+' | '-' | '<' | '>';
+  operator = '+' | '-' | '<' | '>' | '=';
 
   main := |*
 
     number => { emit(:NUMBER, data[ts...te].to_i) };
     string => { emit(:STRING, data[ts+1...te-1]) };
+    unassigned_bareword => { emit(:UNASSIGNED_BAREWORD, data[ts+1 ...te]) };
     bareword => { emit(:BAREWORD, data[ts...te]) };
     open_paren => { emit(:OPEN_PAREN, data[ts...te]) };
     close_paren => { emit(:CLOSE_PAREN, data[ts...te]) };

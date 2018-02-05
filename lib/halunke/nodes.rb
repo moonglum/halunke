@@ -41,6 +41,12 @@ module Halunke
     end
   end
 
+  UnassignedNode = Struct.new(:node) do
+    def eval(context)
+      context["UnassignedBareword"].create_instance(node.value)
+    end
+  end
+
   FunctionNode = Struct.new(:body) do
     def eval(context)
       HFunction.new(lambda { |args|

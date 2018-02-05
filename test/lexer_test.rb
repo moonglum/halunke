@@ -52,4 +52,12 @@ class LexerTest < Minitest::Test
   def test_greater_than
     assert_equal [[:OPERATOR, ">"]], @lexer.tokenize(">")
   end
+
+  def test_equal
+    assert_equal [[:OPERATOR, "="]], @lexer.tokenize("=")
+  end
+
+  def test_unassigned_bareword
+    assert_equal [[:UNASSIGNED_BAREWORD, "abc"]], @lexer.tokenize("'abc")
+  end
 end
