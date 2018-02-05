@@ -60,6 +60,10 @@ module Halunke
       @context[name]
     end
 
+    def key?(name)
+      @context.key?(name)
+    end
+
     def self.root_context
       context = new
 

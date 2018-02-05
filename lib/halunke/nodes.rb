@@ -43,6 +43,7 @@ module Halunke
 
   UnassignedNode = Struct.new(:node) do
     def eval(context)
+      raise "Not unassigned: #{node.value} has value #{context[node.value].inspect}" if context.key? node.value
       context["UnassignedBareword"].create_instance(node.value)
     end
   end

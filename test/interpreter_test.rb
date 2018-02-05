@@ -69,4 +69,11 @@ class InterpreterTest < Minitest::Test
     assert_equal "true", @interpreter.eval("('a = 2)")
     assert_equal "2", @interpreter.eval("a")
   end
+
+  def test_no_reassignement
+    @interpreter.eval("('a = 2)")
+    assert_raises do
+      @interpreter.eval("'a")
+    end
+  end
 end
