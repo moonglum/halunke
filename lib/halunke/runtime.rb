@@ -59,74 +59,79 @@ module Halunke
     def self.root_context
       context = new
 
-      context["Number"] = Halunke::HClass.new(
-        "Number",
-        "+" => Halunke::HFunction.new(lambda { |args|
-          context["Number"].create_instance(args[0].ruby_value + args[1].ruby_value)
-        }),
-        "<" => Halunke::HFunction.new(lambda { |args|
-          if args[0].ruby_value < args[1].ruby_value
-            context["true"]
-          else
-            context["false"]
-          end
-        }),
-        ">" => Halunke::HFunction.new(lambda { |args|
-          if args[0].ruby_value > args[1].ruby_value
-            context["true"]
-          else
-            context["false"]
-          end
-        })
-      )
-
-      context["String"] = Halunke::HClass.new(
-        "String",
-        "reverse" => Halunke::HFunction.new(lambda { |args|
-          context["String"].create_instance(args[0].ruby_value.reverse)
-        }),
-        "replace with" => Halunke::HFunction.new(lambda { |args|
-          result = args[0].ruby_value.gsub(
-            args[1].ruby_value,
-            args[2].ruby_value
-          )
-          context["String"].create_instance(result)
-        })
-      )
-
-      context["True"] = Halunke::HClass.new(
-        "True",
-        "and" => Halunke::HFunction.new(lambda { |args|
-          args[1]
-        }),
-        "or" => Halunke::HFunction.new(lambda { |args|
-          context["true"]
-        }),
-        "then else" => Halunke::HFunction.new(lambda { |args|
-          args[1].call([])
-        })
-      )
+      context["Number"] = HNumber
+      context["String"] = HString
+      context["True"] = HTrue
+      context["False"] = HFalse
 
       # TODO: This is not good. This should need no value to be evaluated.
-      context["true"] = Halunke::HObject.new(context["True"], true)
-
-      context["False"] = Halunke::HClass.new(
-        "False",
-        "and" => Halunke::HFunction.new(lambda { |args|
-          context["false"]
-        }),
-        "or" => Halunke::HFunction.new(lambda { |args|
-          args[1]
-        }),
-        "then else" => Halunke::HFunction.new(lambda { |args|
-          args[2].call([])
-        })
-      )
+      context["true"] = HTrue.create_instance(true)
 
       # TODO: This is not good. This should need no value to be evaluated.
-      context["false"] = Halunke::HObject.new(context["False"], false)
+      context["false"] = HFalse.create_instance(false)
 
       context
     end
+
+    HNumber = HClass.new(
+      "Number",
+      "+" => HFunction.new(lambda { |args|
+        HNumber.create_instance(args[0].ruby_value + args[1].ruby_value)
+      }),
+      "<" => HFunction.new(lambda { |args|
+        if args[0].ruby_value < args[1].ruby_value
+          HTrue.create_instance(true)
+        else
+          HFalse.create_instance(false)
+        end
+      }),
+      ">" => HFunction.new(lambda { |args|
+        if args[0].ruby_value > args[1].ruby_value
+          HTrue.create_instance(true)
+        else
+          HFalse.create_instance(false)
+        end
+      })
+    )
+
+    HString = HClass.new(
+      "String",
+      "reverse" => HFunction.new(lambda { |args|
+        HString.create_instance(args[0].ruby_value.reverse)
+      }),
+      "replace with" => HFunction.new(lambda { |args|
+        result = args[0].ruby_value.gsub(
+          args[1].ruby_value,
+          args[2].ruby_value
+        )
+        HString.create_instance(result)
+      })
+    )
+
+    HTrue = HClass.new(
+      "True",
+      "and" => HFunction.new(lambda { |args|
+        args[1]
+      }),
+      "or" => HFunction.new(lambda { |args|
+        HTrue.create_instance(true)
+      }),
+      "then else" => HFunction.new(lambda { |args|
+        args[1].call([])
+      })
+    )
+
+    HFalse = HClass.new(
+      "False",
+      "and" => HFunction.new(lambda { |args|
+        HFalse.create_instance(false)
+      }),
+      "or" => HFunction.new(lambda { |args|
+        args[1]
+      }),
+      "then else" => HFunction.new(lambda { |args|
+        args[2].call([])
+      })
+    )
   end
 end
