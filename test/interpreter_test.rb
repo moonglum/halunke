@@ -65,6 +65,13 @@ class InterpreterTest < Minitest::Test
     assert_equal '"bar"', @interpreter.eval('(false then { "foo" } else { "bar" })')
   end
 
+  def test_equality
+    assert_equal 'true', @interpreter.eval('(1 = 1)')
+    assert_equal 'false', @interpreter.eval('(1 = 2)')
+    assert_equal 'true', @interpreter.eval('("a" = "a")')
+    assert_equal 'false', @interpreter.eval('("a" = "b")')
+  end
+
   def test_assign
     assert_equal "true", @interpreter.eval("('a = 2)")
     assert_equal "2", @interpreter.eval("a")

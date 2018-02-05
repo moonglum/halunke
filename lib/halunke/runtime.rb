@@ -108,6 +108,13 @@ module Halunke
           HFalse.create_instance
         end
       }),
+      "=" => HFunction.new(lambda { |args|
+        if args[0].ruby_value == args[1].ruby_value
+          HTrue.create_instance
+        else
+          HFalse.create_instance
+        end
+      }),
       "inspect" => HFunction.new(lambda { |args|
         HString.create_instance(args[0].ruby_value.inspect)
       })
@@ -124,6 +131,13 @@ module Halunke
           args[2].ruby_value
         )
         HString.create_instance(result)
+      }),
+      "=" => HFunction.new(lambda { |args|
+        if args[0].ruby_value == args[1].ruby_value
+          HTrue.create_instance
+        else
+          HFalse.create_instance
+        end
       }),
       "inspect" => HFunction.new(lambda { |args|
         HString.create_instance(args[0].ruby_value.inspect)
