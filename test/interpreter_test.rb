@@ -70,6 +70,9 @@ class InterpreterTest < Minitest::Test
     assert_equal 'false', @interpreter.eval('(1 = 2)')
     assert_equal 'true', @interpreter.eval('("a" = "a")')
     assert_equal 'false', @interpreter.eval('("a" = "b")')
+    assert_equal 'true', @interpreter.eval('([1 "a"] = [1 "a"])')
+    assert_equal 'false', @interpreter.eval('([1 "a"] = [1 "b"])')
+    assert_equal 'false', @interpreter.eval('([1 "a"] = [1 "a" 2])')
   end
 
   def test_assign
@@ -86,5 +89,10 @@ class InterpreterTest < Minitest::Test
 
   def test_array
     assert_equal "[2 3 4]", @interpreter.eval("[2 3 4]")
+  end
+
+  def test_pattern_matching
+    assert_equal "true", @interpreter.eval("(['a 2] = [1 2])")
+    assert_equal "1", @interpreter.eval("a")
   end
 end

@@ -150,6 +150,15 @@ module Halunke
       "inspect" => HFunction.new(lambda { |args|
         inspected_members = args[0].ruby_value.map(&:inspect)
         HString.create_instance("[#{inspected_members.join(' ')}]")
+      }),
+      "=" => HFunction.new(lambda { |args|
+        return HFalse.create_instance if args[0].ruby_value.length != args[1].ruby_value.length
+
+        args[0].ruby_value.zip(args[1].ruby_value).map do |a, b|
+          a.receive_message("=", [b])
+        end.reduce(HTrue.create_instance) do |memo, value|
+          memo.receive_message("and", [value])
+        end
       })
     )
 
