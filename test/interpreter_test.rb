@@ -98,6 +98,7 @@ class InterpreterTest < Minitest::Test
 
   def test_clean_context
     assert_equal "12", @interpreter.eval("({ ('a = 12) a } call [])")
+    # a should not be found
     assert_raises do
       @interpreter.eval("a")
     end
@@ -106,5 +107,13 @@ class InterpreterTest < Minitest::Test
   def test_use_outer_context
     assert_equal "true", @interpreter.eval("('a = 12)")
     assert_equal "12", @interpreter.eval("({ a } call [])")
+  end
+
+  def test_bug_params_leaving_context
+    @interpreter.eval('("bla" reverse)')
+    # self should not be found
+    assert_raises do
+      @interpreter.eval("self")
+    end
   end
 end

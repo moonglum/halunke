@@ -49,12 +49,11 @@ module Halunke
       call(context, [self].concat(message_value))
     end
 
-    def call(context, args)
-      # Would be nicer to use an HArray here, but this explodes the call stack
+    def call(parent_context, args)
+      context = parent_context.create_child
       @signature.zip(args).each do |name, value|
         context[name.to_s] = value
       end
-
       @fn.call(context)
     end
   end
@@ -74,6 +73,10 @@ module Halunke
     rescue KeyError
       raise "Undefined bareword '#{name}'" if @parent_context.nil?
       @parent_context[name]
+    end
+
+    def parent
+      @parent_context
     end
 
     def key?(name)
@@ -165,7 +168,7 @@ module Halunke
       return HFalse.create_instance if context["self"].ruby_value.length != context["other"].ruby_value.length
 
       context["self"].ruby_value.zip(context["other"].ruby_value).map do |a, b|
-        a.receive_message(context, "=", [b])
+        a.receive_message(context.parent, "=", [b])
       end.reduce(HTrue.create_instance) do |memo, value|
         memo.receive_message(context, "and", [value])
       end
@@ -175,7 +178,7 @@ module Halunke
   HUnassignedBareword = HClass.new(
     "UnassignedBareword",
     "=" => HFunction.new([:self, :other], lambda { |context|
-      context[context["self"].ruby_value] = context["other"]
+      context.parent[context["self"].ruby_value] = context["other"]
       HTrue.create_instance
     }),
     "inspect" => HFunction.new([:self], lambda { |context|
