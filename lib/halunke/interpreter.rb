@@ -9,7 +9,7 @@ module Halunke
 
     def eval(str)
       nodes = @parser.parse(str)
-      nodes.eval(@context).inspect
+      nodes.eval(@context).inspect(@context)
     end
   end
 end

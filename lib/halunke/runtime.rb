@@ -32,9 +32,8 @@ module Halunke
       m.call(context, [self].concat(message_value))
     end
 
-    # TODO: Is it ok to pass an empty context here?
-    def inspect
-      receive_message({}, "inspect", []).ruby_value
+    def inspect(context)
+      receive_message(context, "inspect", []).ruby_value
     end
   end
 
@@ -146,7 +145,7 @@ module Halunke
   HArray = HClass.new(
     "Array",
     "inspect" => HFunction.new([:self], lambda { |context|
-      inspected_members = context["self"].ruby_value.map(&:inspect)
+      inspected_members = context["self"].ruby_value.map { |member| member.inspect(context) }
       HString.create_instance("[#{inspected_members.join(' ')}]")
     }),
     "=" => HFunction.new([:self, :other], lambda { |context|
@@ -177,7 +176,7 @@ module Halunke
       context["other"]
     }),
     "or" => HFunction.new([:self, :other], lambda { |context|
-      HTrue.create_instance
+      context["self"]
     }),
     "then else" => HFunction.new([:self, :true_branch, :false_branch], lambda { |context|
       context["true_branch"].call(context, [])
@@ -190,7 +189,7 @@ module Halunke
   HFalse = HClass.new(
     "False",
     "and" => HFunction.new([:self, :other], lambda { |context|
-      HFalse.create_instance
+      context["self"]
     }),
     "or" => HFunction.new([:self, :other], lambda { |context|
       context["other"]
