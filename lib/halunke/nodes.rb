@@ -50,7 +50,7 @@ module Halunke
 
   FunctionNode = Struct.new(:body) do
     def eval(_context)
-      HFunction.new(lambda { |context, _args|
+      HFunction.new([], lambda { |context|
         body.eval(context)
       })
     end
