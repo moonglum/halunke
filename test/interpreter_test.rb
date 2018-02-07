@@ -95,4 +95,16 @@ class InterpreterTest < Minitest::Test
     assert_equal "true", @interpreter.eval("(['a 2] = [1 2])")
     assert_equal "1", @interpreter.eval("a")
   end
+
+  def test_clean_context
+    assert_equal "12", @interpreter.eval("({ ('a = 12) a } call [])")
+    assert_raises do
+      @interpreter.eval("a")
+    end
+  end
+
+  def test_use_outer_context
+    assert_equal "true", @interpreter.eval("('a = 12)")
+    assert_equal "12", @interpreter.eval("({ a } call [])")
+  end
 end

@@ -49,7 +49,6 @@ module Halunke
       call(context, [self].concat(message_value))
     end
 
-    # TODO: Create a copy of the context
     def call(context, args)
       # Would be nicer to use an HArray here, but this explodes the call stack
       @signature.zip(args).each do |name, value|
@@ -61,7 +60,8 @@ module Halunke
   end
 
   class HContext
-    def initialize
+    def initialize(parent_context = nil)
+      @parent_context = parent_context
       @context = {}
     end
 
@@ -70,11 +70,18 @@ module Halunke
     end
 
     def [](name)
-      @context[name]
+      @context.fetch(name)
+    rescue KeyError
+      raise "Undefined bareword '#{name}'" if @parent_context.nil?
+      @parent_context[name]
     end
 
     def key?(name)
       @context.key?(name)
+    end
+
+    def create_child
+      HContext.new(self)
     end
 
     def self.root_context
