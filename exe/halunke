@@ -7,6 +7,10 @@ interpreter = Halunke::Interpreter.new
 
 puts "Halunke REPL. Ctrl+d to quit"
 while (line = Readline.readline(">> ", true))
-  value = interpreter.eval(line)
-  puts "=> #{value}"
+  begin
+    value = interpreter.eval(line)
+    puts "=> #{value}"
+  rescue Exception => e
+    puts "An Error Occurred: #{e.message}"
+  end
 end
