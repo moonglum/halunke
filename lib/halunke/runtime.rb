@@ -79,120 +79,120 @@ module Halunke
 
       context
     end
-
-    HNumber = HClass.new(
-      "Number",
-      "+" => HFunction.new(lambda { |context, args|
-        HNumber.create_instance(args[0].ruby_value + args[1].ruby_value)
-      }),
-      "<" => HFunction.new(lambda { |context, args|
-        if args[0].ruby_value < args[1].ruby_value
-          HTrue.create_instance
-        else
-          HFalse.create_instance
-        end
-      }),
-      ">" => HFunction.new(lambda { |context, args|
-        if args[0].ruby_value > args[1].ruby_value
-          HTrue.create_instance
-        else
-          HFalse.create_instance
-        end
-      }),
-      "=" => HFunction.new(lambda { |context, args|
-        if args[0].ruby_value == args[1].ruby_value
-          HTrue.create_instance
-        else
-          HFalse.create_instance
-        end
-      }),
-      "inspect" => HFunction.new(lambda { |context, args|
-        HString.create_instance(args[0].ruby_value.inspect)
-      })
-    )
-
-    HString = HClass.new(
-      "String",
-      "reverse" => HFunction.new(lambda { |context, args|
-        HString.create_instance(args[0].ruby_value.reverse)
-      }),
-      "replace with" => HFunction.new(lambda { |context, args|
-        result = args[0].ruby_value.gsub(
-          args[1].ruby_value,
-          args[2].ruby_value
-        )
-        HString.create_instance(result)
-      }),
-      "=" => HFunction.new(lambda { |context, args|
-        if args[0].ruby_value == args[1].ruby_value
-          HTrue.create_instance
-        else
-          HFalse.create_instance
-        end
-      }),
-      "inspect" => HFunction.new(lambda { |context, args|
-        HString.create_instance(args[0].ruby_value.inspect)
-      })
-    )
-
-    HArray = HClass.new(
-      "Array",
-      "inspect" => HFunction.new(lambda { |context, args|
-        inspected_members = args[0].ruby_value.map(&:inspect)
-        HString.create_instance("[#{inspected_members.join(' ')}]")
-      }),
-      "=" => HFunction.new(lambda { |context, args|
-        return HFalse.create_instance if args[0].ruby_value.length != args[1].ruby_value.length
-
-        args[0].ruby_value.zip(args[1].ruby_value).map do |a, b|
-          a.receive_message(context, "=", [b])
-        end.reduce(HTrue.create_instance) do |memo, value|
-          memo.receive_message(context, "and", [value])
-        end
-      })
-    )
-
-    HUnassignedBareword = HClass.new(
-      "UnassignedBareword",
-      "=" => HFunction.new(lambda { |context, args|
-        context[args[0].ruby_value] = args[1]
-        HTrue.create_instance
-      }),
-      "inspect" => HFunction.new(lambda { |context, args|
-        HString.create_instance("'#{args[0].ruby_value}")
-      })
-    )
-
-    HTrue = HClass.new(
-      "True",
-      "and" => HFunction.new(lambda { |context, args|
-        args[1]
-      }),
-      "or" => HFunction.new(lambda { |context, args|
-        HTrue.create_instance
-      }),
-      "then else" => HFunction.new(lambda { |context, args|
-        args[1].call(context, [])
-      }),
-      "inspect" => HFunction.new(lambda {|context, args|
-        HString.create_instance("true")
-      })
-    )
-
-    HFalse = HClass.new(
-      "False",
-      "and" => HFunction.new(lambda { |context, args|
-        HFalse.create_instance
-      }),
-      "or" => HFunction.new(lambda { |context, args|
-        args[1]
-      }),
-      "then else" => HFunction.new(lambda { |context, args|
-        args[2].call(context, [])
-      }),
-      "inspect" => HFunction.new(lambda {|context, args|
-        HString.create_instance("false")
-      })
-    )
   end
+
+  HNumber = HClass.new(
+    "Number",
+    "+" => HFunction.new(lambda { |context, args|
+      HNumber.create_instance(args[0].ruby_value + args[1].ruby_value)
+    }),
+    "<" => HFunction.new(lambda { |context, args|
+      if args[0].ruby_value < args[1].ruby_value
+        HTrue.create_instance
+      else
+        HFalse.create_instance
+      end
+    }),
+    ">" => HFunction.new(lambda { |context, args|
+      if args[0].ruby_value > args[1].ruby_value
+        HTrue.create_instance
+      else
+        HFalse.create_instance
+      end
+    }),
+    "=" => HFunction.new(lambda { |context, args|
+      if args[0].ruby_value == args[1].ruby_value
+        HTrue.create_instance
+      else
+        HFalse.create_instance
+      end
+    }),
+    "inspect" => HFunction.new(lambda { |context, args|
+      HString.create_instance(args[0].ruby_value.inspect)
+    })
+  )
+
+  HString = HClass.new(
+    "String",
+    "reverse" => HFunction.new(lambda { |context, args|
+      HString.create_instance(args[0].ruby_value.reverse)
+    }),
+    "replace with" => HFunction.new(lambda { |context, args|
+      result = args[0].ruby_value.gsub(
+        args[1].ruby_value,
+        args[2].ruby_value
+      )
+      HString.create_instance(result)
+    }),
+    "=" => HFunction.new(lambda { |context, args|
+      if args[0].ruby_value == args[1].ruby_value
+        HTrue.create_instance
+      else
+        HFalse.create_instance
+      end
+    }),
+    "inspect" => HFunction.new(lambda { |context, args|
+      HString.create_instance(args[0].ruby_value.inspect)
+    })
+  )
+
+  HArray = HClass.new(
+    "Array",
+    "inspect" => HFunction.new(lambda { |context, args|
+      inspected_members = args[0].ruby_value.map(&:inspect)
+      HString.create_instance("[#{inspected_members.join(' ')}]")
+    }),
+    "=" => HFunction.new(lambda { |context, args|
+      return HFalse.create_instance if args[0].ruby_value.length != args[1].ruby_value.length
+
+      args[0].ruby_value.zip(args[1].ruby_value).map do |a, b|
+        a.receive_message(context, "=", [b])
+      end.reduce(HTrue.create_instance) do |memo, value|
+        memo.receive_message(context, "and", [value])
+      end
+    })
+  )
+
+  HUnassignedBareword = HClass.new(
+    "UnassignedBareword",
+    "=" => HFunction.new(lambda { |context, args|
+      context[args[0].ruby_value] = args[1]
+      HTrue.create_instance
+    }),
+    "inspect" => HFunction.new(lambda { |context, args|
+      HString.create_instance("'#{args[0].ruby_value}")
+    })
+  )
+
+  HTrue = HClass.new(
+    "True",
+    "and" => HFunction.new(lambda { |context, args|
+      args[1]
+    }),
+    "or" => HFunction.new(lambda { |context, args|
+      HTrue.create_instance
+    }),
+    "then else" => HFunction.new(lambda { |context, args|
+      args[1].call(context, [])
+    }),
+    "inspect" => HFunction.new(lambda {|context, args|
+      HString.create_instance("true")
+    })
+  )
+
+  HFalse = HClass.new(
+    "False",
+    "and" => HFunction.new(lambda { |context, args|
+      HFalse.create_instance
+    }),
+    "or" => HFunction.new(lambda { |context, args|
+      args[1]
+    }),
+    "then else" => HFunction.new(lambda { |context, args|
+      args[2].call(context, [])
+    }),
+    "inspect" => HFunction.new(lambda {|context, args|
+      HString.create_instance("false")
+    })
+  )
 end
