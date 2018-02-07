@@ -43,6 +43,12 @@ module Halunke
       @fn = fn
     end
 
+    # TODO: This is a little bit of duplication that could probably be cleaned up by making functions proper objects
+    def receive_message(context, message_name, message_value)
+      raise "Class Function has no method to respond to message '#{message_name}'" unless message_name == "call"
+      call(context, [self].concat(message_value))
+    end
+
     # TODO: Create a copy of the context
     def call(context, args)
       # Would be nicer to use an HArray here, but this explodes the call stack
@@ -179,7 +185,7 @@ module Halunke
       context["self"]
     }),
     "then else" => HFunction.new([:self, :true_branch, :false_branch], lambda { |context|
-      context["true_branch"].call(context, [])
+      context["true_branch"].receive_message(context, "call", [])
     }),
     "inspect" => HFunction.new([:self], lambda {|context|
       HString.create_instance("true")
@@ -195,7 +201,7 @@ module Halunke
       context["other"]
     }),
     "then else" => HFunction.new([:self, :true_branch, :false_branch], lambda { |context|
-      context["false_branch"].call(context, [])
+      context["false_branch"].receive_message(context, "call", [])
     }),
     "inspect" => HFunction.new([:self], lambda {|context|
       HString.create_instance("false")
