@@ -71,22 +71,11 @@ module Halunke
       context["Number"] = HNumber
       context["String"] = HString
       context["Array"] = HArray
+      context["UnassignedBareword"] = HUnassignedBareword
       context["True"] = HTrue
       context["False"] = HFalse
       context["true"] = HTrue.create_instance
       context["false"] = HFalse.create_instance
-
-      # This has to be here, because it needs access to the context
-      context["UnassignedBareword"] = HClass.new(
-        "UnassignedBareword",
-        "=" => HFunction.new(lambda { |context, args|
-          context[args[0].ruby_value] = args[1]
-          HTrue.create_instance
-        }),
-        "inspect" => HFunction.new(lambda { |context, args|
-          HString.create_instance("'#{args[0].ruby_value}")
-        })
-      )
 
       context
     end
@@ -160,6 +149,17 @@ module Halunke
         end.reduce(HTrue.create_instance) do |memo, value|
           memo.receive_message(context, "and", [value])
         end
+      })
+    )
+
+    HUnassignedBareword = HClass.new(
+      "UnassignedBareword",
+      "=" => HFunction.new(lambda { |context, args|
+        context[args[0].ruby_value] = args[1]
+        HTrue.create_instance
+      }),
+      "inspect" => HFunction.new(lambda { |context, args|
+        HString.create_instance("'#{args[0].ruby_value}")
       })
     )
 
