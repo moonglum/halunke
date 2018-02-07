@@ -46,7 +46,7 @@ class NodesTest < Minitest::Test
     message_node = Minitest::Mock.new
     message_node.expect :eval, [message], [@context]
     receiver = Minitest::Mock.new
-    receiver.expect :receive_message, :result, [message]
+    receiver.expect :receive_message, :result, [@context, message]
     receiver_node = Minitest::Mock.new
     receiver_node.expect :eval, receiver, [@context]
     node = Halunke::MessageSendNode.new(receiver_node, message_node)
@@ -89,7 +89,7 @@ class NodesTest < Minitest::Test
       ])
     )
 
-    assert_equal '1', node.eval(@context).call([]).inspect
+    assert_equal '1', node.eval(@context).call(@context, []).inspect
   end
 
   def test_unassigend_bareword

@@ -49,8 +49,8 @@ module Halunke
   end
 
   FunctionNode = Struct.new(:body) do
-    def eval(context)
-      HFunction.new(lambda { |args|
+    def eval(_context)
+      HFunction.new(lambda { |context, _args|
         body.eval(context)
       })
     end
@@ -68,7 +68,7 @@ module Halunke
 
   MessageSendNode = Struct.new(:receiver, :message) do
     def eval(context)
-      receiver.eval(context).receive_message(*message.eval(context))
+      receiver.eval(context).receive_message(context, *message.eval(context))
     end
   end
 
