@@ -6,11 +6,15 @@ class LexerTest < Minitest::Test
   end
 
   def test_number
-    assert_equal [[:NUMBER, 82]], @lexer.tokenize("82")
+    assert_equal [[:NUMBER, 82r]], @lexer.tokenize("82")
   end
 
   def test_negative_number
-    assert_equal [[:NUMBER, -82]], @lexer.tokenize("-82")
+    assert_equal [[:NUMBER, -82r]], @lexer.tokenize("-82")
+  end
+
+  def test_rational_number
+    assert_equal [[:NUMBER, 0.9r]], @lexer.tokenize("0.9")
   end
 
   def test_string

@@ -2,7 +2,7 @@
 %%{
   machine lexer;
 
-  number = ('+'|'-')?[0-9]+;
+  number = ('+'|'-')?[0-9]+('.'[0-9]+)?;
   string = '"' [^"]* '"';
   unassigned_bareword = "'" [a-zA-Z_]+;
   bareword = [a-zA-Z_]+;
@@ -16,7 +16,7 @@
 
   main := |*
 
-    number => { emit(:NUMBER, data[ts...te].to_i) };
+    number => { emit(:NUMBER, data[ts...te].to_r) };
     string => { emit(:STRING, data[ts+1...te-1]) };
     unassigned_bareword => { emit(:UNASSIGNED_BAREWORD, data[ts+1 ...te]) };
     bareword => { emit(:BAREWORD, data[ts...te]) };

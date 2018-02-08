@@ -22,6 +22,10 @@ class InterpreterTest < Minitest::Test
     assert_equal '8', @interpreter.eval("(4 + (2 + 2))")
   end
 
+  def test_rational_numbers
+    assert_equal '0.9', @interpreter.eval("((0.3 + 0.3) + 0.3)")
+  end
+
   def test_unassigned_bareword
     assert_equal "'xyz", @interpreter.eval("'xyz")
   end

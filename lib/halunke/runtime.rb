@@ -130,7 +130,9 @@ module Halunke
       end
     }),
     "inspect" => HFunction.new([:self], lambda { |context|
-      HString.create_instance(context["self"].ruby_value.inspect)
+      float_value = context["self"].ruby_value.to_f
+      float_value = float_value.to_i if float_value.to_i == float_value
+      HString.create_instance(float_value.to_s)
     })
   )
 
