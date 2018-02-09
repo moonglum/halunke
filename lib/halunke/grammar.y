@@ -7,7 +7,6 @@ token OPEN_PAREN
 token CLOSE_PAREN
 token OPEN_CURLY
 token CLOSE_CURLY
-token OPERATOR
 token UNASSIGNED_BAREWORD
 token OPEN_BRACKET
 token CLOSE_BRACKET
@@ -47,9 +46,7 @@ rule
   Literal:
     NUMBER   { result = NumberNode.new(val[0]) }
   | STRING   { result = StringNode.new(val[0]) }
-  /* TODO: Are Operators just Barewords? */
   | BAREWORD { result = BarewordNode.new(val[0]) }
-  | OPERATOR { result = BarewordNode.new(val[0]) }
   | UNASSIGNED_BAREWORD { result = UnassignedNode.new(BarewordNode.new(val[0])) }
   ;
 
