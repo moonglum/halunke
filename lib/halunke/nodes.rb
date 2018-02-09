@@ -68,6 +68,20 @@ module Halunke
     end
   end
 
+  DictionaryNode = Struct.new(:nodes) do
+    def initialize(nodes = [])
+      super(nodes)
+    end
+
+    def eval(context)
+      hash = {}
+      nodes.each_slice(2) do |key, value|
+        hash[key.eval(context)] = value.eval(context)
+      end
+      context["Dictionary"].create_instance(hash)
+    end
+  end
+
   MessageSendNode = Struct.new(:receiver, :message) do
     def eval(context)
       receiver.eval(context).receive_message(context, *message.eval(context))

@@ -5,13 +5,14 @@
   number = ('+'|'-')?[0-9]+('.'[0-9]+)?;
   string = '"' [^"]* '"';
   unassigned_bareword = "'" [a-zA-Z_]+;
-  bareword = [a-zA-Z_]+ | '+' | '-' | '<' | '>' | '=';
+  bareword = [a-zA-Z_]+ | '+' | '-' | '<' | '>' | '=' | '@';
   open_paren = '(';
   close_paren = ')';
   open_curly = '{';
   close_curly = '}';
   open_bracket = '[';
   close_bracket = ']';
+  open_dict_bracket = '@[';
   bar = "|";
 
   main := |*
@@ -26,6 +27,7 @@
     close_curly => { emit(:CLOSE_CURLY, data[ts...te]) };
     open_bracket => { emit(:OPEN_BRACKET, data[ts...te]) };
     close_bracket => { emit(:CLOSE_BRACKET, data[ts...te]) };
+    open_dict_bracket => { emit(:OPEN_DICT_BRACKET, data[ts...te]) };
     bar => { emit(:BAR, data[ts...te]) };
     space;
     any => { raise "Could not lex '#{ data[ts...te] }'" };

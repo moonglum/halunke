@@ -49,6 +49,10 @@ class LexerTest < Minitest::Test
     assert_equal [[:CLOSE_BRACKET, "]"]], @lexer.tokenize("]")
   end
 
+  def test_open_dict_bracket
+    assert_equal [[:OPEN_DICT_BRACKET, "@["]], @lexer.tokenize("@[")
+  end
+
   def test_bar
     assert_equal [[:BAR, "|"]], @lexer.tokenize("|")
   end
@@ -71,6 +75,10 @@ class LexerTest < Minitest::Test
 
   def test_equal
     assert_equal [[:BAREWORD, "="]], @lexer.tokenize("=")
+  end
+
+  def test_at
+    assert_equal [[:BAREWORD, "@"]], @lexer.tokenize("@")
   end
 
   def test_unassigned_bareword

@@ -10,6 +10,7 @@ token CLOSE_CURLY
 token UNASSIGNED_BAREWORD
 token OPEN_BRACKET
 token CLOSE_BRACKET
+token OPEN_DICT_BRACKET
 token BAR
 
 rule
@@ -28,6 +29,7 @@ rule
   | OPEN_CURLY Args Expressions CLOSE_CURLY { result = Halunke::FunctionNode.new(val[1], val[2]) }
   | OPEN_PAREN Expression Expressions CLOSE_PAREN { result = Halunke::MessageSendNode.new(val[1], MessageNode.new(val[2].nodes)) }
   | OPEN_BRACKET Expressions CLOSE_BRACKET { result = ArrayNode.new(val[1].nodes) }
+  | OPEN_DICT_BRACKET Expressions CLOSE_BRACKET { result = DictionaryNode.new(val[1].nodes) }
   ;
 
   Args:

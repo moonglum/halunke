@@ -26,6 +26,17 @@ class NodesTest < Minitest::Test
     assert_equal '[2 8]', node.eval(@context).inspect(@context)
   end
 
+  def test_dictionary
+    node = Halunke::DictionaryNode.new([
+      Halunke::StringNode.new("a"),
+      Halunke::NumberNode.new(1),
+      Halunke::StringNode.new("b"),
+      Halunke::NumberNode.new(2)
+    ])
+
+    assert_equal '@["a" 1 "b" 2]', node.eval(@context).inspect(@context)
+  end
+
   def test_bareword_node_eval
     @context["test"] = @context["Number"].create_instance(1)
     bareword_node = Halunke::BarewordNode.new("test")

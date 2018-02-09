@@ -136,4 +136,13 @@ class InterpreterTest < Minitest::Test
   def test_map
     assert_equal "[1 2 3]", @interpreter.eval("([0 1 2] map { |'a| (a + 1) })")
   end
+
+  def test_dictionary
+    assert_equal '@["x" 5 "y" 2]', @interpreter.eval('@["x" 5 "y" 2]')
+  end
+
+  def test_dictionary_lookup
+    assert_equal '2', @interpreter.eval('(@["x" 5 "y" 2] @ "y" else 7)')
+    assert_equal '7', @interpreter.eval('(@["x" 5 "y" 2] @ "z" else 7)')
+  end
 end

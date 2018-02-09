@@ -140,4 +140,17 @@ class ParserTest < Minitest::Test
 
     assert_equal expected_nodes, @parser.parse("[2 3]")
   end
+
+  def test_dictionary
+    expected_nodes = Halunke::Nodes.new([
+      Halunke::DictionaryNode.new([
+        Halunke::StringNode.new("a"),
+        Halunke::NumberNode.new(1),
+        Halunke::StringNode.new("b"),
+        Halunke::NumberNode.new(2)
+      ])
+    ])
+
+    assert_equal expected_nodes, @parser.parse('@["a" 1 "b" 2]')
+  end
 end
