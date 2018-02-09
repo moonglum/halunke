@@ -174,6 +174,12 @@ module Halunke
       end.reduce(HTrue.create_instance) do |memo, value|
         memo.receive_message(context, "and", [value])
       end
+    }),
+    "map" => HFunction.new([:self, :fn], lambda { |context|
+      return HArray.create_instance(context["self"].ruby_value.map do |x|
+        # TODO: Something is fishy about these messages requiring an array...
+        context["fn"].receive_message(context, "call", [HArray.create_instance([x])])
+      end)
     })
   )
 

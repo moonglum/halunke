@@ -124,4 +124,8 @@ class InterpreterTest < Minitest::Test
   def test_own_function_with_params
     assert_equal "0.9", @interpreter.eval("({|'a 'b| (a + b)} call [0.6 0.3])")
   end
+
+  def test_map
+    assert_equal "[1 2 3]", @interpreter.eval("([0 1 2] map { |'a| (a + 1) })")
+  end
 end
