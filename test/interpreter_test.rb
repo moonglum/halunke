@@ -26,6 +26,14 @@ class InterpreterTest < Minitest::Test
     assert_equal '0.9', @interpreter.eval("((0.3 + 0.3) + 0.3)")
   end
 
+  def test_function
+    assert_equal '#<Function (2)>', @interpreter.eval("{ |'a 'b| (a + b) }")
+  end
+
+  def test_class
+    assert_equal "#<Class Number>", @interpreter.eval("Number")
+  end
+
   def test_unassigned_bareword
     assert_equal "'xyz", @interpreter.eval("'xyz")
   end

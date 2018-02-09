@@ -17,6 +17,10 @@ module Halunke
     rescue KeyError
       raise "Class #{@name} has no method to respond to message '#{message}'"
     end
+
+    def inspect(_context)
+      "#<Class #{@name}>"
+    end
   end
 
   class HObject
@@ -29,7 +33,7 @@ module Halunke
 
     def receive_message(context, message_name, message_value)
       m = @runtime_class.lookup(message_name)
-      m.call(context, [self].concat(message_value))
+      m.receive_message(context, "call", [HArray.create_instance([self].concat(message_value))])
     end
 
     def inspect(context)
@@ -43,18 +47,21 @@ module Halunke
       @fn = fn
     end
 
-    # TODO: This is a little bit of duplication that could probably be cleaned up by making functions proper objects
-    def receive_message(context, message_name, message_value)
+    def receive_message(parent_context, message_name, message_value)
       raise "Class Function has no method to respond to message '#{message_name}'" unless message_name == "call"
-      call(context, message_value[0].ruby_value)
-    end
 
-    def call(parent_context, args)
       context = parent_context.create_child
+      args = message_value[0].ruby_value
+
       @signature.zip(args).each do |name, value|
         context[name.to_s] = value
       end
+
       @fn.call(context)
+    end
+
+    def inspect(_context)
+      "#<Function (#{@signature.length})>"
     end
   end
 
@@ -177,7 +184,6 @@ module Halunke
     }),
     "map" => HFunction.new([:self, :fn], lambda { |context|
       return HArray.create_instance(context["self"].ruby_value.map do |x|
-        # TODO: Something is fishy about these messages requiring an array...
         context["fn"].receive_message(context, "call", [HArray.create_instance([x])])
       end)
     })

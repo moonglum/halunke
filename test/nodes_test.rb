@@ -90,7 +90,7 @@ class NodesTest < Minitest::Test
       ])
     )
 
-    assert_equal '1', node.eval(@context).call(@context, []).inspect(@context)
+    assert_equal '1', node.eval(@context).receive_message(@context, "call", [Halunke::HArray.create_instance([])]).inspect(@context)
   end
 
   def test_unassigend_bareword
