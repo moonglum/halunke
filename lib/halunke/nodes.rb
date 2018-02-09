@@ -48,9 +48,11 @@ module Halunke
     end
   end
 
-  FunctionNode = Struct.new(:body) do
+  FunctionNode = Struct.new(:params, :body) do
     def eval(_context)
-      HFunction.new([], lambda { |context|
+      signature = params.nodes.map(&:node).map(&:value)
+
+      HFunction.new(signature, lambda { |context|
         body.eval(context)
       })
     end

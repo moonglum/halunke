@@ -120,4 +120,8 @@ class InterpreterTest < Minitest::Test
       @interpreter.eval("self")
     end
   end
+
+  def test_own_function_with_params
+    assert_equal "0.9", @interpreter.eval("({|'a 'b| (a + b)} call [0.6 0.3])")
+  end
 end

@@ -12,6 +12,7 @@
   close_curly = '}';
   open_bracket = '[';
   close_bracket = ']';
+  bar = "|";
   operator = '+' | '-' | '<' | '>' | '=';
 
   main := |*
@@ -26,6 +27,7 @@
     close_curly => { emit(:CLOSE_CURLY, data[ts...te]) };
     open_bracket => { emit(:OPEN_BRACKET, data[ts...te]) };
     close_bracket => { emit(:CLOSE_BRACKET, data[ts...te]) };
+    bar => { emit(:BAR, data[ts...te]) };
     operator => { emit(:OPERATOR, data[ts ... te]) };
     space;
     any => { raise "Could not lex '#{ data[ts...te] }'" };

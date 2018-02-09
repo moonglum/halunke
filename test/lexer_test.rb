@@ -49,6 +49,10 @@ class LexerTest < Minitest::Test
     assert_equal [[:CLOSE_BRACKET, "]"]], @lexer.tokenize("]")
   end
 
+  def test_bar
+    assert_equal [[:BAR, "|"]], @lexer.tokenize("|")
+  end
+
   def test_plus
     assert_equal [[:OPERATOR, "+"]], @lexer.tokenize("+")
   end

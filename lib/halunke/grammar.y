@@ -11,6 +11,7 @@ token OPERATOR
 token UNASSIGNED_BAREWORD
 token OPEN_BRACKET
 token CLOSE_BRACKET
+token BAR
 
 rule
   Program:
@@ -24,9 +25,23 @@ rule
 
   Expression:
     Literal
-  | OPEN_CURLY Expressions CLOSE_CURLY { result = Halunke::FunctionNode.new(val[1]) }
+  | OPEN_CURLY Expressions CLOSE_CURLY { result = Halunke::FunctionNode.new(Halunke::ArrayNode.new([]), val[1]) }
+  | OPEN_CURLY Args Expressions CLOSE_CURLY { result = Halunke::FunctionNode.new(val[1], val[2]) }
   | OPEN_PAREN Expression Expressions CLOSE_PAREN { result = Halunke::MessageSendNode.new(val[1], MessageNode.new(val[2].nodes)) }
   | OPEN_BRACKET Expressions CLOSE_BRACKET { result = ArrayNode.new(val[1].nodes) }
+  ;
+
+  Args:
+    BAR UnassignedBarewords BAR { result = Halunke::ArrayNode.new(val[1].nodes) }
+  ;
+
+  UnassignedBarewords:
+    /* empty */        { result = Nodes.new }
+  | UnassignedBareword UnassignedBarewords { result = Nodes.new([val[0]]).concat(val[1]) }
+  ;
+
+  UnassignedBareword:
+    UNASSIGNED_BAREWORD { result = UnassignedNode.new(BarewordNode.new(val[0])) }
   ;
 
   Literal:

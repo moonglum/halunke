@@ -46,7 +46,7 @@ module Halunke
     # TODO: This is a little bit of duplication that could probably be cleaned up by making functions proper objects
     def receive_message(context, message_name, message_value)
       raise "Class Function has no method to respond to message '#{message_name}'" unless message_name == "call"
-      call(context, [self].concat(message_value))
+      call(context, message_value[0].ruby_value)
     end
 
     def call(parent_context, args)
@@ -197,7 +197,7 @@ module Halunke
       context["self"]
     }),
     "then else" => HFunction.new([:self, :true_branch, :false_branch], lambda { |context|
-      context["true_branch"].receive_message(context, "call", [])
+      context["true_branch"].receive_message(context, "call", [HArray.create_instance([])])
     }),
     "inspect" => HFunction.new([:self], lambda {|context|
       HString.create_instance("true")
@@ -213,7 +213,7 @@ module Halunke
       context["other"]
     }),
     "then else" => HFunction.new([:self, :true_branch, :false_branch], lambda { |context|
-      context["false_branch"].receive_message(context, "call", [])
+      context["false_branch"].receive_message(context, "call", [HArray.create_instance([])])
     }),
     "inspect" => HFunction.new([:self], lambda {|context|
       HString.create_instance("false")

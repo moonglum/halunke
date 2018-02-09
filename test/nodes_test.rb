@@ -84,6 +84,7 @@ class NodesTest < Minitest::Test
 
   def test_function_node
     node = Halunke::FunctionNode.new(
+      Halunke::ArrayNode.new([]),
       Halunke::Nodes.new([
         Halunke::NumberNode.new(1)
       ])

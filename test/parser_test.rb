@@ -104,6 +104,7 @@ class ParserTest < Minitest::Test
   def test_function_with_no_params
     expected_nodes = Halunke::Nodes.new([
       Halunke::FunctionNode.new(
+        Halunke::ArrayNode.new([]),
         Halunke::Nodes.new([
           Halunke::NumberNode.new(1)
         ])
@@ -111,6 +112,22 @@ class ParserTest < Minitest::Test
     ])
 
     assert_equal expected_nodes, @parser.parse("{ 1 }")
+  end
+
+  def test_function_with_params
+    expected_nodes = Halunke::Nodes.new([
+      Halunke::FunctionNode.new(
+        Halunke::ArrayNode.new([
+          Halunke::UnassignedNode.new(Halunke::BarewordNode.new("a")),
+          Halunke::UnassignedNode.new(Halunke::BarewordNode.new("b"))
+        ]),
+        Halunke::Nodes.new([
+          Halunke::NumberNode.new(1)
+        ])
+      )
+    ])
+
+    assert_equal expected_nodes, @parser.parse("{ |'a 'b| 1 }")
   end
 
   def test_array
