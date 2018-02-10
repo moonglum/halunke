@@ -1,5 +1,3 @@
-require "halunke/runtime"
-
 module Halunke
   Nodes = Struct.new(:nodes) do
     def initialize(nodes = [])
@@ -49,12 +47,11 @@ module Halunke
   end
 
   FunctionNode = Struct.new(:params, :body) do
-    def eval(_context)
+    def eval(context)
       signature = params.nodes.map(&:node).map(&:value)
 
-      # TODO: Read from context
-      Halunke::Runtime::HFunction.new(signature, lambda { |context|
-        body.eval(context)
+      context["Function"].new(signature, lambda { |call_context|
+        body.eval(call_context)
       })
     end
   end

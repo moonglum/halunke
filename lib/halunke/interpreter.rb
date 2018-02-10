@@ -11,6 +11,7 @@ module Halunke
       @root_context = Context.new
 
       @root_context["Class"] = Halunke::Runtime::HClass
+      @root_context["Function"] = Halunke::Runtime::HFunction
       @root_context["Number"] = Halunke::Runtime::HNumber
       @root_context["String"] = Halunke::Runtime::HString
       @root_context["Array"] = Halunke::Runtime::HArray
