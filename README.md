@@ -1,43 +1,28 @@
 # Halunke
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/halunke`. To experiment with that code, run `bin/console` for an interactive prompt.
+Halunke is a dynamic, object-oriented language that has a simple grammar
+inspired by Smalltalk and Lisp. It is created to show that interesting
+characteristics traditionally described as "functional" make sense in an
+object-oriented language:
 
-TODO: Delete this and the text above, and describe your gem
+* Separation of identity and data (but not data and behavior)
+* Immutability and persistent data structures
+* Isolation of Side-Effects
+* Pattern matching
 
-## Installation
+It also has the following characteristics:
 
-Add this line to your application's Gemfile:
+* There is no null/nil value in the language
 
-```ruby
-gem 'halunke'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install halunke
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/halunke. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Find out more on the [documentation page](https://moonglum.github.io/halunke).
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+The project is available as open source under the terms of the [MIT
+License](https://opensource.org/licenses/MIT).
 
 ## Code of Conduct
 
-Everyone interacting in the Halunke project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/halunke/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Halunke project’s codebases, issue trackers, chat
+rooms and mailing lists is expected to follow the [code of
+conduct](https://github.com/moonglum/halunke/blob/master/CODE_OF_CONDUCT.md).
