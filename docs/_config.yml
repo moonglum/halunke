@@ -7,5 +7,7 @@ title: Halunke!
 description: >-
   Halunke is a dynamic, object-oriented language that has a simple grammar inspired by Smalltalk and Lisp
 
+baseurl: "/halunke"
+
 # Build settings
 markdown: kramdown

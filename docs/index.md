@@ -57,12 +57,13 @@ works like this:
 This will return `"Spelunke!"`. The message we send here is `replace with` and
 the value is `["Ha" "Spe"]`.
 
-If you want to find out more about the types of objects in Halunke and the
-messages you can send to them, explore the navigation bar at the top. If you
-want to learn more about conditionals, check out the section about [True &
-False](/true-false). If you want to write your own functions, check out
-[Function](/function) and if you want to define your own classes, check out
-[Class](/class).
+If you want to find out more about the types of objects in Halunke
+and the messages you can send to them, explore the navigation bar
+at the top. If you want to learn more about conditionals, check out
+the section about [True & False](/halunke/true-false). If you want
+to write your own functions, check out
+[Function](/halunke/function) and if you want to define your own
+classes, check out [Class](/halunke/class).
 
 If you want to store an object in a variable, you can do it like this:
 
