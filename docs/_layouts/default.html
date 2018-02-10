@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% seo %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Halunke!</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Intro</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/number">Number</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/string">String</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/array">Array</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dictionary">Dictionary</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/true-false">True & False</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/function">Function</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/class">Class</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/true-false">Stdio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/true-false">Web</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <header>
+        <h1>{{ page.title }}</h1>
+      </header>
+      <main>
+        {{ content }}
+      </main>
+    </div>
+  </body>
+</html>

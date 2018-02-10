@@ -1,0 +1,11 @@
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+title: Halunke!
+description: >-
+  Halunke is a dynamic, object-oriented language that has a simple grammar inspired by Smalltalk and Lisp
+
+# Build settings
+markdown: kramdown
