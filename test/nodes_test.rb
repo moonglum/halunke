@@ -2,7 +2,8 @@ require "test_helper"
 
 class NodesTest < Minitest::Test
   def setup
-    @context = Halunke::HContext.root_context
+    interpreter = Halunke::Interpreter.new
+    @context = interpreter.root_context
   end
 
   def test_number_node_eval

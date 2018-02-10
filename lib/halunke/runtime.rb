@@ -156,7 +156,7 @@ module Halunke
       HContext.new(self)
     end
 
-    def self.root_context
+    def self.root_context(interpreter)
       context = new
 
       context["Class"] = HClass
@@ -165,10 +165,6 @@ module Halunke
       context["Array"] = HArray
       context["Dictionary"] = HDictionary
       context["UnassignedBareword"] = HUnassignedBareword
-      context["True"] = HTrue
-      context["False"] = HFalse
-      context["true"] = HTrue.create_instance
-      context["false"] = HFalse.create_instance
 
       context
     end
@@ -182,23 +178,23 @@ module Halunke
     }),
     "<" => HFunction.new([:self, :other], lambda { |context|
       if context["self"].ruby_value < context["other"].ruby_value
-        HTrue.create_instance
+        context["true"]
       else
-        HFalse.create_instance
+        context["false"]
       end
     }),
     ">" => HFunction.new([:self, :other], lambda { |context|
       if context["self"].ruby_value > context["other"].ruby_value
-        HTrue.create_instance
+        context["true"]
       else
-        HFalse.create_instance
+        context["false"]
       end
     }),
     "=" => HFunction.new([:self, :other], lambda { |context|
       if context["self"].ruby_value == context["other"].ruby_value
-        HTrue.create_instance
+        context["true"]
       else
-        HFalse.create_instance
+        context["false"]
       end
     }),
     "inspect" => HFunction.new([:self], lambda { |context|
@@ -223,9 +219,9 @@ module Halunke
     }),
     "=" => HFunction.new([:self, :other], lambda { |context|
       if context["self"].ruby_value == context["other"].ruby_value
-        HTrue.create_instance
+        context["true"]
       else
-        HFalse.create_instance
+        context["false"]
       end
     }),
     "inspect" => HFunction.new([:self], lambda { |context|
@@ -241,11 +237,11 @@ module Halunke
       HString.create_instance("[#{inspected_members.join(' ')}]")
     }),
     "=" => HFunction.new([:self, :other], lambda { |context|
-      return HFalse.create_instance if context["self"].ruby_value.length != context["other"].ruby_value.length
+      return context["false"] if context["self"].ruby_value.length != context["other"].ruby_value.length
 
       context["self"].ruby_value.zip(context["other"].ruby_value).map do |a, b|
         a.receive_message(context.parent, "=", [b])
-      end.reduce(HTrue.create_instance) do |memo, value|
+      end.reduce(context["true"]) do |memo, value|
         memo.receive_message(context, "and", [value])
       end
     }),
@@ -280,44 +276,10 @@ module Halunke
     [],
     "=" => HFunction.new([:self, :other], lambda { |context|
       context.parent[context["self"].ruby_value] = context["other"]
-      HTrue.create_instance
+      context["true"]
     }),
     "inspect" => HFunction.new([:self], lambda { |context|
       HString.create_instance("'#{context["self"].ruby_value}")
-    })
-  )
-
-  HTrue = HClass.new(
-    "True",
-    [],
-    "and" => HFunction.new([:self, :other], lambda { |context|
-      context["other"]
-    }),
-    "or" => HFunction.new([:self, :other], lambda { |context|
-      context["self"]
-    }),
-    "then else" => HFunction.new([:self, :true_branch, :false_branch], lambda { |context|
-      context["true_branch"].receive_message(context, "call", [HArray.create_instance([])])
-    }),
-    "inspect" => HFunction.new([:self], lambda {|context|
-      HString.create_instance("true")
-    })
-  )
-
-  HFalse = HClass.new(
-    "False",
-    [],
-    "and" => HFunction.new([:self, :other], lambda { |context|
-      context["self"]
-    }),
-    "or" => HFunction.new([:self, :other], lambda { |context|
-      context["other"]
-    }),
-    "then else" => HFunction.new([:self, :true_branch, :false_branch], lambda { |context|
-      context["false_branch"].receive_message(context, "call", [HArray.create_instance([])])
-    }),
-    "inspect" => HFunction.new([:self], lambda {|context|
-      HString.create_instance("false")
     })
   )
 end
