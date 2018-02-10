@@ -5,12 +5,16 @@ require "readline"
 
 interpreter = Halunke::Interpreter.new
 
-puts "Halunke REPL. Ctrl+d to quit"
-while (line = Readline.readline(">> ", true))
-  begin
-    value = interpreter.eval(line)
-    puts "=> #{value}"
-  rescue Exception => e
-    puts "An Error Occurred: #{e.message}"
+if ARGV.length == 0
+  puts "Halunke REPL. Ctrl+d to quit"
+  while (line = Readline.readline(">> ", true))
+    begin
+      value = interpreter.eval(line)
+      puts "=> #{value}"
+    rescue Exception => e
+      puts "An Error Occurred: #{e.message}"
+    end
   end
+else
+  interpreter.eval(File.read(ARGV[0]))
 end

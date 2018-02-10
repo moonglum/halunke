@@ -17,6 +17,7 @@ module Halunke
       @root_context["Array"] = Halunke::Runtime::HArray
       @root_context["Dictionary"] = Halunke::Runtime::HDictionary
       @root_context["UnassignedBareword"] = Halunke::Runtime::HUnassignedBareword
+      @root_context["stdout"] = Halunke::Runtime::HStdout.create_instance
 
       preludes.each do |prelude|
         self.eval(prelude)

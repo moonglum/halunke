@@ -1,0 +1,19 @@
+(Class new 'Greeter
+  attributes ["name"]
+  methods @[
+    "greet" { |'self|
+      ("Hello " + (self name))
+    }
+    "name" { |'self|
+      (self @ "name" else "<Unknown>")
+    }
+  ]
+  class_methods @[
+    "for" { |'self 'name|
+      (self new @["name" name])
+    }
+  ]
+)
+
+('greeter = (Greeter for "World"))
+(stdout puts (greeter greet))
