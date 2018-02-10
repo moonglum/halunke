@@ -13,7 +13,7 @@ require "halunke/nodes"
 module Halunke
   class Parser < Racc::Parser
 
-module_eval(<<'...end grammar.y/module_eval...', 'grammar.y', 48)
+module_eval(<<'...end grammar.y/module_eval...', 'grammar.y', 50)
 
 def parse(code)
   @tokens = Lexer.new.tokenize(code)
@@ -124,7 +124,7 @@ racc_token_table = {
 
 racc_nt_base = 16
 
-racc_use_result_var = true
+racc_use_result_var = false
 
 Racc_arg = [
   racc_action_table,
@@ -170,98 +170,85 @@ Racc_debug_parser = false
 
 # reduce 0 omitted
 
-module_eval(<<'.,.,', 'grammar.y', 19)
-  def _reduce_1(val, _values, result)
-     result = val[0] 
-    result
+module_eval(<<'.,.,', 'grammar.y', 21)
+  def _reduce_1(val, _values)
+     val[0] 
   end
 .,.,
 
-module_eval(<<'.,.,', 'grammar.y', 23)
-  def _reduce_2(val, _values, result)
-     result = Nodes.new([]) 
-    result
+module_eval(<<'.,.,', 'grammar.y', 25)
+  def _reduce_2(val, _values)
+     Nodes.new([]) 
   end
 .,.,
 
-module_eval(<<'.,.,', 'grammar.y', 24)
-  def _reduce_3(val, _values, result)
-     result = Nodes.new([val[0]].concat(val[1].nodes)) 
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'grammar.y', 28)
-  def _reduce_4(val, _values, result)
-     result = NumberNode.new(val[0]) 
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'grammar.y', 29)
-  def _reduce_5(val, _values, result)
-     result = StringNode.new(val[0]) 
-    result
+module_eval(<<'.,.,', 'grammar.y', 26)
+  def _reduce_3(val, _values)
+     Nodes.new([val[0]].concat(val[1].nodes)) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 30)
-  def _reduce_6(val, _values, result)
-     result = BarewordNode.new(val[0]) 
-    result
+  def _reduce_4(val, _values)
+     NumberNode.new(val[0]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 31)
-  def _reduce_7(val, _values, result)
-     result = UnassignedNode.new(BarewordNode.new(val[0])) 
-    result
+  def _reduce_5(val, _values)
+     StringNode.new(val[0]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 32)
-  def _reduce_8(val, _values, result)
-     result = Nodes.new([]) 
-    result
+  def _reduce_6(val, _values)
+     BarewordNode.new(val[0]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 33)
-  def _reduce_9(val, _values, result)
-     result = FunctionNode.new(ArrayNode.new([]), val[1]) 
-    result
+  def _reduce_7(val, _values)
+     UnassignedNode.new(BarewordNode.new(val[0])) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 34)
-  def _reduce_10(val, _values, result)
-     result = FunctionNode.new(val[2].to_array, val[4]) 
-    result
+  def _reduce_8(val, _values)
+     Nodes.new([]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 35)
-  def _reduce_11(val, _values, result)
-     result = MessageSendNode.new(val[1], val[2].to_message) 
-    result
+  def _reduce_9(val, _values)
+     FunctionNode.new(ArrayNode.new([]), val[1]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 36)
-  def _reduce_12(val, _values, result)
-     result = val[1].to_array 
-    result
+  def _reduce_10(val, _values)
+     FunctionNode.new(val[2].to_array, val[4]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 37)
-  def _reduce_13(val, _values, result)
-     result = val[1].to_dictionary 
-    result
+  def _reduce_11(val, _values)
+     MessageSendNode.new(val[1], val[2].to_message) 
   end
 .,.,
 
-def _reduce_none(val, _values, result)
+module_eval(<<'.,.,', 'grammar.y', 38)
+  def _reduce_12(val, _values)
+     val[1].to_array 
+  end
+.,.,
+
+module_eval(<<'.,.,', 'grammar.y', 39)
+  def _reduce_13(val, _values)
+     val[1].to_dictionary 
+  end
+.,.,
+
+def _reduce_none(val, _values)
   val[0]
 end
 
