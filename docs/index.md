@@ -77,4 +77,7 @@ with a value, and it will assign it. Be aware that you can't reassign. So if
 you assign something to a once, it will stay like this forever (within that
 scope). Reassigning will result in an error.
 
+The values are also immutable. If you send a message to an object,
+it will not change the object, but it will return an answer to you.
+
 Comments are written between `/*` and `*/`. They can be multiline.

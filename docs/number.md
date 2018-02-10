@@ -87,7 +87,7 @@ it is false.
 
 ## `inspect`
 
-This converts the number to a string.
+This returns a string to represent the number in output.
 
 **Example:**
 
