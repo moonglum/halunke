@@ -3,25 +3,37 @@
 # They are all prefixed with H to prevent collisions with Ruby's equivalents
 module Halunke
   class HClass
-    def initialize(name, methods)
+    attr_reader :name
+
+    def initialize(name, allowed_attributes, methods)
       @name = name
+      @allowed_attributes = allowed_attributes
       @runtime_methods = methods
     end
 
     def self.receive_message(context, message_name, message_value)
       raise "Class Class has no method to respond to message '#{message_name}'" unless message_name == "new attributes methods"
+
       name = message_value[0].ruby_value
+
+      allowed_attributes = message_value[1].ruby_value.map(&:ruby_value)
+
       methods = {}
       message_value[2].ruby_value.each_pair do |method_name, fn|
         methods[method_name.ruby_value] = fn
       end
-      context[name] = HClass.new(name, methods)
+
+      context[name] = HClass.new(name, allowed_attributes, methods)
     end
 
     # TODO: If a native class receives "new", this doesn't work
     def receive_message(context, message_name, message_value)
       raise "Class #{@name} has no method to respond to message '#{message_name}'" unless message_name == "new"
       HObject.new(self, message_value[0].ruby_value)
+    end
+
+    def allowed_attribute?(attribute_name)
+      @allowed_attributes.include? attribute_name
     end
 
     def create_instance(ruby_value = nil)
@@ -45,8 +57,10 @@ module Halunke
     def initialize(runtime_class, dict)
       @runtime_class = runtime_class
       @dict = {}
-      dict.each_pair do |key, value|
-        @dict[key.ruby_value] = value
+      dict.each_pair do |hkey, value|
+        key = hkey.ruby_value
+        raise "Unknown attribute '#{key}' for #{@runtime_class.name}" unless @runtime_class.allowed_attribute? key
+        @dict[key] = value
       end
     end
 
@@ -155,6 +169,7 @@ module Halunke
 
   HNumber = HClass.new(
     "Number",
+    [],
     "+" => HFunction.new([:self, :other], lambda { |context|
       HNumber.create_instance(context["self"].ruby_value + context["other"].ruby_value)
     }),
@@ -188,6 +203,7 @@ module Halunke
 
   HString = HClass.new(
     "String",
+    [],
     "reverse" => HFunction.new([:self], lambda { |context|
       HString.create_instance(context["self"].ruby_value.reverse)
     }),
@@ -212,6 +228,7 @@ module Halunke
 
   HArray = HClass.new(
     "Array",
+    [],
     "inspect" => HFunction.new([:self], lambda { |context|
       inspected_members = context["self"].ruby_value.map { |member| member.inspect(context) }
       HString.create_instance("[#{inspected_members.join(' ')}]")
@@ -234,6 +251,7 @@ module Halunke
 
   HDictionary = HClass.new(
     "Dictionary",
+    [],
     "inspect" => HFunction.new([:self], lambda { |context|
       x = []
       context["self"].ruby_value.each_pair do |key, value|
@@ -252,6 +270,7 @@ module Halunke
 
   HUnassignedBareword = HClass.new(
     "UnassignedBareword",
+    [],
     "=" => HFunction.new([:self, :other], lambda { |context|
       context.parent[context["self"].ruby_value] = context["other"]
       HTrue.create_instance
@@ -263,6 +282,7 @@ module Halunke
 
   HTrue = HClass.new(
     "True",
+    [],
     "and" => HFunction.new([:self, :other], lambda { |context|
       context["other"]
     }),
@@ -279,6 +299,7 @@ module Halunke
 
   HFalse = HClass.new(
     "False",
+    [],
     "and" => HFunction.new([:self, :other], lambda { |context|
       context["self"]
     }),

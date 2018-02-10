@@ -163,6 +163,13 @@ class InterpreterTest < Minitest::Test
     assert_equal '0', @interpreter.eval('(counter value)')
   end
 
+  def test_counter_class_with_unknown_attribute
+    @interpreter.eval(counter_program)
+    assert_raises do
+      @interpreter.eval(%{('counter = (Counter new @["typo" 2]))})
+    end
+  end
+
   private
 
   def counter_program
