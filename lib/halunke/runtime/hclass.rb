@@ -11,40 +11,53 @@ module Halunke
         @native = native
       end
 
-      def self.receive_message(context, message_name, message_value)
-        raise "Class Class has no method to respond to message '#{message_name}'" unless message_name == "new attributes methods"
+      class << self
+        def receive_message(context, message_name, message_value)
+          raise "Class Class has no method to respond to message '#{message_name}'" unless message_name == "new attributes methods"
 
-        name = message_value[0].ruby_value
+          name = determine_name(message_value[0])
+          allowed_attributes = determine_allowed_attributes(message_value[1])
+          instance_methods = determine_instance_methods(message_value[2])
+          class_methods = {}
 
-        allowed_attributes = message_value[1].ruby_value.map(&:ruby_value)
-
-        methods = {}
-        message_value[2].ruby_value.each_pair do |method_name, fn|
-          methods[method_name.ruby_value] = fn
+          context[name] = HClass.new(name, allowed_attributes, instance_methods, class_methods, false)
         end
 
-        context[name] = HClass.new(name, allowed_attributes, methods, {}, false)
+        private
+
+        def determine_name(hstring)
+          hstring.ruby_value
+        end
+
+        def determine_allowed_attributes(harray)
+          harray.ruby_value.map(&:ruby_value)
+        end
+
+        def determine_instance_methods(hdictionary)
+          instance_methods = {}
+          hdictionary.ruby_value.each_pair do |method_name, fn|
+            instance_methods[method_name.ruby_value] = fn
+          end
+          instance_methods
+        end
       end
 
-      # TODO: If a native class receives "new", this doesn't work
-      def receive_message(context, message_name, message_value)
+      def receive_message(_context, message_name, message_value)
         raise "Class #{@name} has no method to respond to message '#{message_name}'" unless message_name == "new"
 
-        dict = case message_value.length
-               when 0 then {}
-               when 1 then message_value[0].ruby_value
-               else raise "Too many arguments"
-               end
-
-        HObject.new(self, dict)
+        create_instance(message_value[0])
       end
 
       def allowed_attribute?(attribute_name)
         @allowed_attributes.include? attribute_name
       end
 
-      def create_instance(ruby_value = nil)
-        HNativeObject.new(self, ruby_value)
+      def create_instance(value = nil)
+        if native?
+          HNativeObject.new(self, value)
+        else
+          HObject.new(self, value ? value.ruby_value : {})
+        end
       end
 
       def lookup(message)
