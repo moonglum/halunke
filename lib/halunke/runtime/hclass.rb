@@ -13,12 +13,20 @@ module Halunke
 
       class << self
         def receive_message(context, message_name, message_value)
-          raise "Class Class has no method to respond to message '#{message_name}'" unless message_name == "new attributes methods"
-
-          name = determine_name(message_value[0])
-          allowed_attributes = determine_allowed_attributes(message_value[1])
-          instance_methods = determine_instance_methods(message_value[2])
-          class_methods = {}
+          case message_name
+          when "new attributes methods"
+            name = determine_name(message_value[0])
+            allowed_attributes = determine_allowed_attributes(message_value[1])
+            instance_methods = determine_instance_methods(message_value[2])
+            class_methods = {}
+          when "new methods"
+            name = determine_name(message_value[0])
+            allowed_attributes = []
+            instance_methods = determine_instance_methods(message_value[1])
+            class_methods = {}
+          else
+            raise "Class Class has no method to respond to message '#{message_name}'"
+          end
 
           context[name] = HClass.new(name, allowed_attributes, instance_methods, class_methods, false)
         end

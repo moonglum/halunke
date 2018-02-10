@@ -1,5 +1,4 @@
 (Class new 'True
-  attributes []
   methods @[
     "and" { |'self 'other|
       other

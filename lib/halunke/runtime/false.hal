@@ -1,5 +1,4 @@
 (Class new 'False
-  attributes []
   methods @[
     "and" { |'self 'other|
       self
