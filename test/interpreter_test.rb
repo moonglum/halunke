@@ -99,7 +99,7 @@ class InterpreterTest < Minitest::Test
   def test_no_reassignement
     @interpreter.eval("('a = 2)")
     assert_raises do
-      @interpreter.eval("'a")
+      @interpreter.eval("('a = 1)")
     end
   end
 
