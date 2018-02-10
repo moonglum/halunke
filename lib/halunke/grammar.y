@@ -17,44 +17,26 @@ token END_COMMENT
 
 rule
   Program:
-    Expressions  { result = val[0] }
+    Expressions { result = val[0] }
   ;
 
   Expressions:
-    /* empty */            { result = Nodes.new }
-  | Expression Expressions { result = Nodes.new([val[0]]).concat(val[1]) }
+    /* empty */            { result = Nodes.new([]) }
+  | Expression Expressions { result = Nodes.new([val[0]].concat(val[1].nodes)) }
   ;
 
   Expression:
-    Literal
-  | START_COMMENT Expressions END_COMMENT { result = Nodes.new }
-  | OPEN_CURLY Expressions CLOSE_CURLY { result = Halunke::FunctionNode.new(Halunke::ArrayNode.new([]), val[1]) }
-  | OPEN_CURLY Args Expressions CLOSE_CURLY { result = Halunke::FunctionNode.new(val[1], val[2]) }
-  | OPEN_PAREN Expression Expressions CLOSE_PAREN { result = Halunke::MessageSendNode.new(val[1], MessageNode.new(val[2].nodes)) }
-  | OPEN_BRACKET Expressions CLOSE_BRACKET { result = ArrayNode.new(val[1].nodes) }
-  | OPEN_DICT_BRACKET Expressions CLOSE_BRACKET { result = DictionaryNode.new(val[1].nodes) }
+    NUMBER                                                 { result = NumberNode.new(val[0]) }
+  | STRING                                                 { result = StringNode.new(val[0]) }
+  | BAREWORD                                               { result = BarewordNode.new(val[0]) }
+  | UNASSIGNED_BAREWORD                                    { result = UnassignedNode.new(BarewordNode.new(val[0])) }
+  | START_COMMENT Expressions END_COMMENT                  { result = Nodes.new([]) }
+  | OPEN_CURLY Expressions CLOSE_CURLY                     { result = FunctionNode.new(ArrayNode.new([]), val[1]) }
+  | OPEN_CURLY BAR Expressions BAR Expressions CLOSE_CURLY { result = FunctionNode.new(val[2].to_array, val[4]) }
+  | OPEN_PAREN Expression Expressions CLOSE_PAREN          { result = MessageSendNode.new(val[1], val[2].to_message) }
+  | OPEN_BRACKET Expressions CLOSE_BRACKET                 { result = val[1].to_array }
+  | OPEN_DICT_BRACKET Expressions CLOSE_BRACKET            { result = val[1].to_dictionary }
   ;
-
-  Args:
-    BAR UnassignedBarewords BAR { result = Halunke::ArrayNode.new(val[1].nodes) }
-  ;
-
-  UnassignedBarewords:
-    /* empty */        { result = Nodes.new }
-  | UnassignedBareword UnassignedBarewords { result = Nodes.new([val[0]]).concat(val[1]) }
-  ;
-
-  UnassignedBareword:
-    UNASSIGNED_BAREWORD { result = UnassignedNode.new(BarewordNode.new(val[0])) }
-  ;
-
-  Literal:
-    NUMBER   { result = NumberNode.new(val[0]) }
-  | STRING   { result = StringNode.new(val[0]) }
-  | BAREWORD { result = BarewordNode.new(val[0]) }
-  | UNASSIGNED_BAREWORD { result = UnassignedNode.new(BarewordNode.new(val[0])) }
-  ;
-
 end
 
 ---- header

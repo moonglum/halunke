@@ -1,39 +1,35 @@
 module Halunke
   Nodes = Struct.new(:nodes) do
-    def initialize(nodes = [])
-      super(nodes)
-    end
-
-    def concat(other)
-      Nodes.new(nodes.concat(other.nodes))
-    end
-
     def eval(context)
-      val = nil
+      nodes.map { |node| node.eval(context) }.last
+    end
 
-      nodes.each do |node|
-        val = node.eval(context)
-      end
+    def to_message
+      MessageNode.new(nodes)
+    end
 
-      val
+    def to_array
+      ArrayNode.new(nodes)
+    end
+
+    def to_dictionary
+      DictionaryNode.new(nodes)
     end
   end
 
-  LiteralNode = Struct.new(:value)
-
-  class NumberNode < LiteralNode
+  NumberNode = Struct.new(:value) do
     def eval(context)
       context["Number"].create_instance(value)
     end
   end
 
-  class StringNode < LiteralNode
+  StringNode = Struct.new(:value) do
     def eval(context)
       context["String"].create_instance(value)
     end
   end
 
-  class BarewordNode < LiteralNode
+  BarewordNode = Struct.new(:value) do
     def eval(context)
       context[value]
     end
@@ -56,20 +52,12 @@ module Halunke
   end
 
   ArrayNode = Struct.new(:nodes) do
-    def initialize(nodes = [])
-      super(nodes)
-    end
-
     def eval(context)
       context["Array"].create_instance(nodes.map { |node| node.eval(context) })
     end
   end
 
   DictionaryNode = Struct.new(:nodes) do
-    def initialize(nodes = [])
-      super(nodes)
-    end
-
     def eval(context)
       hash = {}
       nodes.each_slice(2) do |key, value|

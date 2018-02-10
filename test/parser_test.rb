@@ -156,7 +156,7 @@ class ParserTest < Minitest::Test
 
   def test_comment
     expected_nodes = Halunke::Nodes.new([
-      Halunke::Nodes.new
+      Halunke::Nodes.new([])
     ])
 
     assert_equal expected_nodes, @parser.parse('/* hallo */')
