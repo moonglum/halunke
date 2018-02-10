@@ -1,0 +1,20 @@
+(Class new 'App
+  methods @[
+    "call" { |'self 'env|
+      [
+        "200"
+        @[ "Content-Type" "text/html" ]
+        [
+          "<h1>Halunke!</h1>"
+          "<ul>"
+          (("<li>Request Method: " + (env @ "request_method" else "I dont know")) + "</li>")
+          (("<li>Path: " + (env @ "path" else "/")) + "</li>")
+          (("<li>Query: " + (env @ "query" else "")) + "</li>")
+          "</ul>"
+        ]
+      ]
+    }
+  ]
+)
+
+(web run (App new) on "0.0.0.0:3000")

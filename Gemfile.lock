@@ -2,12 +2,14 @@ PATH
   remote: .
   specs:
     halunke (0.2.0)
+      rack (~> 2.0.4)
 
 GEM
   remote: https://rubygems.org/
   specs:
     minitest (5.11.3)
     racc (1.4.14)
+    rack (2.0.4)
     rake (12.3.0)
 
 PLATFORMS
