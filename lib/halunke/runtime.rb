@@ -29,7 +29,14 @@ module Halunke
     # TODO: If a native class receives "new", this doesn't work
     def receive_message(context, message_name, message_value)
       raise "Class #{@name} has no method to respond to message '#{message_name}'" unless message_name == "new"
-      HObject.new(self, message_value[0].ruby_value)
+
+      dict = case message_value.length
+             when 0 then {}
+             when 1 then message_value[0].ruby_value
+             else raise "Too many arguments"
+             end
+
+      HObject.new(self, dict)
     end
 
     def allowed_attribute?(attribute_name)

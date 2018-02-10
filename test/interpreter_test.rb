@@ -159,7 +159,7 @@ class InterpreterTest < Minitest::Test
 
   def test_counter_class_default_values
     @interpreter.eval(counter_program)
-    @interpreter.eval(%{('counter = (Counter new @["increaseBy" 2]))})
+    @interpreter.eval(%{('counter = (Counter new))})
     assert_equal '0', @interpreter.eval('(counter value)')
   end
 
