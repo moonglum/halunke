@@ -2,7 +2,7 @@
 # line 1 "lib/halunke/lexer.rl"
 =begin
 
-# line 36 "lib/halunke/lexer.rl"
+# line 40 "lib/halunke/lexer.rl"
 
 =end
 
@@ -21,8 +21,8 @@ self._lexer_actions = [
 	9, 1, 10, 1, 11, 1, 12, 1, 
 	13, 1, 14, 1, 15, 1, 16, 1, 
 	17, 1, 18, 1, 19, 1, 20, 1, 
-	21, 1, 22, 2, 2, 3, 2, 2, 
-	4
+	21, 1, 22, 1, 23, 1, 24, 2, 
+	2, 3, 2, 2, 4
 ]
 
 class << self
@@ -30,8 +30,8 @@ class << self
 	private :_lexer_key_offsets, :_lexer_key_offsets=
 end
 self._lexer_key_offsets = [
-	0, 1, 3, 27, 28, 33, 35, 38, 
-	40, 41
+	0, 1, 3, 29, 30, 35, 36, 38, 
+	41, 43, 44, 45
 ]
 
 class << self
@@ -40,11 +40,12 @@ class << self
 end
 self._lexer_trans_keys = [
 	34, 48, 57, 32, 34, 39, 40, 41, 
-	43, 45, 64, 91, 93, 95, 123, 124, 
-	125, 9, 13, 48, 57, 60, 62, 65, 
-	90, 97, 122, 34, 95, 65, 90, 97, 
-	122, 48, 57, 46, 48, 57, 48, 57, 
-	91, 95, 65, 90, 97, 122, 0
+	42, 43, 45, 47, 64, 91, 93, 95, 
+	123, 124, 125, 9, 13, 48, 57, 60, 
+	62, 65, 90, 97, 122, 34, 95, 65, 
+	90, 97, 122, 47, 48, 57, 46, 48, 
+	57, 48, 57, 42, 91, 95, 65, 90, 
+	97, 122, 0
 ]
 
 class << self
@@ -52,8 +53,8 @@ class << self
 	private :_lexer_single_lengths, :_lexer_single_lengths=
 end
 self._lexer_single_lengths = [
-	1, 0, 14, 1, 1, 0, 1, 0, 
-	1, 1
+	1, 0, 16, 1, 1, 1, 0, 1, 
+	0, 1, 1, 1
 ]
 
 class << self
@@ -61,8 +62,8 @@ class << self
 	private :_lexer_range_lengths, :_lexer_range_lengths=
 end
 self._lexer_range_lengths = [
-	0, 1, 5, 0, 2, 1, 1, 1, 
-	0, 2
+	0, 1, 5, 0, 2, 0, 1, 1, 
+	1, 0, 0, 2
 ]
 
 class << self
@@ -70,8 +71,8 @@ class << self
 	private :_lexer_index_offsets, :_lexer_index_offsets=
 end
 self._lexer_index_offsets = [
-	0, 2, 4, 24, 26, 30, 32, 35, 
-	37, 39
+	0, 2, 4, 26, 28, 32, 34, 36, 
+	39, 41, 43, 45
 ]
 
 class << self
@@ -79,12 +80,13 @@ class << self
 	private :_lexer_trans_targs, :_lexer_trans_targs=
 end
 self._lexer_trans_targs = [
-	2, 0, 7, 2, 2, 3, 4, 2, 
-	2, 5, 5, 8, 2, 2, 9, 2, 
-	2, 2, 2, 6, 2, 9, 9, 2, 
-	2, 0, 4, 4, 4, 2, 6, 2, 
-	1, 6, 2, 7, 2, 2, 2, 9, 
-	9, 9, 2, 2, 2, 2, 2, 2, 
+	2, 0, 8, 2, 2, 3, 4, 2, 
+	2, 5, 6, 6, 9, 10, 2, 2, 
+	11, 2, 2, 2, 2, 7, 2, 11, 
+	11, 2, 2, 0, 4, 4, 4, 2, 
+	2, 2, 7, 2, 1, 7, 2, 8, 
+	2, 2, 2, 2, 2, 11, 11, 11, 
+	2, 2, 2, 2, 2, 2, 2, 2, 
 	2, 2, 2, 2, 0
 ]
 
@@ -93,13 +95,14 @@ class << self
 	private :_lexer_trans_actions, :_lexer_trans_actions=
 end
 self._lexer_trans_actions = [
-	7, 0, 0, 37, 27, 5, 46, 11, 
-	13, 0, 0, 0, 19, 21, 0, 15, 
-	25, 17, 27, 5, 9, 0, 0, 29, 
-	7, 0, 43, 43, 43, 41, 5, 33, 
-	0, 5, 31, 0, 31, 23, 33, 0, 
-	0, 0, 33, 39, 37, 35, 41, 33, 
-	31, 31, 33, 33, 0
+	7, 0, 0, 41, 31, 5, 50, 11, 
+	13, 0, 0, 0, 0, 0, 19, 21, 
+	0, 15, 29, 17, 31, 5, 9, 0, 
+	0, 33, 7, 0, 47, 47, 47, 45, 
+	27, 39, 5, 37, 0, 5, 35, 0, 
+	35, 25, 39, 23, 37, 0, 0, 0, 
+	37, 43, 41, 39, 45, 39, 37, 35, 
+	35, 39, 37, 37, 0
 ]
 
 class << self
@@ -108,7 +111,7 @@ class << self
 end
 self._lexer_to_state_actions = [
 	0, 0, 1, 0, 0, 0, 0, 0, 
-	0, 0
+	0, 0, 0, 0
 ]
 
 class << self
@@ -117,7 +120,7 @@ class << self
 end
 self._lexer_from_state_actions = [
 	0, 0, 3, 0, 0, 0, 0, 0, 
-	0, 0
+	0, 0, 0, 0
 ]
 
 class << self
@@ -125,8 +128,8 @@ class << self
 	private :_lexer_eof_trans, :_lexer_eof_trans=
 end
 self._lexer_eof_trans = [
-	44, 45, 0, 46, 47, 52, 50, 50, 
-	52, 52
+	50, 51, 0, 58, 53, 58, 60, 57, 
+	57, 58, 60, 60
 ]
 
 class << self
@@ -148,7 +151,7 @@ end
 self.lexer_en_main = 2;
 
 
-# line 43 "lib/halunke/lexer.rl"
+# line 47 "lib/halunke/lexer.rl"
       @tokens = []
     end
 
@@ -157,7 +160,7 @@ self.lexer_en_main = 2;
       eof = data.length
 
       
-# line 161 "lib/halunke/lexer.rb"
+# line 164 "lib/halunke/lexer.rb"
 begin
 	p ||= 0
 	pe ||= data.length
@@ -167,9 +170,9 @@ begin
 	act = 0
 end
 
-# line 51 "lib/halunke/lexer.rl"
+# line 55 "lib/halunke/lexer.rl"
       
-# line 173 "lib/halunke/lexer.rb"
+# line 176 "lib/halunke/lexer.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -199,7 +202,7 @@ begin
 		begin
 ts = p
 		end
-# line 203 "lib/halunke/lexer.rb"
+# line 206 "lib/halunke/lexer.rb"
 		end # from state action switch
 	end
 	if _trigger_goto
@@ -271,127 +274,139 @@ when 2 then
 te = p+1
 		end
 when 3 then
-# line 22 "lib/halunke/lexer.rl"
+# line 24 "lib/halunke/lexer.rl"
 		begin
 act = 3;		end
 when 4 then
-# line 33 "lib/halunke/lexer.rl"
+# line 37 "lib/halunke/lexer.rl"
 		begin
-act = 14;		end
+act = 16;		end
 when 5 then
-# line 21 "lib/halunke/lexer.rl"
+# line 23 "lib/halunke/lexer.rl"
 		begin
 te = p+1
  begin  emit(:STRING, data[ts+1...te-1])  end
 		end
 when 6 then
-# line 23 "lib/halunke/lexer.rl"
+# line 25 "lib/halunke/lexer.rl"
 		begin
 te = p+1
  begin  emit(:BAREWORD, data[ts...te])  end
 		end
 when 7 then
-# line 24 "lib/halunke/lexer.rl"
+# line 26 "lib/halunke/lexer.rl"
 		begin
 te = p+1
  begin  emit(:OPEN_PAREN, data[ts...te])  end
 		end
 when 8 then
-# line 25 "lib/halunke/lexer.rl"
+# line 27 "lib/halunke/lexer.rl"
 		begin
 te = p+1
  begin  emit(:CLOSE_PAREN, data[ts...te])  end
 		end
 when 9 then
-# line 26 "lib/halunke/lexer.rl"
+# line 28 "lib/halunke/lexer.rl"
 		begin
 te = p+1
  begin  emit(:OPEN_CURLY, data[ts...te])  end
 		end
 when 10 then
-# line 27 "lib/halunke/lexer.rl"
+# line 29 "lib/halunke/lexer.rl"
 		begin
 te = p+1
  begin  emit(:CLOSE_CURLY, data[ts...te])  end
 		end
 when 11 then
-# line 28 "lib/halunke/lexer.rl"
+# line 30 "lib/halunke/lexer.rl"
 		begin
 te = p+1
  begin  emit(:OPEN_BRACKET, data[ts...te])  end
 		end
 when 12 then
-# line 29 "lib/halunke/lexer.rl"
+# line 31 "lib/halunke/lexer.rl"
 		begin
 te = p+1
  begin  emit(:CLOSE_BRACKET, data[ts...te])  end
 		end
 when 13 then
-# line 30 "lib/halunke/lexer.rl"
+# line 32 "lib/halunke/lexer.rl"
 		begin
 te = p+1
  begin  emit(:OPEN_DICT_BRACKET, data[ts...te])  end
 		end
 when 14 then
-# line 31 "lib/halunke/lexer.rl"
+# line 33 "lib/halunke/lexer.rl"
+		begin
+te = p+1
+ begin  emit(:START_COMMENT, data[ts...te])  end
+		end
+when 15 then
+# line 34 "lib/halunke/lexer.rl"
+		begin
+te = p+1
+ begin  emit(:END_COMMENT, data[ts...te])  end
+		end
+when 16 then
+# line 35 "lib/halunke/lexer.rl"
 		begin
 te = p+1
  begin  emit(:BAR, data[ts...te])  end
 		end
-when 15 then
-# line 32 "lib/halunke/lexer.rl"
+when 17 then
+# line 36 "lib/halunke/lexer.rl"
 		begin
 te = p+1
 		end
-when 16 then
-# line 33 "lib/halunke/lexer.rl"
+when 18 then
+# line 37 "lib/halunke/lexer.rl"
 		begin
 te = p+1
  begin  raise "Could not lex '#{ data[ts...te] }'"  end
 		end
-when 17 then
-# line 20 "lib/halunke/lexer.rl"
+when 19 then
+# line 22 "lib/halunke/lexer.rl"
 		begin
 te = p
 p = p - 1; begin  emit(:NUMBER, data[ts...te].to_r)  end
 		end
-when 18 then
-# line 23 "lib/halunke/lexer.rl"
+when 20 then
+# line 25 "lib/halunke/lexer.rl"
 		begin
 te = p
 p = p - 1; begin  emit(:BAREWORD, data[ts...te])  end
 		end
-when 19 then
-# line 33 "lib/halunke/lexer.rl"
+when 21 then
+# line 37 "lib/halunke/lexer.rl"
 		begin
 te = p
 p = p - 1; begin  raise "Could not lex '#{ data[ts...te] }'"  end
 		end
-when 20 then
-# line 20 "lib/halunke/lexer.rl"
+when 22 then
+# line 22 "lib/halunke/lexer.rl"
 		begin
  begin p = ((te))-1; end
  begin  emit(:NUMBER, data[ts...te].to_r)  end
 		end
-when 21 then
-# line 33 "lib/halunke/lexer.rl"
+when 23 then
+# line 37 "lib/halunke/lexer.rl"
 		begin
  begin p = ((te))-1; end
  begin  raise "Could not lex '#{ data[ts...te] }'"  end
 		end
-when 22 then
+when 24 then
 # line 1 "NONE"
 		begin
 	case act
 	when 3 then
 	begin begin p = ((te))-1; end
  emit(:UNASSIGNED_BAREWORD, data[ts+1 ...te]) end
-	when 14 then
+	when 16 then
 	begin begin p = ((te))-1; end
  raise "Could not lex '#{ data[ts...te] }'" end
 end 
 			end
-# line 395 "lib/halunke/lexer.rb"
+# line 410 "lib/halunke/lexer.rb"
 			end # action switch
 		end
 	end
@@ -411,7 +426,7 @@ when 0 then
 # line 1 "NONE"
 		begin
 ts = nil;		end
-# line 415 "lib/halunke/lexer.rb"
+# line 430 "lib/halunke/lexer.rb"
 		end # to state action switch
 	end
 	if _trigger_goto
@@ -438,7 +453,7 @@ end
 	end
 	end
 
-# line 52 "lib/halunke/lexer.rl"
+# line 56 "lib/halunke/lexer.rl"
 
       @tokens
     end

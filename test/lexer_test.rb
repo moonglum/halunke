@@ -84,4 +84,12 @@ class LexerTest < Minitest::Test
   def test_unassigned_bareword
     assert_equal [[:UNASSIGNED_BAREWORD, "abc"]], @lexer.tokenize("'abc")
   end
+
+  def test_start_comment
+    assert_equal [[:START_COMMENT, "/*"]], @lexer.tokenize("/*")
+  end
+
+  def test_end_comment
+    assert_equal [[:END_COMMENT, "*/"]], @lexer.tokenize("*/")
+  end
 end

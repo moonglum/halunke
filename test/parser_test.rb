@@ -153,4 +153,12 @@ class ParserTest < Minitest::Test
 
     assert_equal expected_nodes, @parser.parse('@["a" 1 "b" 2]')
   end
+
+  def test_comment
+    expected_nodes = Halunke::Nodes.new([
+      Halunke::Nodes.new
+    ])
+
+    assert_equal expected_nodes, @parser.parse('/* hallo */')
+  end
 end

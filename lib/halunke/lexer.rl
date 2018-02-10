@@ -13,6 +13,8 @@
   open_bracket = '[';
   close_bracket = ']';
   open_dict_bracket = '@[';
+  start_comment = '/*';
+  end_comment = '*/';
   bar = "|";
 
   main := |*
@@ -28,6 +30,8 @@
     open_bracket => { emit(:OPEN_BRACKET, data[ts...te]) };
     close_bracket => { emit(:CLOSE_BRACKET, data[ts...te]) };
     open_dict_bracket => { emit(:OPEN_DICT_BRACKET, data[ts...te]) };
+    start_comment => { emit(:START_COMMENT, data[ts...te]) };
+    end_comment => { emit(:END_COMMENT, data[ts...te]) };
     bar => { emit(:BAR, data[ts...te]) };
     space;
     any => { raise "Could not lex '#{ data[ts...te] }'" };

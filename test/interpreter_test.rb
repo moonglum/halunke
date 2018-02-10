@@ -18,6 +18,10 @@ class InterpreterTest < Minitest::Test
     assert_equal '"halunke"', @interpreter.eval('(("halunke" reverse) reverse)')
   end
 
+  def test_comment
+    assert_equal '2', @interpreter.eval('/* Comment */ 2')
+  end
+
   def test_inner_message_send
     assert_equal '8', @interpreter.eval("(4 + (2 + 2))")
   end

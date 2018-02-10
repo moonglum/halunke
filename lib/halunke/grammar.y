@@ -12,6 +12,8 @@ token OPEN_BRACKET
 token CLOSE_BRACKET
 token OPEN_DICT_BRACKET
 token BAR
+token START_COMMENT
+token END_COMMENT
 
 rule
   Program:
@@ -25,6 +27,7 @@ rule
 
   Expression:
     Literal
+  | START_COMMENT Expressions END_COMMENT { result = Nodes.new }
   | OPEN_CURLY Expressions CLOSE_CURLY { result = Halunke::FunctionNode.new(Halunke::ArrayNode.new([]), val[1]) }
   | OPEN_CURLY Args Expressions CLOSE_CURLY { result = Halunke::FunctionNode.new(val[1], val[2]) }
   | OPEN_PAREN Expression Expressions CLOSE_PAREN { result = Halunke::MessageSendNode.new(val[1], MessageNode.new(val[2].nodes)) }
