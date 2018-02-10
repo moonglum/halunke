@@ -4,10 +4,6 @@ module Halunke
       "Array",
       [],
       {
-        "inspect" => HFunction.new([:self], lambda { |context|
-          inspected_members = context["self"].ruby_value.map { |member| member.inspect(context) }
-          HString.create_instance("[#{inspected_members.join(' ')}]")
-        }),
         "=" => HFunction.new([:self, :other], lambda { |context|
           return context["false"] if context["self"].ruby_value.length != context["other"].ruby_value.length
 
@@ -21,6 +17,10 @@ module Halunke
           return HArray.create_instance(context["self"].ruby_value.map do |x|
             context["fn"].receive_message(context, "call", [HArray.create_instance([x])])
           end)
+        }),
+        "inspect" => HFunction.new([:self], lambda { |context|
+          inspected_members = context["self"].ruby_value.map { |member| member.inspect(context) }
+          HString.create_instance("[#{inspected_members.join(' ')}]")
         })
       },
       {},
