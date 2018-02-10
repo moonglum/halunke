@@ -8,8 +8,24 @@ module Halunke
       @runtime_methods = methods
     end
 
+    def self.receive_message(context, message_name, message_value)
+      raise "Class Class has no method to respond to message '#{message_name}'" unless message_name == "new attributes methods"
+      name = message_value[0].ruby_value
+      methods = {}
+      message_value[2].ruby_value.each_pair do |method_name, fn|
+        methods[method_name.ruby_value] = fn
+      end
+      context[name] = HClass.new(name, methods)
+    end
+
+    # TODO: If a native class receives "new", this doesn't work
+    def receive_message(context, message_name, message_value)
+      raise "Class #{@name} has no method to respond to message '#{message_name}'" unless message_name == "new"
+      HObject.new(self, message_value[0].ruby_value)
+    end
+
     def create_instance(ruby_value = nil)
-      HObject.new(self, ruby_value)
+      HNativeObject.new(self, ruby_value)
     end
 
     def lookup(message)
@@ -24,6 +40,31 @@ module Halunke
   end
 
   class HObject
+    attr_reader :dict
+
+    def initialize(runtime_class, dict)
+      @runtime_class = runtime_class
+      @dict = {}
+      dict.each_pair do |key, value|
+        @dict[key.ruby_value] = value
+      end
+    end
+
+    def receive_message(context, message_name, message_value)
+      if message_name == "@ else"
+        @dict.fetch(message_value[0].ruby_value, message_value[1])
+      else
+        m = @runtime_class.lookup(message_name)
+        m.receive_message(context, "call", [HArray.create_instance([self].concat(message_value))])
+      end
+    end
+
+    def inspect(context)
+      receive_message(context, "inspect", []).ruby_value
+    end
+  end
+
+  class HNativeObject
     attr_reader :ruby_value
 
     def initialize(runtime_class, ruby_value = nil)
@@ -97,6 +138,7 @@ module Halunke
     def self.root_context
       context = new
 
+      context["Class"] = HClass
       context["Number"] = HNumber
       context["String"] = HString
       context["Array"] = HArray

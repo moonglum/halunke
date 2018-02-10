@@ -145,4 +145,35 @@ class InterpreterTest < Minitest::Test
     assert_equal '2', @interpreter.eval('(@["x" 5 "y" 2] @ "y" else 7)')
     assert_equal '7', @interpreter.eval('(@["x" 5 "y" 2] @ "z" else 7)')
   end
+
+  def test_counter_class
+    @interpreter.eval(counter_program)
+    @interpreter.eval(%{('counter = (Counter new @["value" 1 "increaseBy" 2]))})
+    assert_equal '1', @interpreter.eval('(counter value)')
+    assert_equal '3', @interpreter.eval('((counter increase) value)')
+  end
+
+  def test_counter_class_default_values
+    @interpreter.eval(counter_program)
+    @interpreter.eval(%{('counter = (Counter new @["increaseBy" 2]))})
+    assert_equal '0', @interpreter.eval('(counter value)')
+  end
+
+  private
+
+  def counter_program
+    <<~PROGRAM
+			(Class new 'Counter
+				attributes ["value" "increaseBy"]
+				methods @[
+					"value" { |'self|
+						(self @ "value" else 0)
+					}
+					"increase" { |'self|
+						(Counter new @["value" ((self value) + (self @ "increaseBy" else 1))])
+					}
+				]
+			)
+    PROGRAM
+  end
 end
