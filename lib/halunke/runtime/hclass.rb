@@ -3,10 +3,12 @@ module Halunke
     class HClass
       attr_reader :name
 
-      def initialize(name, allowed_attributes, methods)
+      def initialize(name, allowed_attributes, instance_methods, class_methods, native)
         @name = name
         @allowed_attributes = allowed_attributes
-        @runtime_methods = methods
+        @instance_methods = instance_methods
+        @class_methods = class_methods
+        @native = native
       end
 
       def self.receive_message(context, message_name, message_value)
@@ -21,7 +23,7 @@ module Halunke
           methods[method_name.ruby_value] = fn
         end
 
-        context[name] = HClass.new(name, allowed_attributes, methods)
+        context[name] = HClass.new(name, allowed_attributes, methods, {}, false)
       end
 
       # TODO: If a native class receives "new", this doesn't work
@@ -46,13 +48,17 @@ module Halunke
       end
 
       def lookup(message)
-        @runtime_methods.fetch(message)
+        @instance_methods.fetch(message)
       rescue KeyError
         raise "Class #{@name} has no method to respond to message '#{message}'"
       end
 
       def inspect(_context)
         "#<Class #{@name}>"
+      end
+
+      def native?
+        @native
       end
     end
   end
