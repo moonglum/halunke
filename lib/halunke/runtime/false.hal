@@ -1,0 +1,19 @@
+(Class new 'False
+  attributes []
+  methods @[
+    "and" { |'self 'other|
+      self
+    }
+    "or" { |'self 'other|
+      other
+    }
+    "then else" { |'self 'true_branch 'false_branch|
+      (false_branch call [])
+    }
+    "inspect" { |'self 'other|
+      "false"
+    }
+  ]
+)
+
+('false = (False new))

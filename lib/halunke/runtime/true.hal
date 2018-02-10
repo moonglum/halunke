@@ -1,0 +1,19 @@
+(Class new 'True
+  attributes []
+  methods @[
+    "and" { |'self 'other|
+      other
+    }
+    "or" { |'self 'other|
+      self
+    }
+    "then else" { |'self 'true_branch 'false_branch|
+      (true_branch call [])
+    }
+    "inspect" { |'self 'other|
+      "true"
+    }
+  ]
+)
+
+('true = (True new))

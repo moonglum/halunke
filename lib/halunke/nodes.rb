@@ -52,7 +52,8 @@ module Halunke
     def eval(_context)
       signature = params.nodes.map(&:node).map(&:value)
 
-      HFunction.new(signature, lambda { |context|
+      # TODO: Read from context
+      Halunke::Runtime::HFunction.new(signature, lambda { |context|
         body.eval(context)
       })
     end
