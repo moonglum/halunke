@@ -7,6 +7,15 @@ module Halunke
         "+" => HFunction.new([:self, :other], lambda { |context|
           HNumber.create_instance(context["self"].ruby_value + context["other"].ruby_value)
         }),
+        "-" => HFunction.new([:self, :other], lambda { |context|
+          HNumber.create_instance(context["self"].ruby_value - context["other"].ruby_value)
+        }),
+        "/" => HFunction.new([:self, :other], lambda { |context|
+          HNumber.create_instance(context["self"].ruby_value / context["other"].ruby_value)
+        }),
+        "*" => HFunction.new([:self, :other], lambda { |context|
+          HNumber.create_instance(context["self"].ruby_value * context["other"].ruby_value)
+        }),
         "<" => HFunction.new([:self, :other], lambda { |context|
           if context["self"].ruby_value < context["other"].ruby_value
             context["true"]

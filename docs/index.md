@@ -76,3 +76,5 @@ Now you can send messages to `a` like `(a + 2)`. Why is there a `'` though? The
 with a value, and it will assign it. Be aware that you can't reassign. So if
 you assign something to a once, it will stay like this forever (within that
 scope). Reassigning will result in an error.
+
+Comments are written between `/*` and `*/`. They can be multiline.
