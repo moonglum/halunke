@@ -14,15 +14,20 @@ module Halunke
       class << self
         def receive_message(context, message_name, message_value)
           case message_name
+          when "new attributes methods class_methods"
+            name = determine_name(message_value[0])
+            allowed_attributes = determine_allowed_attributes(message_value[1])
+            instance_methods = determine_methods(message_value[2])
+            class_methods = determine_methods(message_value[3])
           when "new attributes methods"
             name = determine_name(message_value[0])
             allowed_attributes = determine_allowed_attributes(message_value[1])
-            instance_methods = determine_instance_methods(message_value[2])
+            instance_methods = determine_methods(message_value[2])
             class_methods = {}
           when "new methods"
             name = determine_name(message_value[0])
             allowed_attributes = []
-            instance_methods = determine_instance_methods(message_value[1])
+            instance_methods = determine_methods(message_value[1])
             class_methods = {}
           else
             raise "Class Class has no method to respond to message '#{message_name}'"
@@ -41,7 +46,7 @@ module Halunke
           harray.ruby_value.map(&:ruby_value)
         end
 
-        def determine_instance_methods(hdictionary)
+        def determine_methods(hdictionary)
           instance_methods = {}
           hdictionary.ruby_value.each_pair do |method_name, fn|
             instance_methods[method_name.ruby_value] = fn
@@ -50,10 +55,15 @@ module Halunke
         end
       end
 
-      def receive_message(_context, message_name, message_value)
-        raise "Class #{@name} has no method to respond to message '#{message_name}'" unless message_name == "new"
-
-        create_instance(message_value[0])
+      def receive_message(context, message_name, message_value)
+        if message_name == "new"
+          create_instance(message_value[0])
+        elsif @class_methods.keys.include? message_name
+          m = @class_methods[message_name]
+          m.receive_message(context, "call", [HArray.create_instance([self].concat(message_value))])
+        else
+          raise "Class #{@name} has no method to respond to message '#{message_name}'"
+        end
       end
 
       def allowed_attribute?(attribute_name)

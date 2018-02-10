@@ -170,6 +170,12 @@ class InterpreterTest < Minitest::Test
     end
   end
 
+  def test_custom_constructor
+    @interpreter.eval(counter_program)
+    @interpreter.eval(%{('counter = (Counter from 3))})
+    assert_equal '3', @interpreter.eval('(counter value)')
+  end
+
   private
 
   def counter_program
@@ -184,6 +190,11 @@ class InterpreterTest < Minitest::Test
 						(Counter new @["value" ((self value) + (self @ "increaseBy" else 1))])
 					}
 				]
+        class_methods @[
+          "from" { |'self 'value|
+            (self new @["value" value])
+          }
+        ]
 			)
     PROGRAM
   end
