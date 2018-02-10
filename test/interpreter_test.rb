@@ -18,6 +18,10 @@ class InterpreterTest < Minitest::Test
     assert_equal '"halunke"', @interpreter.eval('(("halunke" reverse) reverse)')
   end
 
+  def test_concatenate_strings
+    assert_equal '"hello world"', @interpreter.eval('("hello " + "world")')
+  end
+
   def test_comment
     assert_equal '2', @interpreter.eval('/* Comment */ 2')
   end

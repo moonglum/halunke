@@ -21,6 +21,9 @@ module Halunke
             context["false"]
           end
         }),
+        "+" => HFunction.new([:self, :other], lambda { |context|
+          HString.create_instance(context["self"].ruby_value + context["other"].ruby_value)
+        }),
         "inspect" => HFunction.new([:self], lambda { |context|
           HString.create_instance(context["self"].ruby_value.inspect)
         })
