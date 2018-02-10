@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.email         = ["lucas@dohmen.io"]
 
   spec.summary       = %q{The Halunke programming language}
-  spec.description   = %q{A prototype for an OO language that embraces ideas like immutability and Lispyness}
-  spec.homepage      = "https://github.com/moonglum/halunke"
+  spec.description   = %q{A dynamic OO language with ideas traditionally described as "functional"}
+  spec.homepage      = "https://moonglum.github.io/halunke"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
