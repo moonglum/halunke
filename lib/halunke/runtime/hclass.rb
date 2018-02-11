@@ -12,7 +12,7 @@ module Halunke
       end
 
       class << self
-        def receive_message(context, message_name, message_value)
+        def receive_message(context, message_name, message_value, ts=nil, te=nil)
           case message_name
           when "new attributes methods class_methods"
             name = determine_name(message_value[0])
@@ -55,7 +55,7 @@ module Halunke
         end
       end
 
-      def receive_message(context, message_name, message_value)
+      def receive_message(context, message_name, message_value, ts=nil, te=nil)
         if message_name == "new"
           create_instance(message_value[0])
         elsif @class_methods.keys.include? message_name
@@ -79,13 +79,15 @@ module Halunke
       end
 
       def lookup(message)
-        @instance_methods.fetch(message)
-      rescue KeyError
-        raise "Class #{@name} has no method to respond to message '#{message}'"
+        @instance_methods[message]
       end
 
       def inspect(_context)
         "#<Class #{@name}>"
+      end
+
+      def receivable_messages
+        @instance_methods.keys
       end
 
       def native?

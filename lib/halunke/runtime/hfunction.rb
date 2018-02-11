@@ -6,7 +6,7 @@ module Halunke
         @fn = fn
       end
 
-      def receive_message(parent_context, message_name, message_value)
+      def receive_message(parent_context, message_name, message_value, ts=nil, te=nil)
         raise "Class Function has no method to respond to message '#{message_name}'" unless message_name == "call"
 
         context = parent_context.create_child

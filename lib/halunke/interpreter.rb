@@ -25,9 +25,15 @@ module Halunke
       end
     end
 
-    def eval(str)
+    def eval(str, repl: false)
       nodes = @parser.parse(str)
       nodes.eval(root_context).inspect(root_context)
+    rescue HError => err
+      show_occurrence(str, err: err, repl: repl)
+
+      puts err
+      exit(1) unless repl
+      nil
     end
 
     def preludes
@@ -35,6 +41,28 @@ module Halunke
         Pathname.new(__dir__).join("runtime", "true.hal").read,
         Pathname.new(__dir__).join("runtime", "false.hal").read
       ]
+    end
+
+    def show_occurrence(str, err:, repl:)
+      ts = err.ts
+      te = err.te
+
+      line, line_number = str.lines.each_with_index.find do |candidate, _line_number|
+        if ts < candidate.length
+          te = candidate.length - 1 if te > candidate.length
+          true
+        else
+          ts -= candidate.length
+          te -= candidate.length
+          false
+        end
+      end
+
+      prefix = repl ? ">> " : "#{line_number + 1} | "
+
+      puts "#{prefix}#{line}" if !repl
+
+      puts " " * (ts + prefix.length) + "^" * (te - ts)
     end
 
     class Context

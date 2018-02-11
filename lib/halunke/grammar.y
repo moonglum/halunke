@@ -28,14 +28,14 @@ rule
   ;
 
   Expression:
-    NUMBER                                                 { NumberNode.new(val[0]) }
-  | STRING                                                 { StringNode.new(val[0]) }
-  | BAREWORD                                               { BarewordNode.new(val[0]) }
-  | UNASSIGNED_BAREWORD                                    { UnassignedNode.new(BarewordNode.new(val[0])) }
+    NUMBER                                                 { NumberNode.new(*val[0]) }
+  | STRING                                                 { StringNode.new(*val[0]) }
+  | BAREWORD                                               { BarewordNode.new(*val[0]) }
+  | UNASSIGNED_BAREWORD                                    { UnassignedNode.new(BarewordNode.new(*val[0])) }
   | START_COMMENT Expressions END_COMMENT                  { Nodes.new([]) }
   | OPEN_CURLY Expressions CLOSE_CURLY                     { FunctionNode.new(ArrayNode.new([]), val[1]) }
   | OPEN_CURLY BAR Expressions BAR Expressions CLOSE_CURLY { FunctionNode.new(val[2].to_array, val[4]) }
-  | OPEN_PAREN Expression Expressions CLOSE_PAREN          { MessageSendNode.new(val[1], val[2].to_message) }
+  | OPEN_PAREN Expression Expressions CLOSE_PAREN          { MessageSendNode.new(val[1], val[2].to_message, val[0][1], val[3][2]) }
   | OPEN_BRACKET Expressions CLOSE_BRACKET                 { val[1].to_array }
   | OPEN_DICT_BRACKET Expressions CLOSE_BRACKET            { val[1].to_dictionary }
   ;

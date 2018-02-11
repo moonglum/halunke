@@ -17,19 +17,19 @@ module Halunke
     end
   end
 
-  NumberNode = Struct.new(:value) do
+  NumberNode = Struct.new(:value, :ts, :te) do
     def eval(context)
       context["Number"].create_instance(value)
     end
   end
 
-  StringNode = Struct.new(:value) do
+  StringNode = Struct.new(:value, :ts, :te) do
     def eval(context)
       context["String"].create_instance(value)
     end
   end
 
-  BarewordNode = Struct.new(:value) do
+  BarewordNode = Struct.new(:value, :ts, :te) do
     def eval(context)
       context[value]
     end
@@ -67,9 +67,9 @@ module Halunke
     end
   end
 
-  MessageSendNode = Struct.new(:receiver, :message) do
+  MessageSendNode = Struct.new(:receiver, :message, :ts, :te) do
     def eval(context)
-      receiver.eval(context).receive_message(context, *message.eval(context))
+      receiver.eval(context).receive_message(context, *message.eval(context), ts, te)
     end
   end
 

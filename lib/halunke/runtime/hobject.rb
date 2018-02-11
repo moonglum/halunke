@@ -13,7 +13,7 @@ module Halunke
         end
       end
 
-      def receive_message(context, message_name, message_value)
+      def receive_message(context, message_name, message_value, ts=nil, te=nil)
         if message_name == "@ else"
           @dict.fetch(message_value[0].ruby_value, message_value[1])
         else
