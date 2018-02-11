@@ -27,6 +27,13 @@ gem install halunke
 
 You can start a REPL with `halunke` or run a file with `halunke file.hal`.
 
+Alternatively (if you don't have Ruby installed for example), you
+can run it with Docker:
+
+```
+docker run --rm -ti bascht/halunke
+```
+
 ## How it works
 
 In Halunke, everything is an object. And you can send messages to Objects.

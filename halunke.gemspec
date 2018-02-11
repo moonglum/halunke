@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{The Halunke programming language}
   spec.description   = %q{A dynamic OO language with ideas traditionally described as "functional"}
-  spec.homepage      = "https://moonglum.github.io/halunke"
+  spec.homepage      = "http://halunke.jetzt"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|

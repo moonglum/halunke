@@ -14,7 +14,7 @@ It also has the following characteristics:
 
 * There is no null/nil value in the language
 
-Find out more on the [documentation page](https://moonglum.github.io/halunke).
+Find out more on the [documentation page](http://halunke.jetzt).
 
 ## License
 
