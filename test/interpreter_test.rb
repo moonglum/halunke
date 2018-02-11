@@ -180,6 +180,11 @@ class InterpreterTest < Minitest::Test
     assert_equal '3', @interpreter.eval('(counter value)')
   end
 
+  def test_array_find
+    assert_equal '"a"', @interpreter.eval(%{(["a" "b" "c"] find { |'el| (el = "a") } else "not found")})
+    assert_equal '"not found"', @interpreter.eval(%{(["a" "b" "c"] find { |'el| (el = "d") } else "not found")})
+  end
+
   private
 
   def counter_program

@@ -18,6 +18,11 @@ module Halunke
             context["fn"].receive_message(context, "call", [HArray.create_instance([x])])
           end)
         }),
+        "find else" => HFunction.new([:self, :search_fn, :fallback], lambda { |context|
+          context["self"].ruby_value.find(-> { context["fallback"] }) do |element|
+            context["search_fn"].receive_message(context, "call", [HArray.create_instance([element])]) == context["true"]
+          end
+        }),
         "to_s" => HFunction.new([:self], lambda { |context|
           inspected_members = context["self"].ruby_value.map do |member|
             member.receive_message(context, "to_s", []).ruby_value

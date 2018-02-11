@@ -44,6 +44,19 @@ length with the results of the function calls.
 ([0 1 2] map { |'x| (x + 1) }) /* => [1 2 3] */
 ```
 
+## `find else`
+
+Calls the provided function for each element. Returns the first element for
+which the function returns true. If none of the calls returns true, it will
+return the fallback value.
+
+**Example:**
+
+```
+(["a" "b" "c"] find { |'el| (el = "a") } else "not found")
+/* => "a" */
+```
+
 ## `to_s`
 
 This returns a string to represent the array in output.
