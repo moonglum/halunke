@@ -44,9 +44,19 @@ length with the results of the function calls.
 ([0 1 2] map { |'x| (x + 1) }) /* => [1 2 3] */
 ```
 
-## `inspect`
+## `to_s`
 
 This returns a string to represent the array in output.
+
+**Example:**
+
+```
+([0 1 2] to_s) /* => "0\n1\n2" */
+```
+
+## `inspect`
+
+This returns a string to represent the array for debugging.
 
 **Example:**
 

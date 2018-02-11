@@ -1,0 +1,13 @@
+(stdio puts "Hello World")
+(stdio puts 5.2)
+(stdio puts @["a" 2 "b" 3])
+(stdio puts ["a" "b"])
+(stdio puts true)
+(stdio puts false)
+
+(stdio p "Hello World")
+(stdio p 5.2)
+(stdio p @["a" 2 "b" 3])
+(stdio p ["a" "b"])
+(stdio p true)
+(stdio p false)

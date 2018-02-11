@@ -18,6 +18,12 @@ module Halunke
             context["fn"].receive_message(context, "call", [HArray.create_instance([x])])
           end)
         }),
+        "to_s" => HFunction.new([:self], lambda { |context|
+          inspected_members = context["self"].ruby_value.map do |member|
+            member.receive_message(context, "to_s", []).ruby_value
+          end
+          HString.create_instance("#{inspected_members.join("\n")}")
+        }),
         "inspect" => HFunction.new([:self], lambda { |context|
           inspected_members = context["self"].ruby_value.map { |member| member.inspect(context) }
           HString.create_instance("[#{inspected_members.join(' ')}]")

@@ -10,6 +10,15 @@ module Halunke
           end
           result ? result[1] : context["fallback"]
         }),
+        "to_s" => HFunction.new([:self], lambda { |context|
+          x = []
+          context["self"].ruby_value.each_pair do |key, value|
+            key_s = key.receive_message(context, "to_s", [])
+            value_s = value.receive_message(context, "to_s", [])
+            x.push("#{key_s.ruby_value} #{value_s.ruby_value}")
+          end
+          HString.create_instance(x.join("\n"))
+        }),
         "inspect" => HFunction.new([:self], lambda { |context|
           x = []
           context["self"].ruby_value.each_pair do |key, value|

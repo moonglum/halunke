@@ -17,7 +17,7 @@ module Halunke
       @root_context["Array"] = Halunke::Runtime::HArray
       @root_context["Dictionary"] = Halunke::Runtime::HDictionary
       @root_context["UnassignedBareword"] = Halunke::Runtime::HUnassignedBareword
-      @root_context["stdout"] = Halunke::Runtime::HStdout.create_instance
+      @root_context["stdio"] = Halunke::Runtime::HStdio.create_instance
       @root_context["web"] = Halunke::Runtime::HWeb.create_instance
 
       preludes.each do |prelude|

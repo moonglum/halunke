@@ -27,9 +27,19 @@ dictionary, the fallback value is used.
 (@["a" 1 "b" 2] @ "c" else "Not Found") /* => "Not Found" */
 ```
 
-## `inspect`
+## `to_s`
 
 This returns a string to represent the dictionary in output.
+
+**Example:**
+
+```
+(@["a" 1 "b" 2] to_s) /* => "a 1\nb 2" */
+```
+
+## `inspect`
+
+This returns a string to represent the dictionary for debugging.
 
 **Example:**
 

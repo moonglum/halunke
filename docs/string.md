@@ -53,6 +53,16 @@ Concatenate two strings.
 ("aaa" + "bbb") /* => "aaabbb" */
 ```
 
+## `to_s`
+
+This returns the string itself.
+
+**Example:**
+
+```
+("aaa" to_s) /* => "aaa" */
+```
+
 ## `inspect`
 
 This returns a string to represent the string in output. This is done by surrounding it with `"`

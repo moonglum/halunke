@@ -16,7 +16,7 @@
 )
 
 ('counter = (Counter from 0))
-(stdout puts (counter value))
+(stdio puts (counter value))
 
 ('increased_counter = (counter increase))
-(stdout puts (increased_counter value))
+(stdio puts (increased_counter value))

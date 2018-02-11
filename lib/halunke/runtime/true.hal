@@ -9,6 +9,9 @@
     "then else" { |'self 'true_branch 'false_branch|
       (true_branch call [])
     }
+    "to_s" { |'self 'other|
+      "true"
+    }
     "inspect" { |'self 'other|
       "true"
     }

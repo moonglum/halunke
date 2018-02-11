@@ -45,9 +45,20 @@ false, it will return the second branch.
 (false then { "yes" } else { "no" }) /* => "no" */
 ```
 
-## `inspect`
+## `to_s`
 
 This returns a string to represent true and false in output.
+
+**Example:**
+
+```
+(true to_s) /* => "true" */
+(false to_s) /* => "false" */
+```
+
+## `inspect`
+
+This returns a string to represent true and false for debugging.
 
 **Example:**
 

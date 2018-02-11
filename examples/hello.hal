@@ -16,4 +16,4 @@
 )
 
 ('greeter = (Greeter for "World"))
-(stdout puts (greeter greet))
+(stdio puts (greeter greet))

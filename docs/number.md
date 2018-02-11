@@ -85,9 +85,19 @@ it is false.
 (0.6 = 0.3) /* => false */
 ```
 
-## `inspect`
+## `to_s`
 
 This returns a string to represent the number in output.
+
+**Example:**
+
+```
+(0.6 to_s) /* => "0.6" */
+```
+
+## `inspect`
+
+This returns a string to represent the number for debugging.
 
 **Example:**
 
