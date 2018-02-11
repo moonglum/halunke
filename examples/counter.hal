@@ -1,0 +1,22 @@
+(Class new 'Counter
+    attributes ["value"]
+    methods @[
+      "value" { |'self|
+          (self @ "value" else 0)
+      }
+      "increase" { |'self|
+          (Counter new @["value" ((self value) + 1)])
+      }
+    ]
+    class_methods @[
+      "from" { |'self 'value|
+        (self new @["value" value])
+      }
+    ]
+)
+
+('counter = (Counter from 0))
+(stdout puts (counter value))
+
+('increased_counter = (counter increase))
+(stdout puts (increased_counter value))
