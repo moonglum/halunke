@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    halunke (0.5.1)
+    halunke (0.5.2)
       rack (~> 2.0.4)
 
 GEM
