@@ -31,7 +31,7 @@ Alternatively (if you don't have Ruby installed for example), you
 can run it with Docker:
 
 ```
-docker run --rm -ti bascht/halunke
+docker run --rm -ti moonglum/halunke
 ```
 
 ## How it works
