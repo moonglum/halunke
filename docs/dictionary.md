@@ -13,6 +13,14 @@ written in square brackets, prefixed with an `@`.
 @["a" 1 "b" 2]
 ```
 
+It has an alternative constructor to construct it from an array of
+two element arrays:
+
+```
+(Dictionary from [["a" 1] ["b" 2]])
+/* => @["a" 1 "b" 2] */
+```
+
 It can answer to the following message:
 
 ## `@ else`

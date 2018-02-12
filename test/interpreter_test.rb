@@ -188,6 +188,10 @@ class InterpreterTest < Minitest::Test
     assert_equal '@["x" 5 "y" 2]', @interpreter.eval('@["x" 5 "y" 2]')
   end
 
+  def test_dictionary_from_array
+    assert_equal '@["a" 1 "b" 2]', @interpreter.eval('(Dictionary from [["a" 1] ["b" 2]])')
+  end
+
   def test_dictionary_lookup
     assert_equal '2', @interpreter.eval('(@["x" 5 "y" 2] @ "y" else 7)')
     assert_equal '7', @interpreter.eval('(@["x" 5 "y" 2] @ "z" else 7)')

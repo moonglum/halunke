@@ -28,7 +28,11 @@ module Halunke
           HString.create_instance("@[#{x.join(' ')}]")
         })
       },
-      {},
+      {
+        "from" => HFunction.new([:self, :array], lambda { |context|
+          context["self"].create_instance(context["array"].ruby_value.map(&:ruby_value).to_h)
+        })
+      },
       true
     )
   end
