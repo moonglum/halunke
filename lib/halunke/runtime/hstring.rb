@@ -27,6 +27,17 @@ module Halunke
           end
           HDictionary.create_instance(h)
         }),
+        "scan" => HFunction.new([:self, :regexp], lambda { |context|
+          result = context["self"].ruby_value.scan(context["regexp"].ruby_value)
+
+          HArray.create_instance(result.map do |r|
+            if r.class == Array
+              HArray.create_instance(r.map { |x| HString.create_instance(x) })
+            else
+              HString.create_instance(r)
+            end
+          end)
+        }),
         "=" => HFunction.new([:self, :other], lambda { |context|
           if context["self"].ruby_value == context["other"].ruby_value
             context["true"]

@@ -85,6 +85,17 @@ class InterpreterTest < Minitest::Test
     assert_equal '"NOT FOUND"', @interpreter.eval(%{(match @ 0 else "NOT FOUND")})
   end
 
+  def test_scan_on_string
+    @interpreter.eval(%{('result = ("aaabaac" scan (Regexp from "a+")))})
+    assert_equal '"aaa"', @interpreter.eval(%{(result @ 0 else "NOT FOUND")})
+    assert_equal '"aa"', @interpreter.eval(%{(result @ 1 else "NOT FOUND")})
+    assert_equal '"NOT FOUND"', @interpreter.eval(%{(result @ 2 else "NOT FOUND")})
+
+    @interpreter.eval(%{('other_result = ("ab=2&bc=3" scan (Regexp from "([^&=]+)=([^&]*)")))})
+    assert_equal '"ab"', @interpreter.eval(%{((other_result @ 0 else []) @ 0 else "NOT FOUND")})
+    assert_equal '"2"', @interpreter.eval(%{((other_result @ 0 else []) @ 1 else "NOT FOUND")})
+  end
+
   def test_true
     assert_equal 'true', @interpreter.eval("true")
   end

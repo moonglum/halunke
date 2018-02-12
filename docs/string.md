@@ -38,6 +38,17 @@ by `\1` etc,
 /* => "<a>b<a>b<a>b" */
 ```
 
+## `scan`
+
+Find all occurrences of the given Regex. Returns an Array. If it doesn't
+include any groups, it contains Strings. If it contains groups, then it
+contains arrays of strings.
+
+```
+('result = ("aaabaac" scan (Regexp from "a+")))
+(result @ 0 else "NOT FOUND") /* => "aaa" */
+```
+
 ## `match`
 
 This matches a Regexp over a String an collects the results in a Dictionary.
