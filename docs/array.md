@@ -17,14 +17,16 @@ whitespace.
 
 It can answer to the following messages:
 
-## `@`
+## `@ else`
 
-Looks up a value in the Array by index.
+Looks up a value in the Array by index. If the index is out of
+bounds for the array, return the fallback value
 
 **Example:**
 
 ```
-([2 3 4] @ 1) /* => 3 */
+([2 3 4] @ 1 else "NOT FOUND") /* => 3 */
+([2 3 4] @ 3 else "NOT FOUND") /* => "NOT FOUND" */
 ```
 
 ## `=`

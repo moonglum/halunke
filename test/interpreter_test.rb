@@ -147,7 +147,8 @@ class InterpreterTest < Minitest::Test
   end
 
   def test_array_lookup
-    assert_equal "3", @interpreter.eval("([2 3 4] @ 1)")
+    assert_equal '3', @interpreter.eval('([2 3 4] @ 1 else "NOT FOUND")')
+    assert_equal '"NOT FOUND"', @interpreter.eval('([2 3 4] @ 3 else "NOT FOUND")')
   end
 
   def test_pattern_matching

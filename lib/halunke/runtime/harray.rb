@@ -13,8 +13,8 @@ module Halunke
             memo.receive_message(context, "and", [value])
           end
         }),
-        "@" => HFunction.new([:self, :index], lambda { |context|
-          context["self"].ruby_value[context["index"].ruby_value]
+        "@ else" => HFunction.new([:self, :index, :fallback], lambda { |context|
+          context["self"].ruby_value[context["index"].ruby_value] || context["fallback"]
         }),
         "map" => HFunction.new([:self, :fn], lambda { |context|
           return HArray.create_instance(context["self"].ruby_value.map do |x|
