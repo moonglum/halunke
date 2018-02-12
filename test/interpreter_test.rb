@@ -69,6 +69,12 @@ class InterpreterTest < Minitest::Test
     assert_equal '"cc"', @interpreter.eval(%{(match @ "bar" else "NOT FOUND")})
   end
 
+  def test_match_on_string_without_hit
+    @interpreter.eval(%{('regexp = (Regexp from "(?<foo>a+)b(?<bar>c+)"))})
+    @interpreter.eval(%{('match = ("aaaabbcc" match regexp))})
+    assert_equal '"NOT FOUND"', @interpreter.eval(%{(match @ 0 else "NOT FOUND")})
+  end
+
   def test_true
     assert_equal 'true', @interpreter.eval("true")
   end

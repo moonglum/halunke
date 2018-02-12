@@ -17,11 +17,13 @@ module Halunke
         "match" => HFunction.new([:self, :regexp], lambda { |context|
           match_data = context["self"].ruby_value.match(context["regexp"].ruby_value)
           h = {}
-          match_data.named_captures.each_pair do |key, value|
-            h[HString.create_instance(key)] = HString.create_instance(value)
-          end
-          match_data.to_a.each_with_index do |value, key|
-            h[HString.create_instance(key)] = HString.create_instance(value)
+          unless match_data.nil?
+            match_data.named_captures.each_pair do |key, value|
+              h[HString.create_instance(key)] = HString.create_instance(value)
+            end
+            match_data.to_a.each_with_index do |value, key|
+              h[HString.create_instance(key)] = HString.create_instance(value)
+            end
           end
           HDictionary.create_instance(h)
         }),
