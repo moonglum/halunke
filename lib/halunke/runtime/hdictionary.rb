@@ -10,6 +10,9 @@ module Halunke
           end
           result ? result[1] : context["fallback"]
         }),
+        "merge" => HFunction.new([:self, :other], lambda { |context|
+          HDictionary.create_instance(context["self"].ruby_value.merge(context["other"].ruby_value))
+        }),
         "to_s" => HFunction.new([:self], lambda { |context|
           x = []
           context["self"].ruby_value.each_pair do |key, value|

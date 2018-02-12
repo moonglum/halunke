@@ -35,6 +35,18 @@ dictionary, the fallback value is used.
 (@["a" 1 "b" 2] @ "c" else "Not Found") /* => "Not Found" */
 ```
 
+## `merge`
+
+Returns a new dictionary that is this dictionary merged with
+another dictionary.
+
+**Example:**
+
+```
+(@["a" 1 "b" 2] merge @["c" 3])
+/* => @["a" 1 "b" 2 "c" 3] */
+```
+
 ## `to_s`
 
 This returns a string to represent the dictionary in output.
