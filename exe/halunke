@@ -13,7 +13,7 @@ if ARGV.length == 0
   while (line = Readline.readline(">> ", true))
     begin
       value = interpreter.eval(line)
-      puts "=> #{value}"
+      puts "=> #{value}" if value
     rescue Exception => e
       puts "An Error Occurred: #{e.message}"
     end

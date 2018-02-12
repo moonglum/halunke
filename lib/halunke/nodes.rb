@@ -4,6 +4,10 @@ module Halunke
       nodes.map { |node| node.eval(context) }.last
     end
 
+    def empty?
+      nodes.empty?
+    end
+
     def to_message
       MessageNode.new(nodes)
     end
@@ -43,6 +47,7 @@ module Halunke
 
   FunctionNode = Struct.new(:params, :body) do
     def eval(context)
+      raise "This function would not return anything. That's forbidden." if body.empty?
       signature = params.nodes.map(&:node).map(&:value)
 
       context["Function"].new(signature, lambda { |call_context|

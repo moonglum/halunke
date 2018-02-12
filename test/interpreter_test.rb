@@ -6,6 +6,16 @@ class InterpreterTest < Minitest::Test
     @interpreter = Halunke::Interpreter.new
   end
 
+  def test_empty_program
+    assert_nil @interpreter.eval("")
+  end
+
+  def test_empty_function
+    assert_raises {
+      @interpreter.eval("{ }")
+    }
+  end
+
   def test_adding_two_numbers
     assert_equal '9', @interpreter.eval("(7 + 2)")
   end

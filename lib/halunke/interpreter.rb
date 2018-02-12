@@ -28,7 +28,8 @@ module Halunke
 
     def eval(str)
       nodes = @parser.parse(str)
-      nodes.eval(root_context).inspect(root_context)
+      result = nodes.eval(root_context)
+      result.nil? ? nil : result.inspect(root_context)
     end
 
     def preludes
