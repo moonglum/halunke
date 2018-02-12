@@ -6,6 +6,8 @@ require "readline"
 
 interpreter = Halunke::Interpreter.new
 
+Readline.completion_proc = ->(*) {[]}
+
 if ARGV.length == 0
   puts "Halunke #{Halunke::VERSION} REPL. Ctrl+d to quit"
   while (line = Readline.readline(">> ", true))
