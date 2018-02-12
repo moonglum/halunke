@@ -48,6 +48,25 @@ class InterpreterTest < Minitest::Test
 
   def test_replace_with_on_string
     assert_equal '"bhb"', @interpreter.eval('("aha" replace "a" with "b")')
+    assert_equal '"bhb"', @interpreter.eval('("aaahaaa" replace (Regexp from "a+") with "b")')
+  end
+
+  def test_match_on_string
+    @interpreter.eval(%{('regexp = (Regexp from "(a+)b(c+)"))})
+    @interpreter.eval(%{('match = ("aaaabcc" match regexp))})
+    assert_equal '"aaaabcc"', @interpreter.eval(%{(match @ 0 else "NOT FOUND")})
+    assert_equal '"aaaa"', @interpreter.eval(%{(match @ 1 else "NOT FOUND")})
+    assert_equal '"cc"', @interpreter.eval(%{(match @ 2 else "NOT FOUND")})
+  end
+
+  def test_match_on_string_with_named_captures
+    @interpreter.eval(%{('regexp = (Regexp from "(?<foo>a+)b(?<bar>c+)"))})
+    @interpreter.eval(%{('match = ("aaaabcc" match regexp))})
+    assert_equal '"aaaabcc"', @interpreter.eval(%{(match @ 0 else "NOT FOUND")})
+    assert_equal '"aaaa"', @interpreter.eval(%{(match @ 1 else "NOT FOUND")})
+    assert_equal '"cc"', @interpreter.eval(%{(match @ 2 else "NOT FOUND")})
+    assert_equal '"aaaa"', @interpreter.eval(%{(match @ "foo" else "NOT FOUND")})
+    assert_equal '"cc"', @interpreter.eval(%{(match @ "bar" else "NOT FOUND")})
   end
 
   def test_true
@@ -183,6 +202,10 @@ class InterpreterTest < Minitest::Test
   def test_array_find
     assert_equal '"a"', @interpreter.eval(%{(["a" "b" "c"] find { |'el| (el = "a") } else "not found")})
     assert_equal '"not found"', @interpreter.eval(%{(["a" "b" "c"] find { |'el| (el = "d") } else "not found")})
+  end
+
+  def test_regexp
+    assert_equal '/a+/', @interpreter.eval(%{(Regexp from "a+")})
   end
 
   private

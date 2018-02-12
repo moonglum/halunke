@@ -17,6 +17,7 @@ module Halunke
       @root_context["Array"] = Halunke::Runtime::HArray
       @root_context["Dictionary"] = Halunke::Runtime::HDictionary
       @root_context["UnassignedBareword"] = Halunke::Runtime::HUnassignedBareword
+      @root_context["Regexp"] = Halunke::Runtime::HRegexp
       @root_context["stdio"] = Halunke::Runtime::HStdio.create_instance
       @root_context["web"] = Halunke::Runtime::HWeb.create_instance
 

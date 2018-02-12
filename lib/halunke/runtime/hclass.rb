@@ -56,7 +56,7 @@ module Halunke
       end
 
       def receive_message(context, message_name, message_value)
-        if message_name == "new"
+        if message_name == "new" && !native?
           create_instance(message_value[0])
         elsif @class_methods.keys.include? message_name
           m = @class_methods[message_name]
