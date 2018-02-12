@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
 
+require "halunke/version"
 require "halunke/interpreter"
 require "readline"
 
 interpreter = Halunke::Interpreter.new
 
 if ARGV.length == 0
-  puts "Halunke REPL. Ctrl+d to quit"
+  puts "Halunke #{Halunke::VERSION} REPL. Ctrl+d to quit"
   while (line = Readline.readline(">> ", true))
     begin
       value = interpreter.eval(line)
