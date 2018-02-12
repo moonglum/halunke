@@ -13,6 +13,9 @@ module Halunke
             memo.receive_message(context, "and", [value])
           end
         }),
+        "@" => HFunction.new([:self, :index], lambda { |context|
+          context["self"].ruby_value[context["index"].ruby_value]
+        }),
         "map" => HFunction.new([:self, :fn], lambda { |context|
           return HArray.create_instance(context["self"].ruby_value.map do |x|
             context["fn"].receive_message(context, "call", [HArray.create_instance([x])])

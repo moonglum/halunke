@@ -17,6 +17,16 @@ whitespace.
 
 It can answer to the following messages:
 
+## `@`
+
+Looks up a value in the Array by index.
+
+**Example:**
+
+```
+([2 3 4] @ 1) /* => 3 */
+```
+
 ## `=`
 
 Compares to arrays. If they have the same length and each item from

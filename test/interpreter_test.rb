@@ -146,6 +146,10 @@ class InterpreterTest < Minitest::Test
     assert_equal "[2 3 4]", @interpreter.eval("[2 3 4]")
   end
 
+  def test_array_lookup
+    assert_equal "3", @interpreter.eval("([2 3 4] @ 1)")
+  end
+
   def test_pattern_matching
     assert_equal "true", @interpreter.eval("(['a 2] = [1 2])")
     assert_equal "1", @interpreter.eval("a")
