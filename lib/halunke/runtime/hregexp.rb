@@ -4,7 +4,10 @@ module Halunke
       "Regexp",
       [],
       {
-        "inspect" => HFunction.new([:self, :attr], lambda { |context|
+        "to_s" => HFunction.new([:self], lambda { |context|
+          HString.create_instance(context["self"].ruby_value.inspect)
+        }),
+        "inspect" => HFunction.new([:self], lambda { |context|
           HString.create_instance(context["self"].ruby_value.inspect)
         })
       },
