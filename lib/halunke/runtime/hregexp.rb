@@ -4,6 +4,9 @@ module Halunke
       "Regexp",
       [],
       {
+        "to_b" => HFunction.new([:self], lambda { |context|
+          context["true"]
+        }),
         "to_s" => HFunction.new([:self], lambda { |context|
           HString.create_instance(context["self"].ruby_value.inspect)
         }),

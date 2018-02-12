@@ -26,6 +26,9 @@ module Halunke
             context["search_fn"].receive_message(context, "call", [HArray.create_instance([element])]) == context["true"]
           end
         }),
+        "to_b" => HFunction.new([:self], lambda { |context|
+          context["true"]
+        }),
         "to_s" => HFunction.new([:self], lambda { |context|
           inspected_members = context["self"].ruby_value.map do |member|
             member.receive_message(context, "to_s", []).ruby_value

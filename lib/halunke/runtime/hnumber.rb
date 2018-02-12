@@ -37,6 +37,9 @@ module Halunke
             context["false"]
           end
         }),
+        "to_b" => HFunction.new([:self], lambda { |context|
+          context["true"]
+        }),
         "to_s" => HFunction.new([:self], lambda { |context|
           float_value = context["self"].ruby_value.to_f
           float_value = float_value.to_i if float_value.to_i == float_value

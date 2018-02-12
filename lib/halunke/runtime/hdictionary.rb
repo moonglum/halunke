@@ -13,6 +13,9 @@ module Halunke
         "merge" => HFunction.new([:self, :other], lambda { |context|
           HDictionary.create_instance(context["self"].ruby_value.merge(context["other"].ruby_value))
         }),
+        "to_b" => HFunction.new([:self], lambda { |context|
+          context["true"]
+        }),
         "to_s" => HFunction.new([:self], lambda { |context|
           x = []
           context["self"].ruby_value.each_pair do |key, value|
