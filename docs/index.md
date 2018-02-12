@@ -82,7 +82,9 @@ Now you can send messages to `a` like `(a + 2)`. Why is there a `'` though? The
 `'` signals an unassigned bareword. That means you can send it a `=` message
 with a value, and it will assign it. Be aware that you can't reassign. So if
 you assign something to a once, it will stay like this forever (within that
-scope). Reassigning will result in an error.
+scope). Reassigning will result in an error. *There will be reassignable
+references in the future, see [the issue for
+details](https://github.com/moonglum/halunke/issues/3)*
 
 The values are also immutable. If you send a message to an object,
 it will not change the object, but it will return an answer to you.

@@ -3,7 +3,8 @@ title: Web
 ---
 
 The object `web` is available from everywhere. *This will change in the future.
-Interacting with STDIO is IO and will be isolated.*
+[Interacting with STDIO is IO and will be
+isolated.](https://github.com/moonglum/halunke/issues/4)*
 
 You can send the `run on` message to `web`. It expects the first object to be
 your application (more on that later) and the second one the bind address and

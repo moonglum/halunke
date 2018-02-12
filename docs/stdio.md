@@ -3,7 +3,8 @@ title: Stdio
 ---
 
 The object `stdio` is available from everywhere. *This will change in the
-future. Interacting with STDIO is IO and will be isolated.*
+future. [Interacting with STDIO is IO and will be
+isolated.](https://github.com/moonglum/halunke/issues/4)*
 
 ## `puts`
 
