@@ -21,6 +21,11 @@ module Halunke
             context["fn"].receive_message(context, "call", [HArray.create_instance([x])])
           end)
         }),
+        "reduce with" => HFunction.new([:self, :fn, :initial], lambda { |context|
+          context["self"].ruby_value.reduce(context["initial"]) do |memo, current|
+            context["fn"].receive_message(context, "call", [HArray.create_instance([memo, current])])
+          end
+        }),
         "find else" => HFunction.new([:self, :search_fn, :fallback], lambda { |context|
           context["self"].ruby_value.find(-> { context["fallback"] }) do |element|
             context["search_fn"].receive_message(context, "call", [HArray.create_instance([element])]) == context["true"]

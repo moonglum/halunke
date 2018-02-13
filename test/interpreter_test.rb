@@ -196,6 +196,10 @@ class InterpreterTest < Minitest::Test
     assert_equal "[1 2 3]", @interpreter.eval("([0 1 2] map { |'a| (a + 1) })")
   end
 
+  def test_reduce_with
+    assert_equal "6", @interpreter.eval("([1 2 3] reduce {|'memo 'el| (memo + el) } with 0)")
+  end
+
   def test_dictionary
     assert_equal '@["x" 5 "y" 2]', @interpreter.eval('@["x" 5 "y" 2]')
   end

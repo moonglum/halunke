@@ -56,6 +56,19 @@ length with the results of the function calls.
 ([0 1 2] map { |'x| (x + 1) }) /* => [1 2 3] */
 ```
 
+## `reduce with`
+
+Combines all elements of the array into a single element. The second argument
+is the initial value of the memo variable. The function will be called once
+for each of the elements. The first argument is the memo, the second the current
+element. The result of each iteration will be the memo for the next call.
+The final value of memo will be returned.
+
+```
+([1 2 3] reduce {|'memo 'el| (memo + el) } with 0)
+/* => 6
+```
+
 ## `find else`
 
 Calls the provided function for each element. Returns the first element for
