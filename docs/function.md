@@ -14,5 +14,5 @@ with an array with the arguments (in our case two):
 
 ```
 (fn call [1 2])
-/* => 6 */
+/* => 3 */
 ```
