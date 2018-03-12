@@ -3,7 +3,7 @@ layout: default
 title: Welcome to Halunke!
 ---
 
-<p align="center"><img src="/docs/img/halunke-logo.png" alt="Halunke" width="600px" /></p>
+<p align="center"><img src="/img/halunke-logo.png" alt="Halunke" width="600px" /></p>
 
 Halunke is a dynamic, object-oriented language that has a simple grammar
 inspired by Smalltalk and Lisp. It is created to show that interesting
