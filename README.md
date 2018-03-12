@@ -1,4 +1,4 @@
-<p align="center"><img src="/docs/img/halunke-logo.png" alt="Halunke"/></p>
+<p align="center"><img src="/docs/img/halunke-logo.png" alt="Halunke" width="600px" /></p>
 
 # Halunke
 
