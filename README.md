@@ -1,3 +1,5 @@
+<p align="center"><img src="/docs/img/halunke-logo.png" alt="Halunke" width="600px" /></p>
+
 # Halunke
 
 Halunke is a dynamic, object-oriented language that has a simple grammar
