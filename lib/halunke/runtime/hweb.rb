@@ -31,6 +31,10 @@ module Halunke
           }, { Host: host, Port: port })
 
           env["host_port"]
+        }),
+        "run" => HFunction.new([:self, :app], lambda { |context|
+          host_port = HString.create_instance("0.0.0.0:#{ENV['PORT']}")
+          context["self"].receive_message(context, "run on", [context["app"], host_port])
         })
       },
       {},

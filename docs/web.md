@@ -10,6 +10,10 @@ You can send the `run on` message to `web`. It expects the first object to be
 your application (more on that later) and the second one the bind address and
 port in the format: `0.0.0.0:3000`.
 
+You can also send the `run` message on `web`. It only expects the application,
+and not the bind address and port. It takes that from the `PORT` environment
+variable.
+
 Your app needs to be an object that can receive the `call` message. It will be
 called with the environment dictionary that represents the request. It expects
 that your return an array that represents the response.
