@@ -1,14 +1,14 @@
 PATH
   remote: .
   specs:
-    halunke (0.7.0)
+    halunke (0.8.0)
       rack (~> 2.0.4)
 
 GEM
   remote: https://rubygems.org/
   specs:
     minitest (5.11.3)
-    racc (1.4.14)
+    racc (1.4.15)
     rack (2.0.6)
     rake (12.3.2)
 
@@ -16,11 +16,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.16.1)
+  bundler (~> 1.17.2)
   halunke!
   minitest (~> 5.11.3)
-  racc (~> 1.4.14)
-  rake (~> 12.3.0)
+  racc (~> 1.4.15)
+  rake (~> 12.3.2)
 
 BUNDLED WITH
-   1.16.4
+   1.17.2
