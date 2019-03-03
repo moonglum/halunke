@@ -1,4 +1,5 @@
 require "test_helper"
+require "halunke/interpreter"
 
 class NodesTest < Minitest::Test
   def setup

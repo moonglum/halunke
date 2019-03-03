@@ -1,3 +1,4 @@
+require "test_helper"
 require "halunke/lexer"
 
 class LexerTest < Minitest::Test

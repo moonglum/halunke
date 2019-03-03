@@ -1,3 +1,4 @@
+require "test_helper"
 require "halunke/parser"
 
 class ParserTest < Minitest::Test
