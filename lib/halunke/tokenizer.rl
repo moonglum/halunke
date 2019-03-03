@@ -5,7 +5,7 @@
   number = ('+'|'-')?[0-9]+('.'[0-9]+)?;
   string = '"' [^"]* '"';
   unassigned_bareword = "'" [a-zA-Z_]+;
-  bareword = [a-zA-Z_]+ | '+' | '-' | '*' | '/' | '<' | '>' | '=' | '@';
+  bareword = [a-zA-Z_]+ | '+' | '-' | '*' | '/' | '<' | '>' | '=' | '@' | '**';
   open_paren = '(';
   close_paren = ')';
   open_curly = '{';

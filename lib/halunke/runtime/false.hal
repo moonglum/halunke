@@ -9,10 +9,10 @@
     "then else" { |'self 'true_branch 'false_branch|
       (false_branch call [])
     }
-    "to_b" { |'self|
+    "to_boolean" { |'self|
       self
     }
-    "to_s" { |'self 'other|
+    "to_string" { |'self 'other|
       "false"
     }
     "inspect" { |'self 'other|

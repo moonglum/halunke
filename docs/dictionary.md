@@ -47,14 +47,24 @@ another dictionary.
 /* => @["a" 1 "b" 2 "c" 3] */
 ```
 
-## `to_s`
+## `to_boolean`
+
+This returns true.
+
+**Example:**
+
+```
+(@["a" 1 "b" 2] to_boolean) /* => true */
+```
+
+## `to_string`
 
 This returns a string to represent the dictionary in output.
 
 **Example:**
 
 ```
-(@["a" 1 "b" 2] to_s) /* => "a 1\nb 2" */
+(@["a" 1 "b" 2] to_string) /* => "a 1\nb 2" */
 ```
 
 ## `inspect`

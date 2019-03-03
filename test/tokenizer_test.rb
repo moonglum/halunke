@@ -66,6 +66,18 @@ class TokenizerTest < Minitest::Test
     assert_equal [[:BAREWORD, "-"]], @tokenizer.tokenize("-")
   end
 
+  def test_multiply
+    assert_equal [[:BAREWORD, "*"]], @tokenizer.tokenize("*")
+  end
+
+  def test_divide
+    assert_equal [[:BAREWORD, "/"]], @tokenizer.tokenize("/")
+  end
+
+  def test_exponation
+    assert_equal [[:BAREWORD, "**"]], @tokenizer.tokenize("**")
+  end
+
   def test_less_than
     assert_equal [[:BAREWORD, "<"]], @tokenizer.tokenize("<")
   end

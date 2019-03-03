@@ -45,15 +45,26 @@ false, it will return the second branch.
 (false then { "yes" } else { "no" }) /* => "no" */
 ```
 
-## `to_s`
+## `to_boolean`
+
+This returns the object itself
+
+**Example:**
+
+```
+(true to_boolean) /* => true */
+(false to_boolean) /* => false */
+```
+
+## `to_string`
 
 This returns a string to represent true and false in output.
 
 **Example:**
 
 ```
-(true to_s) /* => "true" */
-(false to_s) /* => "false" */
+(true to_string) /* => "true" */
+(false to_string) /* => "false" */
 ```
 
 ## `inspect`

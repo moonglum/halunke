@@ -38,17 +38,6 @@ by `\1` etc,
 /* => "<a>b<a>b<a>b" */
 ```
 
-## `scan`
-
-Find all occurrences of the given Regex. Returns an Array. If it doesn't
-include any groups, it contains Strings. If it contains groups, then it
-contains arrays of strings.
-
-```
-('result = ("aaabaac" scan (Regexp from "a+")))
-(result @ 0 else "NOT FOUND") /* => "aaa" */
-```
-
 ## `match`
 
 This matches a Regexp over a String an collects the results in a Dictionary.
@@ -65,6 +54,17 @@ referenced by their name and their position.
 (match @ 2 else "NOT FOUND") /* => "cc" */
 (match @ "foo" else "NOT FOUND") /* => "aaaa" */
 (match @ "bar" else "NOT FOUND") /* => "cc" */
+```
+
+## `scan`
+
+Find all occurrences of the given Regex. Returns an Array. If it doesn't
+include any groups, it contains Strings. If it contains groups, then it
+contains arrays of strings.
+
+```
+('result = ("aaabaac" scan (Regexp from "a+")))
+(result @ 0 else "NOT FOUND") /* => "aaa" */
 ```
 
 ## `=`
@@ -88,14 +88,24 @@ Concatenate two strings.
 ("aaa" + "bbb") /* => "aaabbb" */
 ```
 
-## `to_s`
+## `to_boolean`
+
+This returns true.
+
+**Example:**
+
+```
+("aaa" to_boolean) /* => true */
+```
+
+## `to_string`
 
 This returns the string itself.
 
 **Example:**
 
 ```
-("aaa" to_s) /* => "aaa" */
+("aaa" to_string) /* => "aaa" */
 ```
 
 ## `inspect`

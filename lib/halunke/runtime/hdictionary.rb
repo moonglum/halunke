@@ -13,14 +13,14 @@ module Halunke
         "merge" => HFunction.new([:self, :other], lambda { |context|
           HDictionary.create_instance(context["self"].ruby_value.merge(context["other"].ruby_value))
         }),
-        "to_b" => HFunction.new([:self], lambda { |context|
+        "to_boolean" => HFunction.new([:self], lambda { |context|
           context["true"]
         }),
-        "to_s" => HFunction.new([:self], lambda { |context|
+        "to_string" => HFunction.new([:self], lambda { |context|
           x = []
           context["self"].ruby_value.each_pair do |key, value|
-            key_s = key.receive_message(context, "to_s", [])
-            value_s = value.receive_message(context, "to_s", [])
+            key_s = key.receive_message(context, "to_string", [])
+            value_s = value.receive_message(context, "to_string", [])
             x.push("#{key_s.ruby_value} #{value_s.ruby_value}")
           end
           HString.create_instance(x.join("\n"))

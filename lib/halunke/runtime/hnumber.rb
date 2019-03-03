@@ -16,6 +16,9 @@ module Halunke
         "*" => HFunction.new([:self, :other], lambda { |context|
           HNumber.create_instance(context["self"].ruby_value * context["other"].ruby_value)
         }),
+        "**" => HFunction.new([:self, :other], lambda { |context|
+          HNumber.create_instance(context["self"].ruby_value ** context["other"].ruby_value)
+        }),
         "<" => HFunction.new([:self, :other], lambda { |context|
           if context["self"].ruby_value < context["other"].ruby_value
             context["true"]
@@ -37,16 +40,16 @@ module Halunke
             context["false"]
           end
         }),
-        "to_b" => HFunction.new([:self], lambda { |context|
+        "to_boolean" => HFunction.new([:self], lambda { |context|
           context["true"]
         }),
-        "to_s" => HFunction.new([:self], lambda { |context|
+        "to_string" => HFunction.new([:self], lambda { |context|
           float_value = context["self"].ruby_value.to_f
           float_value = float_value.to_i if float_value.to_i == float_value
           HString.create_instance(float_value.to_s)
         }),
         "inspect" => HFunction.new([:self], lambda { |context|
-          context["self"].receive_message(context, "to_s", [])
+          context["self"].receive_message(context, "to_string", [])
         })
       },
       {},

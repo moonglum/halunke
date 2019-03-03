@@ -52,6 +52,16 @@ This multiplies two numbers.
 (0.6 * 0.3) /* => 0.18 */
 ```
 
+## `**`
+
+This performs exponation.
+
+**Example:**
+
+```
+(0.6 ** 0.3) /* => 0.8579172004440949 */
+```
+
 ## `<`
 
 This compares two numbers. It is true, if the first number is smaller than the
@@ -85,14 +95,24 @@ it is false.
 (0.6 = 0.3) /* => false */
 ```
 
-## `to_s`
+## `to_boolean`
+
+This returns true.
+
+**Example:**
+
+```
+(0.6 to_boolean) /* => true */
+```
+
+## `to_string`
 
 This returns a string to represent the number in output.
 
 **Example:**
 
 ```
-(0.6 to_s) /* => "0.6" */
+(0.6 to_string) /* => "0.6" */
 ```
 
 ## `inspect`

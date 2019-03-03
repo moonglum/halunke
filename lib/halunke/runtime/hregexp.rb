@@ -4,10 +4,10 @@ module Halunke
       "Regexp",
       [],
       {
-        "to_b" => HFunction.new([:self], lambda { |context|
+        "to_boolean" => HFunction.new([:self], lambda { |context|
           context["true"]
         }),
-        "to_s" => HFunction.new([:self], lambda { |context|
+        "to_string" => HFunction.new([:self], lambda { |context|
           HString.create_instance(context["self"].ruby_value.inspect)
         }),
         "inspect" => HFunction.new([:self], lambda { |context|

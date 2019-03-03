@@ -20,6 +20,10 @@ class InterpreterTest < Minitest::Test
     assert_equal '9', @interpreter.eval("(7 + 2)")
   end
 
+  def test_exponation
+    assert_equal '0.8579172004440949', @interpreter.eval("(0.6 ** 0.3)")
+  end
+
   def test_reverse_string
     assert_equal '"eknulah"', @interpreter.eval('("halunke" reverse)')
   end

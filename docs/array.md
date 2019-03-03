@@ -82,14 +82,24 @@ return the fallback value.
 /* => "a" */
 ```
 
-## `to_s`
+## `to_boolean`
+
+This returns true.
+
+**Example:**
+
+```
+([0 1 2] to_boolean) /* => true */
+```
+
+## `to_string`
 
 This returns a string to represent the array in output.
 
 **Example:**
 
 ```
-([0 1 2] to_s) /* => "0\n1\n2" */
+([0 1 2] to_string) /* => "0\n1\n2" */
 ```
 
 ## `inspect`

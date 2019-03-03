@@ -5,11 +5,11 @@ module Halunke
       [],
       {
         "puts" => HFunction.new([:self, :obj], lambda { |context|
-          str = context["obj"].receive_message(context, "to_s", [])
+          str = context["obj"].receive_message(context, "to_string", [])
           puts str.ruby_value
           str
         }),
-        "p" => HFunction.new([:self, :obj], lambda { |context|
+        "examine" => HFunction.new([:self, :obj], lambda { |context|
           str = context["obj"].receive_message(context, "inspect", [])
           puts str.ruby_value
           context["obj"]

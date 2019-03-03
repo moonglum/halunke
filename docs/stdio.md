@@ -9,7 +9,7 @@ isolated.](https://github.com/moonglum/halunke/issues/4)*
 ## `puts`
 
 Prints the object to stdout. To determine how to represent the object, it will
-send the `to_s` message to the object, expecting a string.
+send the `to_string` message to the object, expecting a string.
 
 **Example:**
 
@@ -35,7 +35,7 @@ true
 false
 ```
 
-## `p`
+## `examine`
 
 Prints the object to stdout for debugging. To determine how to represent the
 object, it will send the `inspect` message to the object, expecting a string.
@@ -43,12 +43,12 @@ object, it will send the `inspect` message to the object, expecting a string.
 **Example:**
 
 ```
-(stdio p "Hello World")
-(stdio p 5.2)
-(stdio p @["a" 2 "b" 3])
-(stdio p ["a" "b"])
-(stdio p true)
-(stdio p false)
+(stdio examine "Hello World")
+(stdio examine 5.2)
+(stdio examine @["a" 2 "b" 3])
+(stdio examine ["a" "b"])
+(stdio examine true)
+(stdio examine false)
 ```
 
 This will output:
