@@ -20,6 +20,11 @@ class InterpreterTest < Minitest::Test
     assert_equal '9', @interpreter.eval("(7 + 2)")
   end
 
+  def test_number_hack
+    assert_equal '0.6', @interpreter.eval("(0.3+0.3)")
+    assert_equal '0.6', @interpreter.eval("(0.9-0.3)")
+  end
+
   def test_exponation
     assert_equal '0.8579172004440949', @interpreter.eval("(0.6 ** 0.3)")
   end

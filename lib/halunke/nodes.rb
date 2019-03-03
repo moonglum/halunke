@@ -81,7 +81,12 @@ module Halunke
   MessageNode = Struct.new(:nodes) do
     def eval(context)
       if nodes.length == 1
-        [nodes[0].value, []]
+        if nodes[0].is_a? NumberNode
+          # hack to allow expressions like (1+5)
+          ["+", [nodes[0].eval(context)]]
+        else
+          [nodes[0].value, []]
+        end
       elsif nodes.length.even?
         name = []
         message = []
