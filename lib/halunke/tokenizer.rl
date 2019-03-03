@@ -1,6 +1,6 @@
 =begin
 %%{
-  machine lexer;
+  machine tokenizer;
 
   number = ('+'|'-')?[0-9]+('.'[0-9]+)?;
   string = '"' [^"]* '"';
@@ -41,7 +41,7 @@
 =end
 
 module Halunke
-  class Lexer
+  class Tokenizer
     def initialize
       %% write data;
       @tokens = []

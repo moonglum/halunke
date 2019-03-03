@@ -1,9 +1,9 @@
 require "bundler/gem_tasks"
 require "rake/testtask"
 
-desc 'Compile Lexer with Ragel'
+desc 'Compile Tokenizer and Parser'
 task :compile do
-  sh 'ragel -R -o lib/halunke/lexer.rb lib/halunke/lexer.rl'
+  sh 'ragel -R -o lib/halunke/tokenizer.rb lib/halunke/tokenizer.rl'
   sh 'racc -o lib/halunke/parser.rb lib/halunke/grammar.y'
 end
 

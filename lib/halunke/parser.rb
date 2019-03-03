@@ -7,7 +7,7 @@
 require 'racc/parser.rb'
 
 
-require "halunke/lexer"
+require "halunke/tokenizer"
 require "halunke/nodes"
 
 module Halunke
@@ -16,7 +16,7 @@ module Halunke
 module_eval(<<'...end grammar.y/module_eval...', 'grammar.y', 50)
 
 def parse(code)
-  @tokens = Lexer.new.tokenize(code)
+  @tokens = Tokenizer.new.tokenize(code)
   do_parse
 end
 

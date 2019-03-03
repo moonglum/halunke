@@ -43,13 +43,13 @@ end
 
 ---- header
 
-require "halunke/lexer"
+require "halunke/tokenizer"
 require "halunke/nodes"
 
 ---- inner
 
 def parse(code)
-  @tokens = Lexer.new.tokenize(code)
+  @tokens = Tokenizer.new.tokenize(code)
   do_parse
 end
 
