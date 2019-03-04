@@ -285,73 +285,73 @@ when 5 then
 # line 23 "lib/halunke/tokenizer.rl"
 		begin
 te = p+1
- begin  emit(:STRING, data[ts+1...te-1])  end
+ begin  emit(:STRING, data[ts+1...te-1], ts, te - 1)  end
 		end
 when 6 then
 # line 25 "lib/halunke/tokenizer.rl"
 		begin
 te = p+1
- begin  emit(:BAREWORD, data[ts...te])  end
+ begin  emit(:BAREWORD, data[ts...te], ts, te - 1)  end
 		end
 when 7 then
 # line 26 "lib/halunke/tokenizer.rl"
 		begin
 te = p+1
- begin  emit(:OPEN_PAREN, data[ts...te])  end
+ begin  emit(:OPEN_PAREN, data[ts...te], ts, te - 1)  end
 		end
 when 8 then
 # line 27 "lib/halunke/tokenizer.rl"
 		begin
 te = p+1
- begin  emit(:CLOSE_PAREN, data[ts...te])  end
+ begin  emit(:CLOSE_PAREN, data[ts...te], ts, te - 1)  end
 		end
 when 9 then
 # line 28 "lib/halunke/tokenizer.rl"
 		begin
 te = p+1
- begin  emit(:OPEN_CURLY, data[ts...te])  end
+ begin  emit(:OPEN_CURLY, data[ts...te], ts, te - 1)  end
 		end
 when 10 then
 # line 29 "lib/halunke/tokenizer.rl"
 		begin
 te = p+1
- begin  emit(:CLOSE_CURLY, data[ts...te])  end
+ begin  emit(:CLOSE_CURLY, data[ts...te], ts, te - 1)  end
 		end
 when 11 then
 # line 30 "lib/halunke/tokenizer.rl"
 		begin
 te = p+1
- begin  emit(:OPEN_BRACKET, data[ts...te])  end
+ begin  emit(:OPEN_BRACKET, data[ts...te], ts, te - 1)  end
 		end
 when 12 then
 # line 31 "lib/halunke/tokenizer.rl"
 		begin
 te = p+1
- begin  emit(:CLOSE_BRACKET, data[ts...te])  end
+ begin  emit(:CLOSE_BRACKET, data[ts...te], ts, te - 1)  end
 		end
 when 13 then
 # line 32 "lib/halunke/tokenizer.rl"
 		begin
 te = p+1
- begin  emit(:OPEN_DICT_BRACKET, data[ts...te])  end
+ begin  emit(:OPEN_DICT_BRACKET, data[ts...te], ts, te - 1)  end
 		end
 when 14 then
 # line 33 "lib/halunke/tokenizer.rl"
 		begin
 te = p+1
- begin  emit(:START_COMMENT, data[ts...te])  end
+ begin  emit(:START_COMMENT, data[ts...te], ts, te - 1)  end
 		end
 when 15 then
 # line 34 "lib/halunke/tokenizer.rl"
 		begin
 te = p+1
- begin  emit(:END_COMMENT, data[ts...te])  end
+ begin  emit(:END_COMMENT, data[ts...te], ts, te - 1)  end
 		end
 when 16 then
 # line 35 "lib/halunke/tokenizer.rl"
 		begin
 te = p+1
- begin  emit(:BAR, data[ts...te])  end
+ begin  emit(:BAR, data[ts...te], ts, te - 1)  end
 		end
 when 17 then
 # line 36 "lib/halunke/tokenizer.rl"
@@ -368,13 +368,13 @@ when 19 then
 # line 22 "lib/halunke/tokenizer.rl"
 		begin
 te = p
-p = p - 1; begin  emit(:NUMBER, data[ts...te].to_r)  end
+p = p - 1; begin  emit(:NUMBER, data[ts...te].to_r, ts, te - 1)  end
 		end
 when 20 then
 # line 25 "lib/halunke/tokenizer.rl"
 		begin
 te = p
-p = p - 1; begin  emit(:BAREWORD, data[ts...te])  end
+p = p - 1; begin  emit(:BAREWORD, data[ts...te], ts, te - 1)  end
 		end
 when 21 then
 # line 37 "lib/halunke/tokenizer.rl"
@@ -386,7 +386,7 @@ when 22 then
 # line 22 "lib/halunke/tokenizer.rl"
 		begin
  begin p = ((te))-1; end
- begin  emit(:NUMBER, data[ts...te].to_r)  end
+ begin  emit(:NUMBER, data[ts...te].to_r, ts, te - 1)  end
 		end
 when 23 then
 # line 37 "lib/halunke/tokenizer.rl"
@@ -400,7 +400,7 @@ when 24 then
 	case act
 	when 3 then
 	begin begin p = ((te))-1; end
- emit(:UNASSIGNED_BAREWORD, data[ts+1 ...te]) end
+ emit(:UNASSIGNED_BAREWORD, data[ts+1 ...te], ts, te - 1) end
 	when 16 then
 	begin begin p = ((te))-1; end
  raise "Could not lex '#{ data[ts...te] }'" end
@@ -460,8 +460,8 @@ end
 
     private
 
-    def emit(type, value)
-      @tokens << [ type, value ]
+    def emit(type, value, ts, te)
+      @tokens << [ type, [ value, ts, te ] ]
     end
   end
 end

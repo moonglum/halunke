@@ -190,25 +190,25 @@ module_eval(<<'.,.,', 'grammar.y', 26)
 
 module_eval(<<'.,.,', 'grammar.y', 30)
   def _reduce_4(val, _values)
-     NumberNode.new(val[0]) 
+     NumberNode.new(val[0][0]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 31)
   def _reduce_5(val, _values)
-     StringNode.new(val[0]) 
+     StringNode.new(val[0][0]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 32)
   def _reduce_6(val, _values)
-     BarewordNode.new(val[0]) 
+     BarewordNode.new(val[0][0]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 33)
   def _reduce_7(val, _values)
-     UnassignedNode.new(BarewordNode.new(val[0])) 
+     UnassignedNode.new(BarewordNode.new(val[0][0])) 
   end
 .,.,
 
