@@ -55,12 +55,11 @@ class NodesTest < Minitest::Test
   end
 
   def test_message_send
-    skip "convince minitest mock to expect a third argument"
     message = Object.new
     message_node = Minitest::Mock.new
     message_node.expect :eval, [message], [@context]
     receiver = Minitest::Mock.new
-    receiver.expect :receive_message, :result, [@context, message]
+    receiver.expect :receive_message, :result, [@context, message, any_keyword_arguments]
     receiver_node = Minitest::Mock.new
     receiver_node.expect :eval, receiver, [@context]
     node = Halunke::MessageSendNode.new(receiver_node, message_node)
@@ -118,5 +117,11 @@ class NodesTest < Minitest::Test
 
     node.eval(context)
     unassigned_bareword.verify
+  end
+
+  private
+
+  def any_keyword_arguments
+    Hash # Since Minitest::Mock will perform a === on each argument
   end
 end
