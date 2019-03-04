@@ -1,7 +1,10 @@
+require "halunke/source_code_position"
+
 module Halunke
   module Runtime
     class HObject
       attr_reader :dict
+      attr_reader :runtime_class
 
       def initialize(runtime_class, dict)
         @runtime_class = runtime_class
@@ -13,13 +16,15 @@ module Halunke
         end
       end
 
-      def receive_message(context, message_name, message_value)
+      def receive_message(context, message_name, message_value, source_code_position: NullSourceCodePosition.new)
         if message_name == "@ else"
           @dict.fetch(message_value[0].ruby_value, message_value[1])
         else
           m = @runtime_class.lookup(message_name)
           m.receive_message(context, "call", [HArray.create_instance([self].concat(message_value))])
         end
+      rescue KeyError
+        raise HUnknownMessage.new(self.inspect(context), message_name, @runtime_class.instance_methods.keys, source_code_position)
       end
 
       def inspect(context)

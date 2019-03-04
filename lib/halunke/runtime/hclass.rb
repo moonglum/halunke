@@ -1,7 +1,11 @@
+require "halunke/source_code_position"
+require "halunke/herror"
+
 module Halunke
   module Runtime
     class HClass
       attr_reader :name
+      attr_reader :instance_methods
 
       def initialize(name, allowed_attributes, instance_methods, class_methods, native)
         @name = name
@@ -12,7 +16,7 @@ module Halunke
       end
 
       class << self
-        def receive_message(context, message_name, message_value)
+        def receive_message(context, message_name, message_value, source_code_position: NullSourceCodePosition.new)
           case message_name
           when "new attributes methods class_methods"
             name = determine_name(message_value[0])
@@ -30,7 +34,8 @@ module Halunke
             instance_methods = determine_methods(message_value[1])
             class_methods = {}
           else
-            raise "Class Class has no method to respond to message '#{message_name}'"
+            known_messages = ["new attributes methods class_methods", "new attributes methods", "new methods"]
+            raise HUnknownMessage.new("Class", message_name, known_messages, source_code_position)
           end
 
           context[name] = HClass.new(name, allowed_attributes, instance_methods, class_methods, false)
@@ -47,7 +52,17 @@ module Halunke
         end
 
         def determine_methods(hdictionary)
-          instance_methods = {}
+          instance_methods = {
+            "inspect" => HFunction.new([:self], lambda { |context|
+              hself = context["self"]
+
+              attributes = hself.dict.map do |key, value|
+                %Q{"#{key}" #{value.inspect(context)}}
+              end
+
+              HString.create_instance("#{hself.runtime_class.name} @[#{attributes.join(' ')}]")
+            })
+          }
           hdictionary.ruby_value.each_pair do |method_name, fn|
             instance_methods[method_name.ruby_value] = fn
           end
@@ -55,14 +70,15 @@ module Halunke
         end
       end
 
-      def receive_message(context, message_name, message_value)
+      def receive_message(context, message_name, message_value, source_code_position: NullSourceCodePosition.new)
         if message_name == "new" && !native?
           create_instance(message_value[0])
-        elsif @class_methods.keys.include? message_name
+        elsif @class_methods.key? message_name
           m = @class_methods[message_name]
-          m.receive_message(context, "call", [HArray.create_instance([self].concat(message_value))])
+          m.receive_message(context, "call", [HArray.create_instance([self].concat(message_value))],
+                            source_code_position: source_code_position)
         else
-          raise "Class #{@name} has no method to respond to message '#{message_name}'"
+          raise HUnknownMessage.new(self.inspect(context), message_name, @class_methods.keys, source_code_position)
         end
       end
 
@@ -80,12 +96,14 @@ module Halunke
 
       def lookup(message)
         @instance_methods.fetch(message)
-      rescue KeyError
-        raise "Class #{@name} has no method to respond to message '#{message}'"
       end
 
       def inspect(_context)
-        "#<Class #{@name}>"
+        "Class #{@name}"
+      end
+
+      def runtime_class
+        self
       end
 
       def native?

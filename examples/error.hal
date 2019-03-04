@@ -1,0 +1,6 @@
+('a = 12)
+('my = "str")
+
+("hello" replace (my replac "i" wit "a") with "mumpf")
+
+(stdio puts "a")

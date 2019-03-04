@@ -54,11 +54,11 @@ class InterpreterTest < Minitest::Test
   end
 
   def test_function
-    assert_equal '#<Function (2)>', @interpreter.eval("{ |'a 'b| (a + b) }")
+    assert_equal 'Function (2)', @interpreter.eval("{ |'a 'b| (a + b) }")
   end
 
   def test_class
-    assert_equal "#<Class Number>", @interpreter.eval("Number")
+    assert_equal "Class Number", @interpreter.eval("Number")
   end
 
   def test_unassigned_bareword
@@ -259,6 +259,13 @@ class InterpreterTest < Minitest::Test
 
   def test_regexp
     assert_equal '/a+/', @interpreter.eval(%{(Regexp from "a+")})
+  end
+
+  def test_unknown_message
+    err = assert_raises Halunke::HUnknownMessage do
+      @interpreter.eval(%{("hello" replac "a" with "e")})
+    end
+    assert_match(/Did you mean `replace with`/, err.message)
   end
 
   private

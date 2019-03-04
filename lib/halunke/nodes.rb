@@ -98,7 +98,8 @@ module Halunke
 
   MessageSendNode = Struct.new(:receiver, :message, :ts, :te) do
     def eval(context)
-      receiver.eval(context).receive_message(context, *message.eval(context))
+      receiver.eval(context).receive_message(context, *message.eval(context),
+                                             source_code_position: SourceCodePosition.new(ts, te))
     end
 
     def ==(other)
