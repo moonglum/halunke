@@ -12,12 +12,12 @@ if ARGV.length == 0
   puts "Halunke #{Halunke::VERSION} REPL. Ctrl+d to quit"
   while (line = Readline.readline(">> ", true))
     begin
-      value = interpreter.eval(line)
+      value = interpreter.eval(line, error_mode: :repl)
       puts "=> #{value}" if value
     rescue Exception => e
       puts "An Error Occurred: #{e.message}"
     end
   end
 else
-  interpreter.eval(File.read(ARGV[0]))
+  interpreter.eval(File.read(ARGV[0]), error_mode: :file, exit_on_error: true)
 end

@@ -26,10 +26,18 @@ module Halunke
       end
     end
 
-    def eval(str)
+    def eval(str, error_mode: :raise, exit_on_error: false)
       nodes = @parser.parse(str)
       result = nodes.eval(root_context)
       result.nil? ? nil : result.inspect(root_context)
+    rescue HError => err
+      raise err if error_mode == :raise
+
+      puts err.source_code_position.reveal(str, error_mode)
+      puts err.message
+      exit(1) if exit_on_error
+
+      nil
     end
 
     def preludes

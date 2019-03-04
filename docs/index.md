@@ -18,6 +18,7 @@ object-oriented language:
 It also has the following characteristics:
 
 * There is no null/nil value in the language
+* Playing close attention to error message design
 
 ## Install & Usage
 

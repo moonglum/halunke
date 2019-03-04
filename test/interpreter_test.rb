@@ -261,11 +261,23 @@ class InterpreterTest < Minitest::Test
     assert_equal '/a+/', @interpreter.eval(%{(Regexp from "a+")})
   end
 
-  def test_unknown_message
+  def test_unknown_message_with_default_error_mode
     err = assert_raises Halunke::HUnknownMessage do
       @interpreter.eval(%{("hello" replac "a" with "e")})
     end
     assert_match(/Did you mean `replace with`/, err.message)
+  end
+
+  def test_unknown_message_with_file_error_mode
+    assert_output(file_error_message) do
+      @interpreter.eval(%{("hello" replac "a" with "e")}, error_mode: :file)
+    end
+  end
+
+  def test_unknown_message_with_repl_error_mode
+    assert_output(repl_error_message) do
+      @interpreter.eval(%{("hello" replac "a" with "e")}, error_mode: :repl)
+    end
   end
 
   private
@@ -289,5 +301,24 @@ class InterpreterTest < Minitest::Test
         ]
 			)
     PROGRAM
+  end
+
+  def file_error_message
+    <<~ERROR_MESSAGE
+    1 | ("hello" replac "a" with "e")...
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    "hello" received the message `replac with`. It doesn't know how to handle that.
+    Did you mean `replace with`?
+    ERROR_MESSAGE
+  end
+
+  def repl_error_message
+    <<~ERROR_MESSAGE
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    "hello" received the message `replac with`. It doesn't know how to handle that.
+    Did you mean `replace with`?
+    ERROR_MESSAGE
   end
 end
