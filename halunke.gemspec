@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rack", "~> 2.0.4"
 
+  spec.add_development_dependency "warning", "~> 0.10.1"
   spec.add_development_dependency "bundler", "~> 1.17.2"
   spec.add_development_dependency "rake", "~> 12.3.2"
   spec.add_development_dependency "minitest", "~> 5.11.3"

@@ -11,6 +11,7 @@ GEM
     racc (1.4.15)
     rack (2.0.6)
     rake (12.3.2)
+    warning (0.10.1)
 
 PLATFORMS
   ruby
@@ -21,6 +22,7 @@ DEPENDENCIES
   minitest (~> 5.11.3)
   racc (~> 1.4.15)
   rake (~> 12.3.2)
+  warning (~> 0.10.1)
 
 BUNDLED WITH
    1.17.2
