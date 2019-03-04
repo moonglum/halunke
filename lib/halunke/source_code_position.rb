@@ -6,26 +6,25 @@ module Halunke
     end
 
     def reveal(source, error_mode)
-      ts = @ts
-      te = @te
-      ellipsis = false
+      line, line_number = source.lines.each_with_index do |candidate, candidate_line_number|
+        break candidate, candidate_line_number if @ts < candidate.length
 
-      line, line_number = source.lines.each_with_index.find do |candidate, _line_number|
-        if ts < candidate.length
-          (te = candidate.length - 2) && (ellipsis = true) if te > candidate.length
-          true
-        else
-          ts -= candidate.length
-          te -= candidate.length
-          false
-        end
+        @ts -= candidate.length
+        @te -= candidate.length
+      end
+
+      if @te > line.length
+        @te = line.length - 2
+        ellipsis = '...'
       end
 
       prefix = error_mode == :repl ? ">> " : "#{line_number + 1} | "
 
       output = []
-      output << "#{prefix}#{line.rstrip}#{ellipsis ? '...' : ''}\n" if error_mode == :file
-      output << " " * (ts + prefix.length) + "^" * (te - ts + 1) + "\n\n"
+      output << [prefix, line.rstrip, ellipsis].join("") if error_mode == :file
+      output << " " * (@ts + prefix.length) + "^" * (@te - @ts + 1)
+      output << "\n"
+
       output
     end
   end
