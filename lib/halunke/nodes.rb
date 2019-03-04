@@ -7,45 +7,53 @@ module Halunke
     def empty?
       nodes.empty?
     end
-
-    def to_message
-      MessageNode.new(nodes)
-    end
-
-    def to_array
-      ArrayNode.new(nodes)
-    end
-
-    def to_dictionary
-      DictionaryNode.new(nodes)
-    end
   end
 
-  NumberNode = Struct.new(:value) do
+  NumberNode = Struct.new(:value, :ts, :te) do
     def eval(context)
       context["Number"].create_instance(value)
     end
+
+    def ==(other)
+      other.is_a?(NumberNode) &&
+        value == other.value
+    end
   end
 
-  StringNode = Struct.new(:value) do
+  StringNode = Struct.new(:value, :ts, :te) do
     def eval(context)
       context["String"].create_instance(value)
     end
+
+    def ==(other)
+      other.is_a?(StringNode) &&
+        value == other.value
+    end
   end
 
-  BarewordNode = Struct.new(:value) do
+  BarewordNode = Struct.new(:value, :ts, :te) do
     def eval(context)
       context[value]
     end
-  end
 
-  UnassignedNode = Struct.new(:node) do
-    def eval(context)
-      context["UnassignedBareword"].create_instance(node.value)
+    def ==(other)
+      other.is_a?(BarewordNode) &&
+        value == other.value
     end
   end
 
-  FunctionNode = Struct.new(:params, :body) do
+  UnassignedNode = Struct.new(:node, :ts, :te) do
+    def eval(context)
+      context["UnassignedBareword"].create_instance(node.value)
+    end
+
+    def ==(other)
+      other.is_a?(UnassignedNode) &&
+        node == other.node
+    end
+  end
+
+  FunctionNode = Struct.new(:params, :body, :ts, :te) do
     def eval(context)
       raise "This function would not return anything. That's forbidden." if body.empty?
       signature = params.nodes.map(&:node).map(&:value)
@@ -54,15 +62,26 @@ module Halunke
         body.eval(call_context)
       })
     end
-  end
 
-  ArrayNode = Struct.new(:nodes) do
-    def eval(context)
-      context["Array"].create_instance(nodes.map { |node| node.eval(context) })
+    def ==(other)
+      other.is_a?(FunctionNode) &&
+        params == other.params &&
+        body == other.body
     end
   end
 
-  DictionaryNode = Struct.new(:nodes) do
+  ArrayNode = Struct.new(:nodes, :ts, :te) do
+    def eval(context)
+      context["Array"].create_instance(nodes.map { |node| node.eval(context) })
+    end
+
+    def ==(other)
+      other.is_a?(ArrayNode) &&
+        nodes == other.nodes
+    end
+  end
+
+  DictionaryNode = Struct.new(:nodes, :ts, :te) do
     def eval(context)
       hash = {}
       nodes.each_slice(2) do |key, value|
@@ -70,11 +89,22 @@ module Halunke
       end
       context["Dictionary"].create_instance(hash)
     end
+
+    def ==(other)
+      other.is_a?(DictionaryNode) &&
+        nodes == other.nodes
+    end
   end
 
-  MessageSendNode = Struct.new(:receiver, :message) do
+  MessageSendNode = Struct.new(:receiver, :message, :ts, :te) do
     def eval(context)
       receiver.eval(context).receive_message(context, *message.eval(context))
+    end
+
+    def ==(other)
+      other.is_a?(MessageSendNode) &&
+        receiver == other.receiver &&
+        message == other.message
     end
   end
 

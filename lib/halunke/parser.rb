@@ -190,25 +190,25 @@ module_eval(<<'.,.,', 'grammar.y', 26)
 
 module_eval(<<'.,.,', 'grammar.y', 30)
   def _reduce_4(val, _values)
-     NumberNode.new(val[0][0]) 
+     NumberNode.new(*val[0]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 31)
   def _reduce_5(val, _values)
-     StringNode.new(val[0][0]) 
+     StringNode.new(*val[0]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 32)
   def _reduce_6(val, _values)
-     BarewordNode.new(val[0][0]) 
+     BarewordNode.new(*val[0]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 33)
   def _reduce_7(val, _values)
-     UnassignedNode.new(BarewordNode.new(val[0][0])) 
+     UnassignedNode.new(BarewordNode.new(*val[0]), val[0][1], val[0][2]) 
   end
 .,.,
 
@@ -220,31 +220,31 @@ module_eval(<<'.,.,', 'grammar.y', 34)
 
 module_eval(<<'.,.,', 'grammar.y', 35)
   def _reduce_9(val, _values)
-     FunctionNode.new(ArrayNode.new([]), val[1]) 
+     FunctionNode.new(ArrayNode.new([]), val[1], val[0][1], val[2][2]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 36)
   def _reduce_10(val, _values)
-     FunctionNode.new(val[2].to_array, val[4]) 
+     FunctionNode.new(ArrayNode.new(val[2].nodes), val[4], val[0][1], val[5][2]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 37)
   def _reduce_11(val, _values)
-     MessageSendNode.new(val[1], val[2].to_message) 
+     MessageSendNode.new(val[1], MessageNode.new(val[2].nodes), val[0][1], val[3][2]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 38)
   def _reduce_12(val, _values)
-     val[1].to_array 
+     ArrayNode.new(val[1].nodes, val[0][1], val[2][2]) 
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 39)
   def _reduce_13(val, _values)
-     val[1].to_dictionary 
+     DictionaryNode.new(val[1].nodes, val[0][1], val[2][2]) 
   end
 .,.,
 

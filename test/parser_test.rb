@@ -162,4 +162,22 @@ class ParserTest < Minitest::Test
 
     assert_equal expected_nodes, @parser.parse('/* hallo */')
   end
+
+  def test_token_position
+    outer_message_send = @parser.parse("(20 a (1 x))").nodes.first
+    assert_equal 0, outer_message_send.ts
+    assert_equal 11, outer_message_send.te
+
+    receiver = outer_message_send.receiver
+    assert_equal 1, receiver.ts
+    assert_equal 2, receiver.te
+
+    a = outer_message_send.message.first.first
+    assert_equal 4, a.ts
+    assert_equal 4, a.te
+
+    inner_message_send = outer_message_send.message.first.last
+    assert_equal 6, inner_message_send.ts
+    assert_equal 10, inner_message_send.te
+  end
 end
