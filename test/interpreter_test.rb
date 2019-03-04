@@ -274,6 +274,12 @@ class InterpreterTest < Minitest::Test
     end
   end
 
+  def test_unknown_message_with_file_error_mode_and_line_break
+    assert_output(file_long_error_message) do
+      @interpreter.eval(%{("hello" replac "a"\n with "e")}, error_mode: :file)
+    end
+  end
+
   def test_unknown_message_with_repl_error_mode
     assert_output(repl_error_message) do
       @interpreter.eval(%{("hello" replac "a" with "e")}, error_mode: :repl)
@@ -303,9 +309,19 @@ class InterpreterTest < Minitest::Test
     PROGRAM
   end
 
+  def file_long_error_message
+    <<~ERROR_MESSAGE
+    1 | ("hello" replac "a"...
+        ^^^^^^^^^^^^^^^^^^^
+
+    "hello" received the message `replac with`. It doesn't know how to handle that.
+    Did you mean `replace with`?
+    ERROR_MESSAGE
+  end
+
   def file_error_message
     <<~ERROR_MESSAGE
-    1 | ("hello" replac "a" with "e")...
+    1 | ("hello" replac "a" with "e")
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     "hello" received the message `replac with`. It doesn't know how to handle that.

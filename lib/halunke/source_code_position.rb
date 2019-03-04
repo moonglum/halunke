@@ -12,8 +12,7 @@ module Halunke
 
       line, line_number = source.lines.each_with_index.find do |candidate, _line_number|
         if ts < candidate.length
-          ellipsis = true
-          te = candidate.length - 2 if te > candidate.length
+          (te = candidate.length - 2) && (ellipsis = true) if te > candidate.length
           true
         else
           ts -= candidate.length
