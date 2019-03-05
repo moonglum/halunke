@@ -36,4 +36,10 @@ module Halunke
       end
     end
   end
+
+  class HBarewordAlreadyAssigned < HError
+  end
+
+  class HUnassignedBareword < HError
+  end
 end

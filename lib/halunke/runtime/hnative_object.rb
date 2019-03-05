@@ -5,10 +5,12 @@ module Halunke
     class HNativeObject
       attr_reader :runtime_class
       attr_reader :ruby_value
+      attr_reader :source_code_position
 
-      def initialize(runtime_class, ruby_value = nil)
+      def initialize(runtime_class, ruby_value, source_code_position:)
         @runtime_class = runtime_class
         @ruby_value = ruby_value
+        @source_code_position = source_code_position
       end
 
       def receive_message(context, message_name, message_value, source_code_position: NullSourceCodePosition.new)

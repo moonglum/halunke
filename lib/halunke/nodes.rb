@@ -34,6 +34,9 @@ module Halunke
   BarewordNode = Struct.new(:value, :ts, :te) do
     def eval(context)
       context[value]
+    rescue KeyError
+      source_code_position = SourceCodePosition.new(ts, te)
+      raise HUnassignedBareword.new("Bareword '#{value} is unassigned", source_code_position)
     end
 
     def ==(other)
@@ -44,7 +47,7 @@ module Halunke
 
   UnassignedNode = Struct.new(:node, :ts, :te) do
     def eval(context)
-      context["UnassignedBareword"].create_instance(node.value)
+      context["UnassignedBareword"].create_instance(node.value, source_code_position: SourceCodePosition.new(ts, te))
     end
 
     def ==(other)

@@ -56,14 +56,14 @@ module Halunke
       end
 
       def []=(name, value)
-        raise "Bareword #{name} is already assigned" if key? name
+        raise FrozenError if key? name
         @context[name] = value
       end
 
       def [](name)
         @context.fetch(name)
       rescue KeyError
-        raise "Bareword '#{name} is unassigned'" if @parent.nil?
+        raise KeyError if @parent.nil?
         @parent[name]
       end
 

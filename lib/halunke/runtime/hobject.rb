@@ -5,10 +5,12 @@ module Halunke
     class HObject
       attr_reader :dict
       attr_reader :runtime_class
+      attr_reader :source_code_position
 
-      def initialize(runtime_class, dict)
+      def initialize(runtime_class, dict, source_code_position:)
         @runtime_class = runtime_class
         @dict = {}
+        @source_code_position = source_code_position
         dict.each_pair do |hkey, value|
           key = hkey.ruby_value
           raise "Unknown attribute '#{key}' for #{@runtime_class.name}" unless @runtime_class.allowed_attribute? key

@@ -25,7 +25,7 @@ module Halunke
               h[HString.create_instance(key)] = HString.create_instance(value)
             end
           end
-          HDictionary.create_instance(h)
+          HDictionary.create_instance(h, source_code_position: NullSourceCodePosition.new)
         }),
         "scan" => HFunction.new([:self, :regexp], lambda { |context|
           result = context["self"].ruby_value.scan(context["regexp"].ruby_value)

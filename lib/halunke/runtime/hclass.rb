@@ -86,11 +86,11 @@ module Halunke
         @allowed_attributes.include? attribute_name
       end
 
-      def create_instance(value = nil)
+      def create_instance(value = nil, source_code_position: NullSourceCodePosition.new)
         if native?
-          HNativeObject.new(self, value)
+          HNativeObject.new(self, value, source_code_position: source_code_position)
         else
-          HObject.new(self, value ? value.ruby_value : {})
+          HObject.new(self, value ? value.ruby_value : {}, source_code_position: source_code_position)
         end
       end
 

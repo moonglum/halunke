@@ -108,7 +108,7 @@ class NodesTest < Minitest::Test
 
   def test_unassigend_bareword
     unassigned_bareword = Minitest::Mock.new
-    unassigned_bareword.expect :create_instance, nil, ["abc"]
+    unassigned_bareword.expect :create_instance, nil, ["abc", any_keyword_arguments]
     context = { "UnassignedBareword" => unassigned_bareword }
 
     node = Halunke::UnassignedNode.new(

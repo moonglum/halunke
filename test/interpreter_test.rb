@@ -286,6 +286,18 @@ class InterpreterTest < Minitest::Test
     end
   end
 
+  def test_unassigned_bareword
+    assert_raises Halunke::HUnassignedBareword do
+      @interpreter.eval(%{(stdio puts a)})
+    end
+  end
+
+  def test_bareword_already_assigned
+    assert_raises Halunke::HBarewordAlreadyAssigned do
+      @interpreter.eval(%{('a = 12)('a = 13)})
+    end
+  end
+
   private
 
   def counter_program
