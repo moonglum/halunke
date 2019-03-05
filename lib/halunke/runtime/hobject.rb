@@ -13,7 +13,7 @@ module Halunke
         @source_code_position = source_code_position
         dict.each_pair do |hkey, value|
           key = hkey.ruby_value
-          raise "Unknown attribute '#{key}' for #{@runtime_class.name}" unless @runtime_class.allowed_attribute? key
+          raise HUnknownAttribute.new("Unknown attribute '#{key}' for #{@runtime_class.name}", source_code_position) unless @runtime_class.allowed_attribute? key
           @dict[key] = value
         end
       end

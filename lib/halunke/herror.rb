@@ -45,4 +45,7 @@ module Halunke
 
   class HEmptyFunction < HError
   end
+
+  class HUnknownAttribute < HError
+  end
 end

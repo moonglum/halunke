@@ -72,7 +72,7 @@ module Halunke
 
       def receive_message(context, message_name, message_value, source_code_position: NullSourceCodePosition.new)
         if message_name == "new" && !native?
-          create_instance(message_value[0])
+          create_instance(message_value[0], source_code_position: source_code_position)
         elsif @class_methods.key? message_name
           m = @class_methods[message_name]
           m.receive_message(context, "call", [HArray.create_instance([self].concat(message_value))],
