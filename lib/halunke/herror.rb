@@ -42,4 +42,7 @@ module Halunke
 
   class HUnassignedBareword < HError
   end
+
+  class HEmptyFunction < HError
+  end
 end

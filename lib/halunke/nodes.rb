@@ -58,7 +58,7 @@ module Halunke
 
   FunctionNode = Struct.new(:params, :body, :ts, :te) do
     def eval(context)
-      raise "This function would not return anything. That's forbidden." if body.empty?
+      raise HEmptyFunction.new("This function would not return anything, in Halunke every function needs to return something.", SourceCodePosition.new(ts, te)) if body.empty?
       signature = params.nodes.map(&:node).map(&:value)
 
       context["Function"].new(signature, lambda { |call_context|

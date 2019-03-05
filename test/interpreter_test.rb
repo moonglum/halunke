@@ -11,9 +11,9 @@ class InterpreterTest < Minitest::Test
   end
 
   def test_empty_function
-    assert_raises {
+    assert_raises Halunke::HEmptyFunction do
       @interpreter.eval("{ }")
-    }
+    end
   end
 
   def test_adding_two_numbers
