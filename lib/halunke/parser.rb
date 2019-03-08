@@ -236,7 +236,7 @@ module_eval(<<'.,.,', 'grammar.y', 40)
 
 module_eval(<<'.,.,', 'grammar.y', 41)
   def _reduce_12(val, _values)
-     MessageSendNode.new(val[1], MessageNode.new(val[2].nodes), val[0][1], val[3][2]) 
+     MessageSendNode.new(val[1], val[2].nodes, val[0][1], val[3][2]) 
   end
 .,.,
 

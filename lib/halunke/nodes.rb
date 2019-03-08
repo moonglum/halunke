@@ -99,21 +99,20 @@ module Halunke
     end
   end
 
-  MessageSendNode = Struct.new(:receiver, :message, :ts, :te) do
+  MessageSendNode = Struct.new(:receiver, :nodes, :ts, :te) do
     def eval(context)
-      receiver.eval(context).receive_message(context, *message.eval(context),
+      message_name, message_value = parse_message(context)
+      receiver.eval(context).receive_message(context, message_name, message_value,
                                              source_code_position: SourceCodePosition.new(ts, te))
     end
 
     def ==(other)
       other.is_a?(MessageSendNode) &&
         receiver == other.receiver &&
-        message == other.message
+        nodes == other.nodes
     end
-  end
 
-  MessageNode = Struct.new(:nodes) do
-    def eval(context)
+    def parse_message(context)
       if nodes.length == 1
         if nodes[0].is_a? NumberNode
           # hack to allow expressions like (1+5)

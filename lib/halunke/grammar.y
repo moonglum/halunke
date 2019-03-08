@@ -39,7 +39,7 @@ rule
   | UNASSIGNED_BAREWORD                                    { UnassignedNode.new(BarewordNode.new(*val[0]), val[0][1], val[0][2]) }
   | START_COMMENT Expressions END_COMMENT                  { Nodes.new([]) }
   | OPEN_CURLY Arguments Expressions CLOSE_CURLY           { FunctionNode.new(val[1], val[2], val[0][1], val[3][2]) }
-  | OPEN_PAREN Expression Expressions CLOSE_PAREN          { MessageSendNode.new(val[1], MessageNode.new(val[2].nodes), val[0][1], val[3][2]) }
+  | OPEN_PAREN Expression Expressions CLOSE_PAREN          { MessageSendNode.new(val[1], val[2].nodes, val[0][1], val[3][2]) }
   | OPEN_BRACKET Expressions CLOSE_BRACKET                 { ArrayNode.new(val[1].nodes, val[0][1], val[2][2]) }
   | OPEN_DICT_BRACKET Expressions CLOSE_BRACKET            { DictionaryNode.new(val[1].nodes, val[0][1], val[2][2]) }
   ;
