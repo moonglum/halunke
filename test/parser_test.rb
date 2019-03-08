@@ -154,20 +154,19 @@ class ParserTest < Minitest::Test
   end
 
   def test_token_position
-    skip "Redo this after the refactoring is done"
     outer_message_send = @parser.parse("(20 a (1 x))").nodes.first
     assert_equal 0, outer_message_send.ts
     assert_equal 11, outer_message_send.te
 
-    receiver = outer_message_send.receiver
+    receiver = outer_message_send.nodes[0]
     assert_equal 1, receiver.ts
     assert_equal 2, receiver.te
 
-    a = outer_message_send.message.first.first
+    a = outer_message_send.nodes[1]
     assert_equal 4, a.ts
     assert_equal 4, a.te
 
-    inner_message_send = outer_message_send.message.first.last
+    inner_message_send = outer_message_send.nodes[2]
     assert_equal 6, inner_message_send.ts
     assert_equal 10, inner_message_send.te
   end
