@@ -59,7 +59,8 @@ class NodesTest < Minitest::Test
     receiver.expect :receive_message, :result, [@context, "aaa", [], any_keyword_arguments]
     receiver_node = Minitest::Mock.new
     receiver_node.expect :eval, receiver, [@context]
-    node = Halunke::MessageSendNode.new(receiver_node, [
+    node = Halunke::MessageSendNode.new([
+      receiver_node,
       Halunke::BarewordNode.new("aaa")
     ])
 
@@ -74,7 +75,8 @@ class NodesTest < Minitest::Test
     receiver.expect :receive_message, :result, [@context, "+", expected_arguments, any_keyword_arguments]
     receiver_node = Minitest::Mock.new
     receiver_node.expect :eval, receiver, [@context]
-    node = Halunke::MessageSendNode.new(receiver_node, [
+    node = Halunke::MessageSendNode.new([
+      receiver_node,
       Halunke::NumberNode.new(5)
     ])
 
@@ -89,7 +91,8 @@ class NodesTest < Minitest::Test
     receiver.expect :receive_message, :result, [@context, "-", expected_arguments, any_keyword_arguments]
     receiver_node = Minitest::Mock.new
     receiver_node.expect :eval, receiver, [@context]
-    node = Halunke::MessageSendNode.new(receiver_node, [
+    node = Halunke::MessageSendNode.new([
+      receiver_node,
       Halunke::BarewordNode.new("-"),
       Halunke::NumberNode.new(5)
     ])
@@ -106,7 +109,8 @@ class NodesTest < Minitest::Test
     receiver.expect :receive_message, :result, [@context, "a b", expected_arguments, any_keyword_arguments]
     receiver_node = Minitest::Mock.new
     receiver_node.expect :eval, receiver, [@context]
-    node = Halunke::MessageSendNode.new(receiver_node, [
+    node = Halunke::MessageSendNode.new([
+      receiver_node,
       Halunke::BarewordNode.new("a"),
       Halunke::NumberNode.new(5),
       Halunke::BarewordNode.new("b"),

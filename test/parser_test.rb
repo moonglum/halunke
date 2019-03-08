@@ -42,12 +42,10 @@ class ParserTest < Minitest::Test
 
   def test_message_with_no_args
     expected_nodes = Halunke::Nodes.new([
-      Halunke::MessageSendNode.new(
+      Halunke::MessageSendNode.new([
         Halunke::NumberNode.new(2),
-        [
-          Halunke::BarewordNode.new("a")
-        ]
-      )
+        Halunke::BarewordNode.new("a")
+      ])
     ])
 
     assert_equal expected_nodes, @parser.parse("(2 a)")
@@ -55,13 +53,11 @@ class ParserTest < Minitest::Test
 
   def test_message_with_one_arg
     expected_nodes = Halunke::Nodes.new([
-      Halunke::MessageSendNode.new(
+      Halunke::MessageSendNode.new([
         Halunke::NumberNode.new(2),
-        [
-          Halunke::BarewordNode.new("+"),
-          Halunke::NumberNode.new(3)
-        ]
-      )
+        Halunke::BarewordNode.new("+"),
+        Halunke::NumberNode.new(3)
+      ])
     ])
 
     assert_equal expected_nodes, @parser.parse("(2 + 3)")
@@ -69,15 +65,13 @@ class ParserTest < Minitest::Test
 
   def test_message_with_two_args
     expected_nodes = Halunke::Nodes.new([
-      Halunke::MessageSendNode.new(
+      Halunke::MessageSendNode.new([
         Halunke::NumberNode.new(2),
-        [
-          Halunke::BarewordNode.new("a"),
-          Halunke::BarewordNode.new("x"),
-          Halunke::BarewordNode.new("b"),
-          Halunke::NumberNode.new(4)
-        ]
-      )
+        Halunke::BarewordNode.new("a"),
+        Halunke::BarewordNode.new("x"),
+        Halunke::BarewordNode.new("b"),
+        Halunke::NumberNode.new(4)
+      ])
     ])
 
     assert_equal expected_nodes, @parser.parse("(2 a x b 4)")
@@ -85,18 +79,14 @@ class ParserTest < Minitest::Test
 
   def test_inner_message_send
     expected_nodes = Halunke::Nodes.new([
-      Halunke::MessageSendNode.new(
+      Halunke::MessageSendNode.new([
         Halunke::NumberNode.new(2),
-        [
-          Halunke::BarewordNode.new("a"),
-          Halunke::MessageSendNode.new(
-            Halunke::NumberNode.new(1),
-            [
-              Halunke::BarewordNode.new("x")
-            ]
-          )
-        ]
-      )
+        Halunke::BarewordNode.new("a"),
+        Halunke::MessageSendNode.new([
+          Halunke::NumberNode.new(1),
+          Halunke::BarewordNode.new("x")
+        ])
+      ])
     ])
 
     assert_equal expected_nodes, @parser.parse("(2 a (1 x))")

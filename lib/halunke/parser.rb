@@ -28,54 +28,50 @@ end
 
 racc_action_table = [
      4,     5,     6,    10,    13,     9,    16,     7,    11,    21,
-    12,    22,     8,     4,     5,     6,    10,    26,     9,    27,
-     7,    11,    28,    12,    29,     8,     4,     5,     6,    10,
-    30,     9,   nil,     7,    11,   nil,    12,   nil,     8,     4,
+    12,    22,     8,     4,     5,     6,    10,    25,     9,    26,
+     7,    11,    27,    12,    28,     8,     4,     5,     6,    10,
+    29,     9,   nil,     7,    11,   nil,    12,   nil,     8,     4,
      5,     6,    10,   nil,     9,   nil,     7,    11,   nil,    12,
    nil,     8,     4,     5,     6,    10,   nil,     9,   nil,     7,
     11,   nil,    12,   nil,     8,     4,     5,     6,    10,   nil,
      9,   nil,     7,    11,   nil,    12,   nil,     8,     4,     5,
      6,    10,   nil,     9,   nil,     7,    11,   nil,    12,   nil,
      8,     4,     5,     6,    10,   nil,     9,   nil,     7,    11,
-   nil,    12,   nil,     8,     4,     5,     6,    10,   nil,     9,
-   nil,     7,    11,   nil,    12,   nil,     8 ]
+   nil,    12,   nil,     8 ]
 
 racc_action_check = [
      0,     0,     0,     0,     1,     0,     9,     0,     0,    13,
-     0,    15,     0,     3,     3,     3,     3,    19,     3,    20,
-     3,     3,    23,     3,    24,     3,     8,     8,     8,     8,
-    25,     8,   nil,     8,     8,   nil,     8,   nil,     8,    10,
+     0,    15,     0,     3,     3,     3,     3,    18,     3,    19,
+     3,     3,    20,     3,    23,     3,     8,     8,     8,     8,
+    24,     8,   nil,     8,     8,   nil,     8,   nil,     8,    10,
     10,    10,    10,   nil,    10,   nil,    10,    10,   nil,    10,
    nil,    10,    11,    11,    11,    11,   nil,    11,   nil,    11,
     11,   nil,    11,   nil,    11,    12,    12,    12,    12,   nil,
     12,   nil,    12,    12,   nil,    12,   nil,    12,    16,    16,
     16,    16,   nil,    16,   nil,    16,    16,   nil,    16,   nil,
     16,    17,    17,    17,    17,   nil,    17,   nil,    17,    17,
-   nil,    17,   nil,    17,    18,    18,    18,    18,   nil,    18,
-   nil,    18,    18,   nil,    18,   nil,    18 ]
+   nil,    17,   nil,    17 ]
 
 racc_action_pointer = [
     -2,     4,   nil,    11,   nil,   nil,   nil,   nil,    24,    -7,
-    37,    50,    63,     9,   nil,    -4,    76,    89,   102,     6,
-     8,   nil,   nil,     9,    16,    24,   nil,   nil,   nil,   nil,
-   nil ]
+    37,    50,    63,     9,   nil,    -4,    76,    89,    11,     8,
+    11,   nil,   nil,    11,    22,   nil,   nil,   nil,   nil,   nil ]
 
 racc_action_default = [
     -2,   -15,    -1,    -2,    -6,    -7,    -8,    -9,    -2,    -4,
-   -15,    -2,    -2,   -15,    -3,   -15,    -2,    -2,    -2,   -15,
-   -15,    31,   -10,   -15,   -15,   -15,   -13,   -14,    -5,   -11,
-   -12 ]
+    -2,    -2,    -2,   -15,    -3,   -15,    -2,    -2,   -15,   -15,
+   -15,    30,   -10,   -15,   -15,   -12,   -13,   -14,    -5,   -11 ]
 
 racc_goto_table = [
-     2,     1,    18,    14,    17,   nil,   nil,   nil,    15,   nil,
-   nil,    19,    20,   nil,   nil,   nil,    23,    24,    25 ]
+     2,     1,    17,    14,   nil,   nil,   nil,   nil,    15,   nil,
+    18,    19,    20,   nil,   nil,   nil,    23,    24 ]
 
 racc_goto_check = [
-     2,     1,     3,     2,     4,   nil,   nil,   nil,     2,   nil,
-   nil,     2,     2,   nil,   nil,   nil,     2,     2,     2 ]
+     2,     1,     4,     2,   nil,   nil,   nil,   nil,     2,   nil,
+     2,     2,     2,   nil,   nil,   nil,     2,     2 ]
 
 racc_goto_pointer = [
-   nil,     1,     0,    -8,    -5 ]
+   nil,     1,     0,   nil,    -7 ]
 
 racc_goto_default = [
    nil,   nil,   nil,     3,   nil ]
@@ -93,13 +89,13 @@ racc_reduce_table = [
   1, 19, :_reduce_9,
   3, 19, :_reduce_10,
   4, 19, :_reduce_11,
-  4, 19, :_reduce_12,
+  3, 19, :_reduce_12,
   3, 19, :_reduce_13,
   3, 19, :_reduce_14 ]
 
 racc_reduce_n = 15
 
-racc_shift_n = 31
+racc_shift_n = 30
 
 racc_token_table = {
   false => 0,
@@ -236,7 +232,7 @@ module_eval(<<'.,.,', 'grammar.y', 40)
 
 module_eval(<<'.,.,', 'grammar.y', 41)
   def _reduce_12(val, _values)
-     MessageSendNode.new(val[1], val[2].nodes, val[0][1], val[3][2]) 
+     MessageSendNode.new(val[1].nodes, val[0][1], val[2][2]) 
   end
 .,.,
 
