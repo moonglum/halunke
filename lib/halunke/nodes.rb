@@ -35,7 +35,6 @@ module Halunke
     def eval(context)
       context[value]
     rescue KeyError
-      source_code_position = SourceCodePosition.new(ts, te)
       raise HUnassignedBareword.new("Bareword '#{value} is unassigned", source_code_position)
     end
 
@@ -43,22 +42,34 @@ module Halunke
       other.is_a?(BarewordNode) &&
         value == other.value
     end
+
+    private
+
+    def source_code_position
+      SourceCodePosition.new(ts, te)
+    end
   end
 
   UnassignedNode = Struct.new(:node, :ts, :te) do
     def eval(context)
-      context["UnassignedBareword"].create_instance(node.value, source_code_position: SourceCodePosition.new(ts, te))
+      context["UnassignedBareword"].create_instance(node.value, source_code_position: source_code_position)
     end
 
     def ==(other)
       other.is_a?(UnassignedNode) &&
         node == other.node
     end
+
+    private
+
+    def source_code_position
+      SourceCodePosition.new(ts, te)
+    end
   end
 
   FunctionNode = Struct.new(:params, :body, :ts, :te) do
     def eval(context)
-      raise HEmptyFunction.new("This function would not return anything, in Halunke every function needs to return something.", SourceCodePosition.new(ts, te)) if body.empty?
+      raise HEmptyFunction.new("This function would not return anything, in Halunke every function needs to return something.", source_code_position) if body.empty?
       signature = params.nodes.map(&:node).map(&:value)
 
       context["Function"].new(signature, lambda { |call_context|
@@ -70,6 +81,12 @@ module Halunke
       other.is_a?(FunctionNode) &&
         params == other.params &&
         body == other.body
+    end
+
+    private
+
+    def source_code_position
+      SourceCodePosition.new(ts, te)
     end
   end
 
@@ -86,6 +103,7 @@ module Halunke
 
   DictionaryNode = Struct.new(:nodes, :ts, :te) do
     def eval(context)
+      # TODO Raise exception when number of elements isn't even
       hash = {}
       nodes.each_slice(2) do |key, value|
         hash[key.eval(context)] = value.eval(context)
