@@ -298,6 +298,36 @@ class InterpreterTest < Minitest::Test
     end
   end
 
+  def test_message_without_receiver
+    assert_raises Halunke::HInvalidMessage do
+      @interpreter.eval(%{()})
+    end
+  end
+
+  def test_message_with_receiver_but_empty_message
+    assert_raises Halunke::HInvalidMessage do
+      @interpreter.eval(%{(5)})
+    end
+  end
+
+  def test_message_with_odd_message_length
+    assert_raises Halunke::HInvalidMessage do
+      @interpreter.eval(%{("hello" replace "a" with)})
+    end
+  end
+
+  def test_message_with_single_non_bareword_key
+    assert_raises Halunke::HInvalidMessage do
+      @interpreter.eval(%{("hello" "aa")})
+    end
+  end
+
+  def test_message_with_non_bareword_key
+    assert_raises Halunke::HInvalidMessage do
+      @interpreter.eval(%{("hello" replace "a" 5 5)})
+    end
+  end
+
   private
 
   def counter_program

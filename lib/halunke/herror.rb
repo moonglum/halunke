@@ -48,4 +48,7 @@ module Halunke
 
   class HUnknownAttribute < HError
   end
+
+  class HInvalidMessage < HError
+  end
 end

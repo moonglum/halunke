@@ -119,11 +119,9 @@ module Halunke
 
   MessageSendNode = Struct.new(:nodes, :ts, :te) do
     def eval(context)
-      receiver = nodes[0]
-      message_nodes = nodes.drop(1)
-      message_name, message_value = parse_message(message_nodes, context)
+      message_name, message_value = parse_message(context)
       receiver.eval(context).receive_message(context, message_name, message_value,
-                                             source_code_position: SourceCodePosition.new(ts, te))
+                                             source_code_position: source_code_position)
     end
 
     def ==(other)
@@ -131,25 +129,46 @@ module Halunke
         nodes == other.nodes
     end
 
-    def parse_message(message_nodes, context)
+    private
+
+    def source_code_position
+      SourceCodePosition.new(ts, te)
+    end
+
+    def receiver
+      raise HInvalidMessage.new("This message has no receiver", source_code_position) if nodes.length == 0
+      @receiver ||= nodes[0]
+    end
+
+    def parse_message(context)
       if message_nodes.length == 1
         if message_nodes[0].is_a? NumberNode
           # hack to allow expressions like (1+5)
           ["+", [message_nodes[0].eval(context)]]
-        else
+        elsif message_nodes[0].is_a? BarewordNode
           [message_nodes[0].value, []]
+        else
+          # TODO: Underline the offending node, not the entire message
+          raise HInvalidMessage.new("The key #{message_nodes[0].eval(context).inspect(context)} is not a bareword", source_code_position)
         end
-      elsif message_nodes.length.even?
+      else
         name = []
         message = []
         message_nodes.each_slice(2) do |name_part, value|
+          # TODO: Underline the offending node, not the entire message
+          raise HInvalidMessage.new("The key #{name_part.eval(context).inspect(context)} is not a bareword", source_code_position) unless name_part.is_a? BarewordNode
+          # TODO: Underline the offending node, not the entire message
+          raise HInvalidMessage.new("Wrong number", source_code_position) if value.nil?
           name.push(name_part.value)
           message.push(value.eval(context))
         end
         [name.join(" "), message]
-      else
-        raise "Parse Error"
       end
+    end
+
+    def message_nodes
+      raise HInvalidMessage.new("You are sending an empty message", source_code_position) if nodes.length == 1
+      @message_nodes ||= nodes.drop(1)
     end
   end
 end
