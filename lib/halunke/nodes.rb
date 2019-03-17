@@ -11,23 +11,33 @@ module Halunke
 
   NumberNode = Struct.new(:value, :ts, :te) do
     def eval(context)
-      context["Number"].create_instance(value)
+      context["Number"].create_instance(value,
+                                        source_code_position: source_code_position)
     end
 
     def ==(other)
       other.is_a?(NumberNode) &&
         value == other.value
     end
+
+    def source_code_position
+      SourceCodePosition.new(ts, te)
+    end
   end
 
   StringNode = Struct.new(:value, :ts, :te) do
     def eval(context)
-      context["String"].create_instance(value)
+      context["String"].create_instance(value,
+                                        source_code_position: source_code_position)
     end
 
     def ==(other)
       other.is_a?(StringNode) &&
         value == other.value
+    end
+
+    def source_code_position
+      SourceCodePosition.new(ts, te)
     end
   end
 
@@ -43,8 +53,6 @@ module Halunke
         value == other.value
     end
 
-    private
-
     def source_code_position
       SourceCodePosition.new(ts, te)
     end
@@ -59,8 +67,6 @@ module Halunke
       other.is_a?(UnassignedNode) &&
         node == other.node
     end
-
-    private
 
     def source_code_position
       SourceCodePosition.new(ts, te)
@@ -83,8 +89,6 @@ module Halunke
         body == other.body
     end
 
-    private
-
     def source_code_position
       SourceCodePosition.new(ts, te)
     end
@@ -99,6 +103,10 @@ module Halunke
       other.is_a?(ArrayNode) &&
         nodes == other.nodes
     end
+
+    def source_code_position
+      SourceCodePosition.new(ts, te)
+    end
   end
 
   DictionaryNode = Struct.new(:nodes, :ts, :te) do
@@ -108,12 +116,17 @@ module Halunke
       nodes.each_slice(2) do |key, value|
         hash[key.eval(context)] = value.eval(context)
       end
-      context["Dictionary"].create_instance(hash)
+      context["Dictionary"].create_instance(hash,
+                                            source_code_position: source_code_position)
     end
 
     def ==(other)
       other.is_a?(DictionaryNode) &&
         nodes == other.nodes
+    end
+
+    def source_code_position
+      SourceCodePosition.new(ts, te)
     end
   end
 
@@ -129,11 +142,11 @@ module Halunke
         nodes == other.nodes
     end
 
-    private
-
     def source_code_position
       SourceCodePosition.new(ts, te)
     end
+
+    private
 
     def receiver
       raise HInvalidMessage.new("This message has no receiver", source_code_position) if nodes.length == 0
@@ -148,17 +161,14 @@ module Halunke
         elsif message_nodes[0].is_a? BarewordNode
           [message_nodes[0].value, []]
         else
-          # TODO: Underline the offending node, not the entire message
-          raise HInvalidMessage.new("The key #{message_nodes[0].eval(context).inspect(context)} is not a bareword", source_code_position)
+          raise HInvalidMessage.new("#{message_nodes[0].eval(context).inspect(context)} is not a bareword", message_nodes[0].source_code_position)
         end
       else
         name = []
         message = []
         message_nodes.each_slice(2) do |name_part, value|
-          # TODO: Underline the offending node, not the entire message
-          raise HInvalidMessage.new("The key #{name_part.eval(context).inspect(context)} is not a bareword", source_code_position) unless name_part.is_a? BarewordNode
-          # TODO: Underline the offending node, not the entire message
-          raise HInvalidMessage.new("Wrong number", source_code_position) if value.nil?
+          raise HInvalidMessage.new("#{name_part.eval(context).inspect(context)} is not a bareword", name_part.source_code_position) unless name_part.is_a? BarewordNode
+          raise HInvalidMessage.new("This bareword has no according argument", name_part.source_code_position) if value.nil?
           name.push(name_part.value)
           message.push(value.eval(context))
         end
