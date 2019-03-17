@@ -39,12 +39,15 @@ module Halunke
           end
 
           context[name] = HClass.new(name, allowed_attributes, instance_methods, class_methods, false)
+        rescue FrozenError
+          assigned_value = context[name].inspect(context)
+          raise HBarewordAlreadyAssigned.new("Bareword '#{name} is already assigned to #{assigned_value}. In Halunke, you can only assign once.", message_value[0].source_code_position)
         end
 
         private
 
-        def determine_name(hstring)
-          hstring.ruby_value
+        def determine_name(unassigned_bareword)
+          unassigned_bareword.ruby_value
         end
 
         def determine_allowed_attributes(harray)

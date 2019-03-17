@@ -162,6 +162,13 @@ class InterpreterTest < Minitest::Test
     end
   end
 
+  def test_no_reassignement_of_class
+    @interpreter.eval(%<(Class new 'Foo methods @[])>)
+    assert_raises Halunke::HBarewordAlreadyAssigned do
+      @interpreter.eval(%<(Class new 'Foo methods @[])>)
+    end
+  end
+
   def test_array
     assert_equal "[2 3 4]", @interpreter.eval("[2 3 4]")
   end
