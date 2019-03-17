@@ -155,25 +155,22 @@ module Halunke
 
     def parse_message(context)
       if message_nodes.length == 1
-        if message_nodes[0].is_a? NumberNode
-          # hack to allow expressions like (1+5)
-          ["+", [message_nodes[0].eval(context)]]
-        elsif message_nodes[0].is_a? BarewordNode
-          [message_nodes[0].value, []]
-        else
-          raise HInvalidMessage.new("#{message_nodes[0].eval(context).inspect(context)} is not a bareword", message_nodes[0].source_code_position)
-        end
-      else
-        name = []
-        message = []
-        message_nodes.each_slice(2) do |name_part, value|
-          raise HInvalidMessage.new("#{name_part.eval(context).inspect(context)} is not a bareword", name_part.source_code_position) unless name_part.is_a? BarewordNode
-          raise HInvalidMessage.new("This bareword has no according argument", name_part.source_code_position) if value.nil?
-          name.push(name_part.value)
-          message.push(value.eval(context))
-        end
-        [name.join(" "), message]
+        # hack to allow expressions like (1+5)
+        return ["+", [message_nodes[0].eval(context)]] if message_nodes[0].is_a? NumberNode
+        return [message_nodes[0].value, []] if message_nodes[0].is_a? BarewordNode
+
+        raise HInvalidMessage.new("This is not a bareword", message_nodes[0].source_code_position)
       end
+
+      name = []
+      message = []
+      message_nodes.each_slice(2) do |name_part, value|
+        raise HInvalidMessage.new("This is not a bareword", name_part.source_code_position) unless name_part.is_a? BarewordNode
+        raise HInvalidMessage.new("This bareword has no according argument", name_part.source_code_position) if value.nil?
+        name << name_part
+        message << value
+      end
+      [name.map(&:value).join(" "), message.map { |node| node.eval(context) }]
     end
 
     def message_nodes
