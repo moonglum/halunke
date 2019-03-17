@@ -328,6 +328,12 @@ class InterpreterTest < Minitest::Test
     end
   end
 
+  def test_dictionary_with_uneven_nodes
+    assert_raises Halunke::HInvalidDictionary do
+      @interpreter.eval(%{@["a" 2 "b"]})
+    end
+  end
+
   private
 
   def counter_program

@@ -111,9 +111,9 @@ module Halunke
 
   DictionaryNode = Struct.new(:nodes, :ts, :te) do
     def eval(context)
-      # TODO Raise exception when number of elements isn't even
       hash = {}
       nodes.each_slice(2) do |key, value|
+        raise HInvalidDictionary.new("This key has no value", key.source_code_position) if value.nil?
         hash[key.eval(context)] = value.eval(context)
       end
       context["Dictionary"].create_instance(hash,

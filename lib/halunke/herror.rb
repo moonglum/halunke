@@ -51,4 +51,7 @@ module Halunke
 
   class HInvalidMessage < HError
   end
+
+  class HInvalidDictionary < HError
+  end
 end
