@@ -157,7 +157,7 @@ class InterpreterTest < Minitest::Test
 
   def test_no_reassignement
     @interpreter.eval("('a = 2)")
-    assert_raises do
+    assert_raises Halunke::HBarewordAlreadyAssigned do
       @interpreter.eval("('a = 1)")
     end
   end
@@ -178,8 +178,7 @@ class InterpreterTest < Minitest::Test
 
   def test_clean_context
     assert_equal "12", @interpreter.eval("({ ('a = 12) a } call [])")
-    # a should not be found
-    assert_raises do
+    assert_raises Halunke::HUnassignedBareword do
       @interpreter.eval("a")
     end
   end
@@ -191,8 +190,7 @@ class InterpreterTest < Minitest::Test
 
   def test_bug_params_leaving_context
     @interpreter.eval('("bla" reverse)')
-    # self should not be found
-    assert_raises do
+    assert_raises Halunke::HUnassignedBareword do
       @interpreter.eval("self")
     end
   end
@@ -241,7 +239,7 @@ class InterpreterTest < Minitest::Test
 
   def test_counter_class_with_unknown_attribute
     @interpreter.eval(counter_program)
-    assert_raises do
+    assert_raises Halunke::HUnknownAttribute do
       @interpreter.eval(%{('counter = (Counter new @["typo" 2]))})
     end
   end
