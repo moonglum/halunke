@@ -64,6 +64,12 @@ module Halunke
             })
           }
           hdictionary.ruby_value.each_pair do |method_name, fn|
+            raise HInvalidMessageName.new("Message name must be a String", method_name.source_code_position) unless method_name.runtime_class.name == "String"
+            raise HInvalidMessageName.new("An empty String is not a valid message", method_name.source_code_position) if method_name.ruby_value == ""
+            raise HInvalidMessageName.new("A message can't start with a space", method_name.source_code_position) if method_name.ruby_value.start_with? " "
+            raise HInvalidMessageName.new("A message can't stop with a space", method_name.source_code_position) if method_name.ruby_value.end_with? " "
+            raise HInvalidMessageName.new("The parts of the message need to be separated by a single space", method_name.source_code_position) if method_name.ruby_value.match(/ {2,}/)
+
             instance_methods[method_name.ruby_value] = fn
           end
           instance_methods

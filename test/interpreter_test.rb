@@ -334,6 +334,36 @@ class InterpreterTest < Minitest::Test
     end
   end
 
+  def test_non_string_message_name
+    assert_raises Halunke::HInvalidMessageName do
+      @interpreter.eval(%<(Class new 'Foo methods @[ 5 { |'self| "Hi" }])>)
+    end
+  end
+
+  def test_empty_message_name
+    assert_raises Halunke::HInvalidMessageName do
+      @interpreter.eval(%<(Class new 'Foo methods @[ "" { |'self| "Hi" }])>)
+    end
+  end
+
+  def test_message_name_starting_with_space
+    assert_raises Halunke::HInvalidMessageName do
+      @interpreter.eval(%<(Class new 'Foo methods @[ " abc" { |'self| "Hi" }])>)
+    end
+  end
+
+  def test_message_name_ending_with_space
+    assert_raises Halunke::HInvalidMessageName do
+      @interpreter.eval(%<(Class new 'Foo methods @[ "abc " { |'self| "Hi" }])>)
+    end
+  end
+
+  def test_message_with_multiple_spaces
+    assert_raises Halunke::HInvalidMessageName do
+      @interpreter.eval(%<(Class new 'Foo methods @[ "abc  def" { |'self| "Hi" }])>)
+    end
+  end
+
   private
 
   def counter_program
