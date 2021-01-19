@@ -55,35 +55,17 @@
 
       <header>
         <div class="alert alert-primary" role="alert">
-          Halunke is Open Source and on <a href="http://github.com/moonglum/halunke">Github. <a href="#repl">Try out Halunke online!</a>
+          Halunke is Open Source and on <a href="http://github.com/moonglum/halunke">Github</a>.
         </div>
         <h1>{{ page.title }}</h1>
       </header>
       <main>
         {{ content }}
       </main>
-      <footer>
-        <h2 id="repl">Try Halunke in your browser</h2>
-        <a href="https://try.halunke.jetzt/repl" onclick="javascript:launch_repl(this); return false;">Click here to start an interactive Halunke Shell.</a>
-        You can also go to <a target="_blank" href="https://try.halunke.jetzt/repl">try.halunke.jetzt</a> to directly open the REPL.
-        <div id="try-frame-target"></div>
-      </footer>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script>
-      var launch_repl = function(element) {
-        var iframe = document.createElement('iframe');
-        var wrapper = document.querySelectorAll('#try-frame-target');
-        iframe.src = element.getAttribute('href');
-        iframe.id = 'try-frame';
-        iframe.style = 'width: 100%; border: 2px solid #f3f3f3; position: sticky; height: 200px; margin-top: 10px; bottom: 0; left: 0; right: 0; box-shadow: 0 -3px 6px 0px #888888';
-        iframe.scrolling = 'no';
-        element.remove();
-        wrapper[0].replaceWith(iframe);
-      };
-    </script>
   </body>
 </html>
